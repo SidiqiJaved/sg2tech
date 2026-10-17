@@ -293,9 +293,9 @@ export function FinancialIntelligencePage() {
                 the result.
               </p>
               <p>
-                SG2 supports this in existing implementations. Whether it is included in your
-                deployment is agreed during scoping, and collecting payment on invoices is not part
-                of the workflow.
+                Royalty calculations and franchise invoicing can be tailored to each organization’s
+                agreements and operational requirements, with implementation scope defined during
+                discovery.
               </p>
               <p>
                 For inspections, standards and wider franchise oversight, see{' '}
