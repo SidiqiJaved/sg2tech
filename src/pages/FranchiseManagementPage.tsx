@@ -267,7 +267,7 @@ export function FranchiseManagementPage() {
       </Section>
 
       {/* DELIVERY MODEL */}
-      <Section tone="deep">
+      <Section>
         <SectionHeader
           index="04"
           eyebrow="Shaped to your network"
@@ -321,7 +321,7 @@ export function FranchiseManagementPage() {
         </div>
       </Section>
 
-      <Section tone="deep">
+      <Section>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <SectionHeader index="06" eyebrow="Questions" title="Straight answers." />

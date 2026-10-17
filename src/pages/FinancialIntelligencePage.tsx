@@ -111,7 +111,7 @@ export function FinancialIntelligencePage() {
       />
 
       {/* THE GAP */}
-      <Section tone="deep">
+      <Section>
         <SectionHeader
           index="01"
           eyebrow="The gap"
@@ -242,7 +242,18 @@ export function FinancialIntelligencePage() {
               finance manager can review and an accountant can use.
             </p>
           </FeatureRow>
+        </div>
+      </section>
 
+      {/* AI-ENABLED FINANCIAL INTELLIGENCE */}
+      <Section tone="ink">
+        <SectionHeader
+          index="03"
+          eyebrow="AI-Enabled Financial Intelligence"
+          title="Ask your data. Catch what looks unusual."
+          lead="Natural-language analysis and AI anomaly detection, built on the reporting and reconciliation already in the platform."
+        />
+        <div className="-mt-6">
           <FeatureRow
             index="G"
             eyebrow="Natural-language analysis"
@@ -288,17 +299,17 @@ export function FinancialIntelligencePage() {
             </p>
           </FeatureRow>
         </div>
-      </section>
+      </Section>
 
       {/* SCENARIO */}
-      <Section tone="ink">
+      <Section tone="ivory">
         <SectionHeader
-          index="03"
+          index="04"
           eyebrow="A typical Monday"
           title="From assembling reports to reading them."
           lead="An illustrative scenario for a four-location operator."
         />
-        <div className="mt-14 grid gap-px bg-line-dark md:grid-cols-2">
+        <div className="mt-14 grid gap-px bg-line md:grid-cols-2">
           {[
             {
               h: 'Before',
@@ -319,12 +330,12 @@ export function FinancialIntelligencePage() {
               ],
             },
           ].map((col) => (
-            <div key={col.h} className="bg-ink py-8 md:p-12">
-              <p className="t-label mb-6 text-[#ff9a55]">{col.h}</p>
+            <div key={col.h} className="bg-paper p-8 sm:p-10">
+              <p className="t-label mb-6 text-copper-deep">{col.h}</p>
               <ol className="space-y-4">
                 {col.items.map((x, i) => (
-                  <li key={x} className="flex gap-4 text-[#d6d9dd]">
-                    <span className="t-label mt-1 text-ivory/50">{i + 1}</span>
+                  <li key={x} className="flex gap-4 text-ink-soft">
+                    <span className="t-label mt-1 text-ink-mute">{i + 1}</span>
                     {x}
                   </li>
                 ))}
@@ -337,7 +348,7 @@ export function FinancialIntelligencePage() {
       {/* INTEGRATIONS */}
       <Section>
         <SectionHeader
-          index="04"
+          index="05"
           eyebrow="Integrations"
           title="From source data to one financial view."
           lead="Financial data arrives from the platforms and point-of-sale (POS) systems you already use, is structured into a single model, and surfaces as reports your team can read."
@@ -350,7 +361,7 @@ export function FinancialIntelligencePage() {
       {/* AUDIENCE */}
       <Section tone="sage">
         <SectionHeader
-          index="05"
+          index="06"
           eyebrow="Who it is for"
           title="Made for the people who answer for the numbers."
         />
@@ -374,7 +385,7 @@ export function FinancialIntelligencePage() {
       <Section>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <SectionHeader index="06" eyebrow="Questions" title="Straight answers." />
+            <SectionHeader index="07" eyebrow="Questions" title="Straight answers." />
           </div>
           <div className="lg:col-span-8">
             <Faq items={faqs} />

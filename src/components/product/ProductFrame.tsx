@@ -30,7 +30,7 @@ export function ProductFrame({
     <figure
       className={cn(
         'overflow-hidden rounded-lg border shadow-[0_30px_60px_-30px_rgba(27,40,41,0.45)]',
-        dark ? 'border-line-dark bg-[#17191c]' : 'border-line bg-paper',
+        dark ? 'border-line-dark bg-[#17191c]' : 'light-surface border-line bg-paper',
         className,
       )}
     >

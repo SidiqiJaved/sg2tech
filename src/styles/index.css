@@ -40,7 +40,7 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 body {
-  background: var(--color-ivory);
+  background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
   font-size: 1.0625rem;
@@ -228,4 +228,15 @@ body {
 /* Copper text tokens are tuned for light backgrounds; lift them on charcoal. */
 .on-dark .text-copper-deep {
   color: #ff9a55;
+}
+
+/* Light product frames placed inside charcoal sections keep light-surface text colors. */
+.on-dark .light-surface .t-caption {
+  color: var(--color-ink-mute);
+}
+.on-dark .light-surface .t-body {
+  color: var(--color-ink-soft);
+}
+.on-dark .light-surface .text-copper-deep {
+  color: var(--color-copper-deep);
 }

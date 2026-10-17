@@ -215,7 +215,7 @@ export function HomePage() {
       </Section>
 
       {/* FINANCIAL INTELLIGENCE */}
-      <Section tone="ink">
+      <Section>
         <SectionHeader
           index="02"
           eyebrow="Product · AI-Enabled Financial Intelligence"
@@ -223,21 +223,21 @@ export function HomePage() {
           lead="Sales are the start of the story. Fees, adjustments and payout timing are where margin quietly changes. Ask questions in plain language and surface what looks unusual."
         />
         <div className="mt-14">
-          <FeatureTabs tabs={featureTabs} dark />
+          <FeatureTabs tabs={featureTabs} />
         </div>
         <div className="rule-tick mt-14 flex flex-col gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-xl text-[0.95rem] text-[#cdd0d4]">
+          <p className="max-w-xl text-[0.95rem] text-ink-soft">
             Natural-language analysis and AI anomaly detection are introduced through our next
             rollout phase and included in implementations by agreed scope.
           </p>
-          <Button to="/solutions/financial-intelligence" variant="ghost-dark">
+          <Button to="/solutions/financial-intelligence" variant="secondary">
             See the full product
           </Button>
         </div>
       </Section>
 
       {/* FRANCHISE MANAGEMENT */}
-      <Section tone="paper">
+      <Section tone="ivory">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <SectionHeader
@@ -348,7 +348,7 @@ export function HomePage() {
       </Section>
 
       {/* CUSTOM SOFTWARE */}
-      <Section tone="sage">
+      <Section>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <SectionHeader
@@ -381,7 +381,7 @@ export function HomePage() {
       </Section>
 
       {/* HOW WE WORK */}
-      <Section>
+      <Section className="border-t border-line">
         <SectionHeader
           index="06"
           eyebrow="How we work"

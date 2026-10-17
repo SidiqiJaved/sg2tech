@@ -4,14 +4,14 @@ import { cn } from '@/lib/cn'
 type Tone = 'ivory' | 'deep' | 'ink' | 'sage' | 'paper'
 const tones: Record<Tone, string> = {
   ivory: 'bg-ivory',
-  deep: 'bg-ivory-deep',
+  deep: 'bg-ivory',
   paper: 'bg-paper',
-  sage: 'bg-sage',
+  sage: 'bg-ivory',
   ink: 'bg-ink text-ivory on-dark',
 }
 
 export function Section({
-  tone = 'ivory',
+  tone = 'paper',
   id,
   labelledBy,
   className,

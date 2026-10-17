@@ -122,7 +122,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-40 bg-ivory transition-[border-color] duration-300',
+        'sticky top-0 z-40 bg-paper transition-[border-color] duration-300',
         scrolled || mobileOpen ? 'border-b border-line' : 'border-b border-transparent',
       )}
     >
@@ -153,7 +153,7 @@ export function Header() {
         <div className="flex items-center gap-3">
           <Link
             to={demoCta.to}
-            className="hidden rounded-full bg-ink px-5 py-2.5 text-[0.9rem] font-medium text-ivory transition-colors hover:bg-copper-deep sm:inline-block"
+            className="hidden rounded-full bg-copper px-5 py-2.5 text-[0.9rem] font-medium text-ink transition-colors hover:bg-ink hover:text-white sm:inline-block"
           >
             {demoCta.label}
           </Link>
@@ -175,7 +175,7 @@ export function Header() {
         id="mobile-nav"
         aria-label="Mobile"
         hidden={!mobileOpen}
-        className="fixed inset-x-0 bottom-0 top-[4.5rem] overflow-y-auto bg-ivory lg:hidden"
+        className="fixed inset-x-0 bottom-0 top-[4.5rem] overflow-y-auto bg-paper lg:hidden"
       >
         <div className="container-page py-8">
           {navGroups.map((g) => (
@@ -216,7 +216,7 @@ export function Header() {
           </div>
           <Link
             to={demoCta.to}
-            className="mt-8 block rounded-full bg-ink px-6 py-4 text-center font-medium text-ivory"
+            className="mt-8 block rounded-full bg-copper px-6 py-4 text-center font-medium text-ink"
           >
             {demoCta.label}
           </Link>

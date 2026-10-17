@@ -9,8 +9,8 @@ const base =
   'group inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3.5 text-[0.95rem] font-medium leading-none transition-[background,color,box-shadow,transform] duration-300 active:translate-y-px'
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-ink text-ivory hover:bg-copper-deep',
-  copper: 'bg-copper-deep text-white hover:bg-ink',
+  primary: 'bg-copper text-ink hover:bg-ink hover:text-white',
+  copper: 'bg-copper text-ink hover:bg-white hover:text-ink',
   secondary: 'border border-ink/70 text-ink hover:bg-ink hover:text-ivory',
   'ghost-dark': 'border border-ivory/50 text-ivory hover:bg-ivory hover:text-ink',
 }

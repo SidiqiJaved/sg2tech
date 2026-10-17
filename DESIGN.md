@@ -89,3 +89,12 @@ Vite + React + TypeScript + Tailwind 4 with **build-time prerendering**. A ~60-l
 ## Accessibility decisions
 
 Semantic landmarks and one `h1` per page, with no skipped levels. Skip link. Visible 3 px copper focus ring. Disclosure nav with `aria-expanded`, Escape to close. Tabs follow the ARIA pattern (roving tabindex, arrow/Home/End). Form: explicit labels, `aria-invalid`/`aria-describedby`, error summary with `role="alert"`, focus moved to the first invalid field. Charts have text alternatives (or sit beside real tables). Native `<details>` for the FAQ.
+
+## Color balance (approved)
+
+Approximate guideline, not a rigid measurement: **55% white** (primary backgrounds and product presentations), **25% charcoal** (product stages, AI section, final CTA, footer), **15% warm ivory** (selected editorial sections) and **5% SG2 orange** (buttons, active navigation, accents, chart highlights).
+
+- Body and default `Section` tone are white. `deep` and `sage` tones now both render as warm ivory; use ivory for at most two sections per page.
+- Primary buttons are bright orange (`copper`) with charcoal text (4.6:1). White text on bright orange fails contrast, so do not use it.
+- Orange *text* on light backgrounds uses `copper-deep`; it is lifted to `#FF9A55` inside `.on-dark` sections.
+- Light product frames placed on charcoal keep light-surface text colors via `.light-surface`.
