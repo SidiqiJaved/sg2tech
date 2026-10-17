@@ -49,7 +49,7 @@ The build contains **no invented company facts**. Everything below needs your in
 
 ## 7. Added in the executive review (needs human verification)
 
-- [ ] **Uber Eats / DoorDash:** the integration diagram marks both "Available now" for financial reports. Confirm that is true and which report types are ingested.
+- [x] **Uber Eats / DoorDash:** owner confirmed financial reporting is available today, so the diagram's "Available now" badge stands. Still worth listing which report types are ingested.
 - [ ] **Clover:** confirm the SFTP/CSV ingestion description and that the direct API is planned, not in development.
 - [ ] **Toast and Grubhub** were removed from the site (availability unverified). Re-add only when confirmed.
 - [ ] **Payout language:** copy now says "payout visibility" and compares reported sales with platform payout figures. No bank connectivity or bank reconciliation is claimed. Confirm that matches the product, or say if bank deposit comparison exists.
