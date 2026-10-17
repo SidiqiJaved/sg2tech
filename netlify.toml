@@ -4,6 +4,8 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  # Contact form posts to Netlify Forms; submissions are stored under Netlify > Forms.
+  VITE_FORMS_ENABLED = "true"
 
 # Pages are prerendered to real HTML files, so no SPA catch-all rewrite is needed.
 # Unknown paths get the prerendered 404 page.

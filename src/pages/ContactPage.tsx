@@ -78,6 +78,7 @@ export function ContactPage() {
   const [inquiry, setInquiry] = useState<Inquiry>('demo')
   const [status, setStatus] = useState<Status>('idle')
   const [errors, setErrors] = useState<Errors>({})
+  const [sentTo, setSentTo] = useState({ name: '', email: '' })
   const formRef = useRef<HTMLFormElement>(null)
   const summaryRef = useRef<HTMLDivElement>(null)
   // Synchronous guard: state updates are async, so a fast double click could otherwise post twice.
@@ -123,6 +124,10 @@ export function ContactPage() {
         body: encode(data),
       })
       if (!res.ok) throw new Error(String(res.status))
+      setSentTo({
+        name: String(data.get('name')).trim().split(/s+/)[0] ?? '',
+        email: String(data.get('email')).trim(),
+      })
       setStatus('sent')
       formRef.current?.reset()
     } catch {
@@ -194,8 +199,14 @@ export function ContactPage() {
                 >
                   <CircleCheck aria-hidden className="mt-0.5 shrink-0" size={20} />
                   <p>
-                    <strong>Thank you.</strong> Your message was sent. We will reply to the email
-                    address you provided.
+                    <strong>
+                      Thank you{sentTo.name ? `, ${sentTo.name}` : ''}. We have received your
+                      message.
+                    </strong>{' '}
+                    {sentTo.email
+                      ? `We will reply to ${sentTo.email}`
+                      : 'We will reply to the email address you provided'}
+                    . If it is urgent, call us at {contact.phone}.
                   </p>
                 </div>
               )}
