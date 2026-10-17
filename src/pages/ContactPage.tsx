@@ -172,8 +172,7 @@ export function ContactPage() {
               <div className="rule-tick pt-5">
                 <dt className="t-h3">Custom software consultation</dt>
                 <dd className="t-body mt-2 text-[0.95rem]">
-                  For organizations in any industry that need an application, integration or
-                  automation built.
+                  For organizations that need an application, integration or automation built.
                 </dd>
               </div>
             </dl>

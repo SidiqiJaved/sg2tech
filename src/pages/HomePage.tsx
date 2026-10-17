@@ -18,26 +18,29 @@ import {
 
 const problems = [
   {
-    t: 'Four systems, four versions of last week',
-    d: 'Your POS, each delivery platform, direct ordering and accounting all report the same week differently, so nobody can say with confidence what the number is.',
-    help: [['Financial Intelligence', '/solutions/financial-intelligence']],
+    t: 'Fragmented systems',
+    d: 'Applications, reports and platforms each hold part of the picture, so nobody can say with confidence what the number is. SG2 builds the systems and integrations that bring related information together.',
+    help: [
+      ['Financial Intelligence', '/solutions/financial-intelligence'],
+      ['Integrations & automation', '/services/custom-software-development#integrations'],
+    ],
   },
   {
-    t: 'Sales that don’t match the payout',
-    d: 'Between an order and the deposit sit commissions, promotions, refunds and adjustments. When a payout comes in short, finding out why means digging through statements.',
+    t: 'Financial discrepancies',
+    d: 'A restaurant reports one sales figure, while fees, adjustments and payouts tell a different story. SG2’s financial reporting and reconciliation workflows help investigate the differences.',
     help: [['Reconciliation and discrepancy identification', '/solutions/financial-intelligence']],
   },
   {
-    t: 'Locations you can’t compare',
-    d: 'Each location’s numbers are assembled differently and its standards are checked differently, so a strong location and a struggling one are hard to tell apart.',
+    t: 'Multi-location visibility',
+    d: 'Organizations managing multiple locations need consistent reporting, standards and oversight. SG2’s products and tailored workflows support a centralized view.',
     help: [
       ['Multi-location comparison', '/solutions/financial-intelligence'],
       ['Franchise Management', '/solutions/franchise-management'],
     ],
   },
   {
-    t: 'Work held together by spreadsheets and email',
-    d: 'Weekly exports, re-keyed data, approvals and follow-ups that live in inboxes and memory: the manual glue between tools that nobody planned.',
+    t: 'Manual operations',
+    d: 'Teams spend their time assembling reports, chasing follow-ups, reconciling figures and moving data between tools. SG2 develops software and automation to reduce unnecessary manual work.',
     help: [['Custom software and integrations', '/services/custom-software-development']],
   },
 ] as const
@@ -47,7 +50,7 @@ const featureTabs: FeatureTab[] = [
     id: 'revenue',
     label: 'Revenue visibility',
     heading: 'See every sales channel in one place',
-    body: 'Gross sales, fees and net payout side by side, by week and by location, so a question like “how did last week go?” has one answer.',
+    body: 'Gross sales, platform fees and net payout side by side, by week and by location, so a question like “how did last week go?” has one answer.',
     frameTitle: 'Revenue overview',
     visual: <RevenueOverviewMock />,
   },
@@ -106,7 +109,7 @@ const steps = [
   ['Integrate', 'We connect the systems you already use so people stop re-entering data.'],
   [
     'Improve',
-    'We watch real usage, then refine. Software is only finished when it stops needing explanation.',
+    'We improve software based on how people actually use it, making everyday workflows clearer and more effective.',
   ],
 ]
 
@@ -362,7 +365,7 @@ export function HomePage() {
               index="05"
               eyebrow="Engineering capabilities"
               title="When off-the-shelf stops fitting, we build."
-              lead="Custom software for organizations in any industry, delivered by the same team that builds our products. Your systems should work together. No black boxes. No unnecessary complexity."
+              lead="Custom software for organizations whose needs standard tools don’t meet, delivered by the same team that builds our products. Your systems should work together. No black boxes. No unnecessary complexity."
             />
             <div className="mt-8">
               <TextLink to="/services/custom-software-development">

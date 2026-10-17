@@ -1,185 +1,130 @@
-import { Link, useParams } from 'react-router-dom'
 import { CtaBand, PageIntro } from '@/components/ui/Blocks'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
 import { SectionHeader } from '@/components/ui/SectionHeader'
-import { StatusBadge } from '@/components/ui/StatusBadge'
-import { TextLink } from '@/components/ui/Button'
-import { ProductFrame } from '@/components/product/ProductFrame'
-import { publishedCaseStudies, type CaseStudy } from '@/content/caseStudies'
-import { NotFoundPage } from './NotFoundPage'
 
-const structure = [
-  ['Client or project overview', 'Who the work was for and what they do.'],
-  ['Business challenge', 'The problem in the client’s own terms.'],
-  ['Initial state', 'The tools, processes and data before we started.'],
-  ['Solution approach', 'How we scoped, designed and sequenced the work.'],
-  ['Product capabilities', 'What was built and what people can now do.'],
-  ['Technology and integrations', 'The systems involved and how they connect.'],
-  ['Business outcomes', 'Results that have been verified with the client. Never estimates.'],
-  ['Future opportunities', 'What comes next, where relevant.'],
+const stages = [
+  [
+    '01',
+    'Understanding the Business',
+    'We examine how the work is actually done: the workflows, the people who depend on them, the constraints, the systems already in place and the outcome the business wants. Requirements come from that understanding, not from a feature list.',
+  ],
+  [
+    '02',
+    'Defining the Solution',
+    'Business requirements become product priorities, user experiences, technical decisions and a delivery plan. We agree on what “done” means before engineering begins, and on what can wait.',
+  ],
+  [
+    '03',
+    'Engineering & Integration',
+    'Applications, data pipelines, integrations and custom workflows are built in increments you can see and react to, and connected to the systems your teams already use.',
+  ],
+  [
+    '04',
+    'Testing & Validation',
+    'We check that the software does what the business needs, not only that it runs. Functionality is tested, defects are reviewed and fixed, requirements are verified, and findings feed the next iteration.',
+  ],
+]
+
+const documents = [
+  ['Business and functional requirements', 'What the software must do, and why.'],
+  [
+    'Product roadmaps and priorities',
+    'What is being built now, what is next, and what is deferred.',
+  ],
+  ['User workflows', 'How people move through the software to get their work done.'],
+  ['Architecture and integration documentation', 'How the pieces fit together and exchange data.'],
+  ['Technical decisions', 'The options considered and the reasons for the choice made.'],
+  ['Testing and QA records', 'What was tested, what was found and how it was resolved.'],
+  ['Deployment documentation', 'How the software is released, configured and rolled back.'],
+  ['Handover and support guidance', 'What the people who run the software need to know.'],
 ]
 
 export function WorkPage() {
-  const has = publishedCaseStudies.length > 0
   return (
     <>
       <PageIntro
         eyebrow="Our work"
-        title="Work we can stand behind, shown with permission."
-        lead="We publish a client’s name, screens and results only after they have approved it, and we publish only outcomes that have been verified."
+        title="From business challenges to working software."
+        lead="Every solution begins with understanding the business behind it. At SG2 Technologies, we bring discovery, product thinking, engineering, testing and documentation together to develop software around practical operational needs."
       />
 
-      {has ? (
-        <Section tone="deep">
-          <ul className="grid gap-px border border-line bg-line md:grid-cols-2">
-            {publishedCaseStudies.map((c) => (
-              <li key={c.slug} className="bg-paper p-8 sm:p-10">
-                <p className="t-label mb-3 text-ink-mute">{c.industry}</p>
-                <h2 className="t-h3 text-2xl">
-                  <Link to={`/work/${c.slug}`} className="hover:text-copper-deep">
-                    {c.title}
-                  </Link>
-                </h2>
-                <p className="t-body mt-3">{c.summary}</p>
-                <div className="mt-6">
-                  <TextLink to={`/work/${c.slug}`}>Read the case study</TextLink>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </Section>
-      ) : (
-        <Section tone="deep">
-          <Reveal className="border border-dashed border-ink-mute/50 bg-ivory p-8 sm:p-14">
-            <StatusBadge status="planned" />
-            <h2 className="t-h2 mt-6 max-w-2xl">Our first case studies are in preparation.</h2>
-            <p className="t-body mt-4 max-w-2xl">
-              We are working with customers on write-ups that they can review and approve. Until one
-              is ready, we would rather show you nothing than something we cannot verify. If you
-              would like to see how the products behave, a live walkthrough is the best way.
-            </p>
-            <div className="mt-8">
-              <TextLink to="/contact?inquiry=demo">Request a walkthrough</TextLink>
-            </div>
-          </Reveal>
-        </Section>
-      )}
-
-      <Section>
+      <Section tone="deep">
         <SectionHeader
-          index="01"
-          eyebrow="How we document our work"
-          title="Every case study follows the same structure."
-          lead="So that you can compare projects, and so that nothing important is left out."
+          eyebrow="From challenge to delivery"
+          title="How a business problem becomes working software."
         />
         <ol className="mt-14 grid gap-x-16 md:grid-cols-2">
-          {structure.map(([t, d], i) => (
-            <Reveal as="li" key={t} className="rule-tick grid grid-cols-[2.5rem_1fr] gap-3 py-6">
-              <span className="t-label pt-1.5 text-copper-deep">
-                {String(i + 1).padStart(2, '0')}
-              </span>
+          {stages.map(([n, t, d], i) => (
+            <Reveal
+              as="li"
+              key={t}
+              delay={(i % 2) * 70}
+              className="rule-tick grid grid-cols-[2.5rem_1fr] gap-3 py-8"
+            >
+              <span className="t-label pt-1.5 text-copper-deep">{n}</span>
               <span>
                 <span className="t-h3 block">{t}</span>
-                <span className="t-body mt-1 block text-[0.95rem]">{d}</span>
+                <span className="t-body mt-2 block text-[0.95rem]">{d}</span>
               </span>
             </Reveal>
           ))}
         </ol>
       </Section>
 
-      <CtaBand
-        title="Want to be among our first case studies?"
-        primary={{ label: 'Start a conversation', to: '/contact' }}
-      />
-    </>
-  )
-}
-
-function Block({
-  index,
-  title,
-  children,
-}: {
-  index: string
-  title: string
-  children: React.ReactNode
-}) {
-  return (
-    <Reveal className="rule-tick grid gap-4 py-10 lg:grid-cols-12 lg:gap-12">
-      <div className="lg:col-span-4">
-        <p className="t-label mb-2 text-copper-deep">{index}</p>
-        <h2 className="t-h3">{title}</h2>
-      </div>
-      <div className="t-body lg:col-span-8">{children}</div>
-    </Reveal>
-  )
-}
-
-function CaseStudyBody({ c }: { c: CaseStudy }) {
-  return (
-    <>
-      <PageIntro
-        eyebrow={`Case study · ${c.industry}`}
-        title={c.title}
-        lead={c.summary}
-        aside={
-          c.screenshot ? <ProductFrame title={c.client} screenshot={c.screenshot} /> : undefined
-        }
-      />
-      <Section tone="deep">
-        <Block index="01" title="Overview">
-          <p>{c.anonymous ? `${c.client} (name withheld at the client’s request).` : c.client}</p>
-        </Block>
-        <Block index="02" title="Business challenge">
-          <p>{c.challenge}</p>
-        </Block>
-        <Block index="03" title="Initial state">
-          <p>{c.initialState}</p>
-        </Block>
-        <Block index="04" title="Solution approach">
-          <p>{c.approach}</p>
-        </Block>
-        <Block index="05" title="Product capabilities">
-          <ul className="list-disc space-y-1 pl-5">
-            {c.capabilities.map((x) => (
-              <li key={x}>{x}</li>
+      <Section tone="ink" id="documentation">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <SectionHeader
+              index="05"
+              eyebrow="How we document our work"
+              title="Documentation is part of the product."
+              lead="It keeps the work transparent while it is built, preserves continuity when people change, and lets you maintain and own the software long after delivery."
+            />
+            <p className="t-caption mt-8 max-w-md">
+              Documentation is tailored to the scope and complexity of each engagement. Not every
+              document is produced for every project.
+            </p>
+          </div>
+          <ul className="lg:col-span-6 lg:col-start-7">
+            {documents.map(([t, d]) => (
+              <li key={t} className="rule-tick py-5">
+                <p className="font-display text-xl tracking-tight sm:text-2xl">{t}</p>
+                <p className="t-body mt-1 text-[0.95rem]">{d}</p>
+              </li>
             ))}
           </ul>
-        </Block>
-        <Block index="06" title="Technology and integrations">
-          <ul className="list-disc space-y-1 pl-5">
-            {c.technology.map((x) => (
-              <li key={x}>{x}</li>
-            ))}
-          </ul>
-        </Block>
-        {c.outcomes.length > 0 && (
-          <Block index="07" title="Business outcomes">
-            <ul className="list-disc space-y-1 pl-5">
-              {c.outcomes.map((x) => (
-                <li key={x}>{x}</li>
-              ))}
-            </ul>
-          </Block>
-        )}
-        {c.future && (
-          <Block index="08" title="Future opportunities">
-            <p>{c.future}</p>
-          </Block>
-        )}
+        </div>
       </Section>
+
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <SectionHeader
+              index="06"
+              eyebrow="Built for long-term use"
+              title="No black boxes. No unnecessary complexity."
+            />
+          </div>
+          <div className="t-lead space-y-6 lg:col-span-6 lg:col-start-7">
+            <p>
+              Software should stay understandable, maintainable and adaptable as your organization
+              evolves. We favor clear structure over cleverness, and we explain our decisions so
+              that the people who inherit the system can work with it.
+            </p>
+            <p>
+              After release, we improve the software based on how people actually use it, making
+              everyday workflows clearer and more effective.
+            </p>
+          </div>
+        </div>
+      </Section>
+
       <CtaBand
-        title="Facing something similar?"
-        primary={{ label: 'Start a conversation', to: '/contact' }}
+        title="Have a software project to discuss?"
+        primary={{ label: 'Discuss a project', to: '/contact?inquiry=custom' }}
+        secondary={{ label: 'Book a demo', to: '/contact?inquiry=demo' }}
       />
     </>
   )
-}
-
-export function CaseStudyPage() {
-  const { slug } = useParams()
-  const c = publishedCaseStudies.find((x) => x.slug === slug)
-  if (!c) return <NotFoundPage />
-  return <CaseStudyBody c={c} />
 }

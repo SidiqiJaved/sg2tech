@@ -339,7 +339,7 @@ function LocationLines() {
     <svg
       viewBox={`0 0 ${w} ${h}`}
       role="img"
-      aria-label="Illustrative 12-week net revenue trend for four locations"
+      aria-label="Illustrative 12-week net payout trend for four locations"
       className="h-auto w-full"
     >
       {[0, 1, 2, 3].map((g) => (
@@ -377,7 +377,7 @@ export function DashboardMock() {
       </div>
       <div className="rounded border border-line bg-paper p-3">
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-          <p className="font-display text-[0.95rem] tracking-tight">Net revenue by location</p>
+          <p className="font-display text-[0.95rem] tracking-tight">Net payout by location</p>
           <span className="flex flex-wrap gap-x-3 text-[0.65rem] text-ink-soft">
             {seriesColors.map((c, i) => (
               <span key={c} className="flex items-center gap-1">
@@ -401,7 +401,12 @@ export function StatementMock({ compact = false }: { compact?: boolean }) {
     { n: 'Delivery platform B', v: [1928, 1669, 1987, 2088, 1479], tick: 'bg-ink-mute' },
     { n: 'In-store sales (POS)', v: [1014, 1324, 1232, 1294, 1491], tick: 'bg-copper-soft' },
     { n: 'Platform fees', v: [-620, -613, -611, -598, -478], neg: true, tick: 'bg-line' },
-    { n: 'Net revenue', v: [5285, 5516, 5767, 5056, 4646], bold: true, tick: 'bg-ink' },
+    {
+      n: 'Revenue after platform fees',
+      v: [5285, 5516, 5767, 5056, 4646],
+      bold: true,
+      tick: 'bg-ink',
+    },
   ]
   const fmt = (n: number) => (n < 0 ? `−${usd(-n)}` : usd(n))
   return (

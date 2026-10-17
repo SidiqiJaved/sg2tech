@@ -144,10 +144,13 @@ export function FinancialIntelligencePage() {
         />
         <Reveal className="mt-14 grid gap-px border border-line bg-line md:grid-cols-4">
           {[
-            ['Sales', 'What customers paid, including items, taxes where reported, and tips.'],
+            [
+              'Gross sales',
+              'What customers paid, including items, taxes where reported, and tips.',
+            ],
             ['Adjustments', 'Discounts, promotions, refunds, and order corrections.'],
             ['Platform fees', 'Commissions and service or marketing charges set by each platform.'],
-            ['Net payout', 'What actually arrives, and when.'],
+            ['Net payout', 'The amount a platform reports as payable to you, and when.'],
           ].map(([t, d], i) => (
             <div key={t} className="bg-ivory p-7">
               <p className="t-label text-copper-deep">{String(i + 1).padStart(2, '0')}</p>
@@ -188,7 +191,7 @@ export function FinancialIntelligencePage() {
 
           <FeatureRow
             index="B"
-            eyebrow="Gross vs. net revenue"
+            eyebrow="Gross sales to net payout"
             title="Explain the distance between sales and payout."
             flip
             visual={
@@ -252,8 +255,10 @@ export function FinancialIntelligencePage() {
               </ProductFrame>
             }
           >
-            <p>Rank and compare locations on net results, not just top-line sales.</p>
-            <p>That makes it easier to tell a busy location from a profitable one.</p>
+            <p>
+              Compare locations based on revenue, platform fees and net payouts to understand
+              financial performance beyond sales volume.
+            </p>
           </FeatureRow>
 
           <FeatureRow

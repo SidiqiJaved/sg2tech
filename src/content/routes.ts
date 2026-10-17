@@ -1,5 +1,3 @@
-import { publishedCaseStudies } from './caseStudies'
-
 export interface RouteMeta {
   path: string
   title: string
@@ -41,14 +39,14 @@ export const routeMeta: RouteMeta[] = [
     path: '/about',
     title: 'About SG2 | Software Products & Engineering',
     description:
-      'SG2 is a software products and engineering company focused on practical business problems. Learn how we approach problems and work with customers.',
+      'SG2 Technologies develops software products and custom business applications around real operational challenges. Our mission: to help businesses operate with greater clarity, confidence, and ease.',
     indexable: true,
   },
   {
     path: '/work',
-    title: 'Our Work | SG2 Technologies',
+    title: 'Our Work | How We Deliver Software | SG2 Technologies',
     description:
-      'How SG2 documents its work: challenge, approach, capabilities and verified outcomes. Case studies are published with client approval.',
+      'How SG2 Technologies designs, engineers, tests, documents and delivers software, from understanding the business to long-term maintainability.',
     indexable: true,
   },
   {
@@ -59,15 +57,6 @@ export const routeMeta: RouteMeta[] = [
     indexable: true,
   },
 ]
-
-routeMeta.push(
-  ...publishedCaseStudies.map((c) => ({
-    path: `/work/${c.slug}`,
-    title: `${c.title} | SG2 Technologies`,
-    description: c.summary,
-    indexable: true,
-  })),
-)
 
 export const notFoundMeta: RouteMeta = {
   path: '/404',

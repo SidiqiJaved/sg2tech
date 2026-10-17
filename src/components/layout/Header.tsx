@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink as RouterNavLink, useLocation } from 'react-router-dom'
 import { ChevronDown, Menu, X } from 'lucide-react'
-import { demoCta, navGroups, topLevelLinks } from '@/content/site'
+import { demoCta, homeLink, navGroups, topLevelLinks } from '@/content/site'
 import { cn } from '@/lib/cn'
 import { Logo } from './Logo'
 
@@ -103,6 +103,47 @@ function DesktopGroup({ group }: { group: (typeof navGroups)[number] }) {
   )
 }
 
+function MobileTopLink({
+  link,
+  pathname,
+}: {
+  link: (typeof topLevelLinks)[number]
+  pathname: string
+}) {
+  const active = trimSlash(pathname) === link.to
+  return (
+    <Link
+      to={link.to}
+      aria-current={active ? 'page' : undefined}
+      className={cn(
+        'block py-2 font-display text-2xl tracking-tight',
+        active && 'text-copper-deep',
+      )}
+    >
+      {link.label}
+    </Link>
+  )
+}
+
+/** Top-level link. React Router sets aria-current="page" when it matches exactly. */
+function TopLink({ link }: { link: (typeof topLevelLinks)[number] }) {
+  return (
+    <RouterNavLink
+      to={link.to}
+      end
+      className={({ isActive }) =>
+        cn(
+          'relative rounded px-3 py-2 text-[0.95rem] font-medium text-ink hover:text-copper-deep',
+          isActive &&
+            'after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:bg-copper',
+        )
+      }
+    >
+      {link.label}
+    </RouterNavLink>
+  )
+}
+
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -140,23 +181,12 @@ export function Header() {
         <Logo />
 
         <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
+          <TopLink link={homeLink} />
           {navGroups.map((g) => (
             <DesktopGroup key={g.label} group={g} />
           ))}
           {topLevelLinks.map((l) => (
-            <RouterNavLink
-              key={l.to}
-              to={l.to}
-              className={({ isActive }) =>
-                cn(
-                  'relative rounded px-3 py-2 text-[0.95rem] font-medium text-ink hover:text-copper-deep',
-                  isActive &&
-                    'after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:bg-copper',
-                )
-              }
-            >
-              {l.label}
-            </RouterNavLink>
+            <TopLink key={l.to} link={l} />
           ))}
         </nav>
 
@@ -188,6 +218,9 @@ export function Header() {
         className="fixed inset-x-0 bottom-0 top-[4.5rem] overflow-y-auto bg-paper lg:hidden"
       >
         <div className="container-page py-8">
+          <div className="border-b border-line pb-5">
+            <MobileTopLink link={homeLink} pathname={pathname} />
+          </div>
           {navGroups.map((g) => (
             <div key={g.label} className="border-b border-line py-5">
               <p className="t-label mb-3 text-copper-deep">{g.label}</p>
@@ -211,17 +244,7 @@ export function Header() {
           ))}
           <div className="border-b border-line py-5">
             {topLevelLinks.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                aria-current={trimSlash(pathname) === l.to ? 'page' : undefined}
-                className={cn(
-                  'block py-2 font-display text-2xl tracking-tight',
-                  trimSlash(pathname) === l.to && 'text-copper-deep',
-                )}
-              >
-                {l.label}
-              </Link>
+              <MobileTopLink key={l.to} link={l} pathname={pathname} />
             ))}
           </div>
           <Link

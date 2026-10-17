@@ -15,8 +15,8 @@ export function Logo({ inverted = false }: { inverted?: boolean }) {
       <span
         aria-hidden
         className={cn(
-          't-label ml-3 hidden border-l pl-3 text-[0.62rem] leading-none tracking-[0.22em] min-[400px]:inline',
-          inverted ? 'border-ivory/30 text-ivory/80' : 'border-line text-ink-soft',
+          't-label ml-2.5 text-[0.62rem] font-medium leading-none tracking-[0.2em] sm:ml-3 sm:text-[0.68rem]',
+          inverted ? 'text-ivory/85' : 'text-ink-soft',
         )}
       >
         Technologies

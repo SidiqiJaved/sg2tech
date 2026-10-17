@@ -71,51 +71,18 @@ const examples = [
   ],
 ] as const
 
-const process = [
-  {
-    t: 'Discovery and requirements',
-    d: 'We learn the workflow, the people and the data involved, then write down what the software must do.',
-    out: 'Requirements summary and open questions',
-  },
-  {
-    t: 'Solution architecture',
-    d: 'We choose how the system will be structured and which existing services it will connect to.',
-    out: 'Architecture outline and integration plan',
-  },
-  {
-    t: 'Experience and interface design',
-    d: 'We design the screens and flows with the people who will use them every day.',
-    out: 'Interactive designs to review',
-  },
-  {
-    t: 'Iterative engineering',
-    d: 'We build in small increments you can see and react to, instead of disappearing for months.',
-    out: 'Working software at each iteration',
-  },
-  {
-    t: 'Integration and quality assurance',
-    d: 'We connect the pieces, test with realistic data, and fix what testing finds.',
-    out: 'Tested, integrated release candidate',
-  },
-  {
-    t: 'Deployment and continuous improvement',
-    d: 'We release, observe real usage, and keep improving as the business changes.',
-    out: 'Production release and a prioritized improvement list',
-  },
-]
-
 export function CustomSoftwarePage() {
   return (
     <>
       <PageIntro
         eyebrow="Engineering · Custom Software Development"
         title="Built around your business, not the other way around."
-        lead="Some requirements cannot be met by off-the-shelf tools. SG2 designs and builds the software your organization actually needs, from connected data and integrations to workflow platforms and intelligent applications, in any industry."
+        lead="Some requirements cannot be met by off-the-shelf tools. SG2 designs and builds the software your organization actually needs, from connected data and integrations to workflow platforms and intelligent applications."
         actions={
           <>
             <Button to="/contact?inquiry=custom">Discuss a Project</Button>
-            <Button to="#process" variant="secondary" arrow={false}>
-              See how we deliver
+            <Button to="/work" variant="secondary">
+              How we deliver
             </Button>
           </>
         }
@@ -202,31 +169,21 @@ export function CustomSoftwarePage() {
       </Section>
 
       <Section id="process" className="border-t border-line">
-        <SectionHeader
-          index="05"
-          eyebrow="Process"
-          title="Six steps, each with something you can review."
-          lead="We agree on scope and priorities with you at each stage. Timelines depend on the project and are set after discovery, not promised up front."
-        />
-        <ol className="mt-14 border-t border-ink/80">
-          {process.map((p, i) => (
-            <Reveal
-              as="li"
-              key={p.t}
-              className="grid gap-3 border-b border-line py-8 md:grid-cols-[4rem_1.1fr_1.4fr_1fr] md:gap-8"
-            >
-              <span className="t-label pt-1.5 text-copper-deep">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <h3 className="t-h3">{p.t}</h3>
-              <p className="t-body">{p.d}</p>
-              <p className="text-[0.9rem]">
-                <span className="t-label mb-1 block text-[0.65rem] text-ink-mute">You receive</span>
-                {p.out}
-              </p>
-            </Reveal>
-          ))}
-        </ol>
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
+            <SectionHeader
+              index="05"
+              eyebrow="How we deliver"
+              title="Scope, timelines and ownership are agreed with you."
+              lead="Timelines depend on the project and are set after discovery, not promised up front. See how we move from business challenge to working, documented software."
+            />
+          </div>
+          <div className="lg:col-span-4 lg:col-start-9">
+            <Button to="/work" variant="secondary">
+              How we deliver software
+            </Button>
+          </div>
+        </div>
       </Section>
 
       <Section tone="deep">

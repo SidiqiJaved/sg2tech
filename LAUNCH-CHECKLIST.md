@@ -60,10 +60,10 @@ The build contains **no invented company facts**. Everything below needs your in
 - [ ] Approved screenshots of Franchise Management (location overview, inspection checklist, compliance, royalty, invoices).
 - [ ] Replace illustrative `ProductFrame`s via the `screenshot` prop; alt text should describe what the screen shows.
 
-## 4. Case studies
+## 4. Customer references
 
-- [ ] **Halal Munchies:** written authorization to publish the name, logo, screenshots and any outcomes. Until then it is not mentioned anywhere on the site. The supplied dashboard screenshots are confidential references: they are not in the repository, `public/` or the build, and must stay out. A scan of `src`, `public`, `dist` and `index.html` for client names finds nothing.
-- [ ] Verified outcomes only. If none exist, publish an anonymous write-up with no metrics (`anonymous: true`).
+- [ ] The site has no case-study pages and names no customers. Do not add customer names, logos, screenshots or outcomes without written authorization.
+- [ ] The supplied dashboard screenshots are confidential references: keep them out of the repository, `public/` and the build.
 
 ## 5. Technical launch tasks
 

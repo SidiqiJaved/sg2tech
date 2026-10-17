@@ -8,7 +8,7 @@ export const company = {
   name: 'SG2 Technologies',
   legalName: 'SG2 Technologies, LLC',
   tagline: 'Software Products & Engineering',
-  mission: 'We build software that makes businesses run better.',
+  mission: 'To help businesses operate with greater clarity, confidence, and ease.',
   year: new Date().getFullYear(),
 } as const
 
@@ -61,13 +61,19 @@ export const navGroups: NavGroup[] = [
     ],
   },
   {
-    label: 'Company',
+    label: 'About',
     links: [
-      { label: 'About SG2', to: '/about', description: 'How we think and work.' },
-      { label: 'Our Work', to: '/work', description: 'Case studies and walkthroughs.' },
+      { label: 'About SG2', to: '/about', description: 'Who we are and what we believe.' },
+      {
+        label: 'Our Work',
+        to: '/work',
+        description: 'How we design, engineer and deliver software.',
+      },
     ],
   },
 ]
+
+export const homeLink: NavLink = { label: 'Home', to: '/' }
 
 export const topLevelLinks: NavLink[] = [{ label: 'Contact', to: '/contact' }]
 

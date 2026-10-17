@@ -7,7 +7,7 @@ import { FinancialIntelligencePage } from '@/pages/FinancialIntelligencePage'
 import { FranchiseManagementPage } from '@/pages/FranchiseManagementPage'
 import { HomePage } from '@/pages/HomePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
-import { CaseStudyPage, WorkPage } from '@/pages/WorkPage'
+import { WorkPage } from '@/pages/WorkPage'
 
 export function App() {
   return (
@@ -19,7 +19,6 @@ export function App() {
         <Route path="services/custom-software-development" element={<CustomSoftwarePage />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="work" element={<WorkPage />} />
-        <Route path="work/:slug" element={<CaseStudyPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
