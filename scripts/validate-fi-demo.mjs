@@ -59,6 +59,10 @@ try {
   for (const r of d.reconciliation)
     assert.equal(r.status === 'matched', r.difference === 0, `${r.id} status matches difference`)
 
+  // Timing and review items always carry an explanation for the reader.
+  for (const r of d.reconciliation)
+    if (r.status !== 'matched') assert.ok(r.note && r.note.length > 20, `${r.id} needs a note`)
+
   // Natural-language answer: drivers explain the whole change in net payout, to the dollar.
   assert.equal(sum(d.askDrivers.items.map((i) => i.delta)), d.askDrivers.netDelta)
   assert.ok(d.askDrivers.netDelta < 0, 'the demo question asks why net payout fell')

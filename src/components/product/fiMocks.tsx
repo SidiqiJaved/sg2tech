@@ -83,7 +83,11 @@ function StatusChip({ status }: { status: ReconStatus }) {
 }
 
 const DEFINITION =
-  'Net payout is gross sales less discounts, refunds & adjustments and platform fees, as reported by each source. It is not profit or a verified bank deposit.'
+  'Net payout is gross sales less discounts, refunds & adjustments and platform fees, as reported by each source. It is not profit or a verified bank deposit. All figures are invented.'
+
+/** Reminder placed wherever fee percentages appear. Platform labels are deliberately generic. */
+const RATES_NOTE =
+  'All figures are invented. Fee percentages are hypothetical examples, not the rates of any specific delivery platform or payment provider.'
 
 function Footnote({ children }: { children: React.ReactNode }) {
   return <p className="t-caption text-[0.7rem] leading-snug">{children}</p>
@@ -315,7 +319,7 @@ export function GrossToNetMock() {
       </ul>
       <Footnote>
         Percentages are shares of gross sales. Net payout is the amount the platforms report as
-        payable, not profit or a bank deposit.
+        payable, not profit or a bank deposit. {RATES_NOTE}
       </Footnote>
     </div>
   )
@@ -403,9 +407,28 @@ export function PayoutVisibilityMock() {
           </li>
         ))}
       </ul>
+      <dl className="space-y-1">
+        {(
+          [
+            ['matched', 'Reported payout equals the calculated net payout.'],
+            [
+              'timing',
+              'Transactions settle after the reporting period ends. Expected to clear in a later period, so not treated as a discrepancy.',
+            ],
+            ['review', 'The difference is not explained by timing and needs investigation.'],
+          ] as const
+        ).map(([status, meaning]) => (
+          <div key={status} className="grid grid-cols-[5.25rem_1fr] items-start gap-2">
+            <dt>
+              <StatusChip status={status} />
+            </dt>
+            <dd className="t-caption text-[0.7rem] leading-snug">{meaning}</dd>
+          </div>
+        ))}
+      </dl>
       <Footnote>
         Calculated is net payout from the order-level report for the same period and locations.
-        In-store sales are not part of payout reconciliation.
+        In-store sales are not part of payout reconciliation. {RATES_NOTE}
       </Footnote>
     </div>
   )
@@ -453,7 +476,8 @@ export function LocationComparisonMock() {
       </ul>
       <Footnote>
         Sales volume and net payout can rank locations differently. Compare the share of gross sales
-        that remains after discounts, refunds and platform fees. Net payout is not profit.
+        that remains after discounts, refunds and platform fees. Net payout is not profit. All
+        figures are invented.
       </Footnote>
     </div>
   )
@@ -541,6 +565,7 @@ export function ChannelMixMock() {
           </tbody>
         </table>
       </div>
+      <Footnote>{RATES_NOTE}</Footnote>
     </div>
   )
 }
@@ -842,7 +867,7 @@ export function AnomalyInsightsMock() {
       </ul>
       <Footnote>
         Sparklines show recent weeks, ending with {PERIOD.label}. Items are flagged for a person to
-        review, not treated as errors.
+        review, not treated as errors. {RATES_NOTE}
       </Footnote>
     </div>
   )
