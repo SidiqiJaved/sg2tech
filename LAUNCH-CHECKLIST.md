@@ -65,3 +65,10 @@ The build contains **no invented company facts**. Everything below needs your in
 - [ ] No page says AI performs current reconciliation. If any current workflow *is* AI-based, tell me and I will say so.
 - [ ] AI capabilities (natural-language questions, generated summaries, anomaly detection, forecasting) are described as "being introduced" and carry a **Planned** badge. If some are further along, switch the badge to **In development**.
 - [ ] "Reconciliation" is used for sales vs. platform payouts only. No bank connectivity or bank-deposit reconciliation is claimed.
+
+### Owner decisions recorded
+- Reconciliation and discrepancy identification are existing capabilities in customer reporting (compare reported figures, investigate differences, establish reconciled results). **The split between software-driven processing and manual investigation is pending confirmation by the engineering lead**, so no copy claims fully automated reconciliation.
+- No operational AI workflow is confirmed. Copy never implies AI performs today's reconciliation.
+- AI items stay **Planned** until engineering confirms which are in development.
+- Reconciliation messaging covers reported sales, platform fees and platform payouts only. No bank-deposit matching or bank connectivity.
+- Corporate positioning stays "Software Products & Engineering".

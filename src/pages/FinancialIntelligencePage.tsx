@@ -200,8 +200,8 @@ export function FinancialIntelligencePage() {
               platform, and identify the discrepancies.
             </p>
             <p>
-              The product identifies what to look into. A person still decides what is an error and
-              what is expected.
+              Differences are identified and investigated before results are reconciled. A person
+              still decides what is an error and what is expected.
             </p>
           </FeatureRow>
 
