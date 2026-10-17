@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/Button'
 import { CtaBand, Faq, FeatureRow, PageIntro } from '@/components/ui/Blocks'
 import { Reveal } from '@/components/ui/Reveal'
@@ -13,6 +14,7 @@ import {
   GrossToNetMock,
   LocationComparisonMock,
   PayoutVisibilityMock,
+  RoyaltyInvoiceMock,
   StatementMock,
 } from '@/components/product/fiMocks'
 
@@ -111,6 +113,7 @@ export function FinancialIntelligencePage() {
               ['Discrepancy identification', false],
               ['Delivery platform fees and payouts', false],
               ['Multi-location comparison', false],
+              ['Royalty calculations & franchise invoicing', false],
               ['Natural-language analytics', true],
               ['AI anomaly detection', true],
             ].map(([x, ai]) => (
@@ -274,10 +277,50 @@ export function FinancialIntelligencePage() {
         </div>
       </section>
 
+      {/* ROYALTIES & FRANCHISE INVOICING */}
+      <Section tone="soft">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="min-w-0 lg:col-span-5">
+            <SectionHeader
+              index="03"
+              eyebrow="Franchise finance"
+              title="Royalty Calculations & Franchise Invoicing"
+            />
+            <div className="t-body mt-6 space-y-4">
+              <p>
+                Once sales are reported consistently, they can feed royalty calculations based on
+                the terms agreed with each franchisee, and franchise invoices can be generated from
+                the result.
+              </p>
+              <p>
+                SG2 supports this in existing implementations. Whether it is included in your
+                deployment is agreed during scoping, and collecting payment on invoices is not part
+                of the workflow.
+              </p>
+              <p>
+                For inspections, standards and wider franchise oversight, see{' '}
+                <Link
+                  to="/solutions/franchise-management"
+                  className="underline decoration-copper/50 underline-offset-4 hover:decoration-copper-deep"
+                >
+                  Franchise Management
+                </Link>
+                .
+              </p>
+            </div>
+          </div>
+          <Reveal className="min-w-0 lg:col-span-7">
+            <ProductFrame title="Royalties · Invoice preview">
+              <RoyaltyInvoiceMock />
+            </ProductFrame>
+          </Reveal>
+        </div>
+      </Section>
+
       {/* AI-ENABLED FINANCIAL INTELLIGENCE */}
       <Section tone="ink">
         <SectionHeader
-          index="03"
+          index="04"
           eyebrow="AI-Enabled Financial Intelligence"
           title="Ask your data. Catch what looks unusual."
           lead="Natural-language analysis and AI anomaly detection, built on the reporting and reconciliation already in the platform."
@@ -333,7 +376,7 @@ export function FinancialIntelligencePage() {
       {/* SCENARIO */}
       <Section tone="soft">
         <SectionHeader
-          index="04"
+          index="05"
           eyebrow="A typical Monday"
           title="From assembling reports to reading them."
           lead="An illustrative scenario for a four-location operator."
@@ -377,7 +420,7 @@ export function FinancialIntelligencePage() {
       {/* INTEGRATIONS */}
       <Section>
         <SectionHeader
-          index="05"
+          index="06"
           eyebrow="Integrations"
           title="From source data to one financial view."
           lead="Financial data arrives from the platforms and point-of-sale (POS) systems you already use, is structured into a single model, and surfaces as reports your team can read."
@@ -390,7 +433,7 @@ export function FinancialIntelligencePage() {
       {/* AUDIENCE */}
       <Section tone="soft">
         <SectionHeader
-          index="06"
+          index="07"
           eyebrow="Who it is for"
           title="Made for the people who answer for the numbers."
         />
@@ -414,7 +457,7 @@ export function FinancialIntelligencePage() {
       <Section>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <SectionHeader index="07" eyebrow="Questions" title="Straight answers." />
+            <SectionHeader index="08" eyebrow="Questions" title="Straight answers." />
           </div>
           <div className="lg:col-span-8">
             <Faq items={faqs} />

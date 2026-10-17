@@ -876,3 +876,60 @@ export function AnomalyInsightsMock() {
     </div>
   )
 }
+
+/** Example franchise term used only in the royalty illustration. Real terms come from each agreement. */
+const EXAMPLE_ROYALTY_RATE = 0.06
+
+export function RoyaltyInvoiceMock() {
+  const rows = locations.map((l) => ({
+    ...l,
+    gross: byLocation[l.id].gross,
+    royalty: Math.round(byLocation[l.id].gross * EXAMPLE_ROYALTY_RATE),
+  }))
+  const due = rows.reduce((t, r) => t + r.royalty, 0)
+  return (
+    <div className="space-y-3 text-ink">
+      <PanelHead title="Royalty invoice" scope={`${PERIOD.label} · Draft`} />
+      <dl className="grid grid-cols-2 gap-2 text-[0.8rem]">
+        <div className="rounded border border-line bg-ivory/60 p-3">
+          <dt className="t-label text-[0.75rem] text-ink-mute">Example terms</dt>
+          <dd className="mt-1">{pct(EXAMPLE_ROYALTY_RATE, 0)} of reported gross sales</dd>
+        </div>
+        <div className="rounded border border-line bg-ivory/60 p-3">
+          <dt className="t-label text-[0.75rem] text-ink-mute">Period</dt>
+          <dd className="mt-1">
+            {PERIOD.label} · {PERIOD.span}
+          </dd>
+        </div>
+      </dl>
+      <table className="w-full text-left text-[0.8rem] tabular-nums">
+        <caption className="sr-only">Illustrative royalty calculation by location</caption>
+        <thead>
+          <tr className="t-label border-b border-line text-[0.75rem] text-ink-mute">
+            <th className="py-2 font-medium">Location</th>
+            <th className="py-2 text-right font-medium">Reported gross</th>
+            <th className="py-2 text-right font-medium">Royalty</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.id} className="border-b border-line/60">
+              <td className="py-2.5">{r.name}</td>
+              <td className="py-2.5 text-right">{usd(r.gross)}</td>
+              <td className="py-2.5 text-right">{usd(r.royalty)}</td>
+            </tr>
+          ))}
+          <tr className="font-medium">
+            <td className="pt-3">Total due</td>
+            <td className="pt-3 text-right">{usd(total.gross)}</td>
+            <td className="pt-3 text-right">{usd(due)}</td>
+          </tr>
+        </tbody>
+      </table>
+      <Footnote>
+        Example terms and invented figures. Actual rates, fees and invoice details follow each
+        franchise agreement. Payment is handled outside this view.
+      </Footnote>
+    </div>
+  )
+}
