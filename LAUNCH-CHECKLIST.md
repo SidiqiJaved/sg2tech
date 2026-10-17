@@ -58,3 +58,10 @@ The build contains **no invented company facts**. Everything below needs your in
 - [ ] **Franchise Management** capability list (inspections, checklists, training, follow-ups, invoicing, royalty workflows) is shown with illustrative visuals. Confirm each is shipped, and mark any that are not.
 - [ ] **Staging:** set `VITE_NOINDEX=true` on the staging site so it is not indexed, and leave it unset on production. Set `VITE_FORMS_ENABLED=true` and confirm the `contact` form appears in Netlify Forms, then route notifications to the shared mailbox.
 - [ ] Open Graph image, privacy policy, Lighthouse run and screen-reader pass are still outstanding.
+
+## 8. AI positioning update (needs human verification)
+
+- [ ] Copy now states, without hedging, that reporting, reconciliation (reported sales vs. platform payouts) and discrepancy identification are part of the existing platform. Confirm those are shipped and how they work.
+- [ ] No page says AI performs current reconciliation. If any current workflow *is* AI-based, tell me and I will say so.
+- [ ] AI capabilities (natural-language questions, generated summaries, anomaly detection, forecasting) are described as "being introduced" and carry a **Planned** badge. If some are further along, switch the badge to **In development**.
+- [ ] "Reconciliation" is used for sales vs. platform payouts only. No bank connectivity or bank-deposit reconciliation is claimed.

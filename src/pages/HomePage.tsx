@@ -61,10 +61,10 @@ const featureTabs: FeatureTab[] = [
   },
   {
     id: 'payouts',
-    label: 'Payout visibility',
-    heading: 'See where payouts differ from sales',
-    body: 'Line up reported sales against platform payout figures and flag the differences worth a closer look.',
-    frameTitle: 'Payout visibility',
+    label: 'Payout reconciliation',
+    heading: 'Reconcile payouts and surface discrepancies',
+    body: 'Reconcile reported sales against platform payouts and identify the discrepancies worth a closer look.',
+    frameTitle: 'Payout reconciliation',
     visual: <PayoutVisibilityMock />,
   },
   {
@@ -119,9 +119,9 @@ export function HomePage() {
           </h1>
           <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
             <p className="t-lead max-w-2xl">
-              SG2 Technologies develops intelligent software products and custom business
-              applications that connect data, simplify operations, and help organizations make
-              better decisions.
+              SG2 Technologies builds intelligent financial analytics and business software that
+              connect data, surface discrepancies and support better decisions, with AI capabilities
+              being introduced across our products.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button to="/solutions/financial-intelligence">Explore Our Solutions</Button>
@@ -210,7 +210,7 @@ export function HomePage() {
         </div>
         <div className="rule-tick mt-14 flex flex-col gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-xl text-[0.95rem] text-[#cdd0d4]">
-            Next on the roadmap: operational insights such as anomaly detection and forecasting.{' '}
+            AI-enabled analysis is being introduced on top of this foundation.{' '}
             <StatusBadge status="planned" className="ml-1 align-middle !text-ivory/80" />
           </p>
           <Button to="/solutions/financial-intelligence" variant="ghost-dark">
@@ -268,8 +268,8 @@ export function HomePage() {
         <SectionHeader
           index="04"
           eyebrow="Technology, security & innovation"
-          title="The engineering behind the numbers."
-          lead="Software that handles financial and operational data has to be dependable first and clever second."
+          title="Intelligent analytics, built on dependable engineering."
+          lead="Connected data, reliable reconciliation and a clear path to AI-enabled analysis."
         />
         <div className="mt-14 grid gap-px bg-line-dark lg:grid-cols-3">
           <article className="bg-ink p-8 sm:p-10">
@@ -284,7 +284,7 @@ export function HomePage() {
               {[
                 'Ingest source data',
                 'Structure and map it',
-                'Check for gaps and mismatches',
+                'Reconcile and identify discrepancies',
                 'Report',
               ].map((x, i) => (
                 <li key={x} className="flex gap-3">
@@ -308,11 +308,14 @@ export function HomePage() {
           </article>
           <article className="bg-ink p-8 sm:p-10">
             <p className="t-label flex flex-wrap items-center gap-3 text-[#ff9a55]">
-              AI-enhanced Financial Intelligence
+              AI-enabled intelligence
               <StatusBadge status="planned" className="!text-ivory/80" />
             </p>
-            <h3 className="t-h3 mt-4">Intelligence that builds on trustworthy data.</h3>
-            <p className="t-body mt-4 text-[0.95rem]">On our roadmap, not yet released:</p>
+            <h3 className="t-h3 mt-4">AI built on trusted, reconciled data.</h3>
+            <p className="t-body mt-4 text-[0.95rem]">
+              Being introduced, and not yet generally available. Today’s reporting, reconciliation
+              and discrepancy identification are part of the existing platform:
+            </p>
             <ul className="mt-4 space-y-2 text-[0.9rem]">
               {[
                 'Natural-language financial questions',

@@ -54,11 +54,13 @@ const faqs = [
     ),
   },
   {
-    q: 'Are forecasting and AI-generated insights available?',
+    q: 'Where does AI fit?',
     a: (
       <p>
-        Not yet. They are planned, and we mark anything that is not released as planned or in
-        development.
+        AI-enabled analysis is being introduced on top of the existing platform, and it is not yet
+        generally available. Today’s reporting, reconciliation and discrepancy identification are
+        part of the platform now, and we will not describe a feature as AI-powered until it is
+        released.
       </p>
     ),
   },
@@ -79,7 +81,7 @@ export function FinancialIntelligencePage() {
       <PageIntro
         eyebrow="Solutions · Financial Intelligence"
         title="Know what your restaurants earn, not just what they sell."
-        lead="Restaurants generate financial data across point-of-sale (POS) systems, delivery platforms and direct ordering. Financial Intelligence brings POS sales, platform fees and payout information into one place, so your team spends less time assembling reports."
+        lead="Restaurants generate financial data across point-of-sale (POS) systems, delivery platforms and direct ordering. Financial Intelligence connects it, reconciles sales against payouts and surfaces the discrepancies, so your team spends less time assembling reports and more time acting on them."
         actions={
           <>
             <Button to="/contact?inquiry=demo">Book a Demo</Button>
@@ -184,21 +186,21 @@ export function FinancialIntelligencePage() {
 
           <FeatureRow
             index="D"
-            eyebrow="Payout visibility"
-            title="Spot payouts that differ from the sales reported."
+            eyebrow="Payout reconciliation"
+            title="Reconcile payouts and surface what doesn’t match."
             flip
             visual={
-              <ProductFrame title="Payout visibility">
+              <ProductFrame title="Payout reconciliation">
                 <PayoutVisibilityMock />
               </ProductFrame>
             }
           >
             <p>
-              Compare the sales reported by each source with the payout figures available, and
-              surface the differences.
+              Reconcile the sales reported by each source against the payouts received from each
+              platform, and identify the discrepancies.
             </p>
             <p>
-              The product highlights what to look into. A person still decides what is an error and
+              The product identifies what to look into. A person still decides what is an error and
               what is expected.
             </p>
           </FeatureRow>
@@ -230,14 +232,15 @@ export function FinancialIntelligencePage() {
 
           <FeatureRow
             index="G"
-            eyebrow="Future intelligent insights"
-            title="Anomaly detection and forecasting are on the roadmap."
+            eyebrow="AI-enabled intelligence"
+            title="Intelligent insight, built on reconciled data."
             status="planned"
           >
             <p>
-              We are planning insights that flag unusual fees or payout patterns and help estimate
-              what is coming. They are not released, and we will not describe them as available
-              until they are.
+              AI-enabled capabilities are being introduced: natural-language questions, generated
+              summaries, anomaly detection and revenue forecasting. They build on the data
+              engineering and reconciliation already in the platform, and they are not yet generally
+              available.
             </p>
           </FeatureRow>
         </div>
