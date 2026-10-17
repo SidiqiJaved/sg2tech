@@ -1,139 +1,299 @@
 /**
  * Illustrative Financial Intelligence interface patterns.
- * All numbers are invented for illustration and are labeled as such by ProductFrame.
+ *
+ * Every figure comes from the shared dataset in `@/content/fiDemoData` (all invented), and every
+ * total, rate and difference is derived there, so the panels always agree with one another.
+ * ProductFrame labels the content as illustrative.
  */
 import { cn } from '@/lib/cn'
+import {
+  PERIOD,
+  askDrivers,
+  askLocation,
+  byChannel,
+  byLocation,
+  cell,
+  change,
+  channels,
+  deliveryPlatforms,
+  insights,
+  locations,
+  netOf,
+  priorTotal,
+  rate,
+  reconciliation,
+  total,
+  weekly,
+  type Amounts,
+  type LocationId,
+  type ReconStatus,
+} from '@/content/fiDemoData'
 
-const usd = (n: number) => `$${n.toLocaleString('en-US')}`
+// --- formatting -------------------------------------------------------------------------------
+
+const usd = (n: number) => `$${Math.round(n).toLocaleString('en-US')}`
+/** Currency with a true minus sign, for deductions and differences. */
+const usdSigned = (n: number) => (n < 0 ? `−${usd(-n)}` : n > 0 ? `+${usd(n)}` : usd(0))
+const deduct = (n: number) => (n === 0 ? '—' : `−${usd(n)}`)
+const pct = (n: number, digits = 1) => `${(n * 100).toFixed(digits)}%`
+const pctSigned = (n: number) => `${n < 0 ? '−' : '+'}${Math.abs(n * 100).toFixed(1)}%`
+
+const netTotal = netOf(total)
+const locationName = (id: string) => locations.find((l) => l.id === id)?.name ?? id
+
+// --- shared pieces ----------------------------------------------------------------------------
+
+/** Panel title with the reporting period and scope the figures describe. */
+function PanelHead({ title, scope }: { title: string; scope: string }) {
+  return (
+    <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
+      <p className="font-display text-lg tracking-tight">{title}</p>
+      <p className="t-label text-[0.62rem] text-ink-mute">{scope}</p>
+    </div>
+  )
+}
 
 function Kpi({ label, value, note }: { label: string; value: string; note?: string }) {
   return (
     <div className="min-w-0 rounded border border-line bg-ivory/60 p-3">
       <p className="t-label truncate text-[0.62rem] text-ink-mute">{label}</p>
       <p className="mt-1 font-display text-xl tabular-nums tracking-tight sm:text-2xl">{value}</p>
-      {note && <p className="mt-0.5 text-[0.7rem] text-ink-mute">{note}</p>}
+      {note && <p className="mt-0.5 text-[0.7rem] tabular-nums text-ink-mute">{note}</p>}
     </div>
   )
 }
 
-const weeks = [38, 41, 40, 44, 47, 45, 49, 52, 50, 54, 53, 58]
-const nets = [27, 29, 29, 31, 33, 32, 35, 37, 35, 38, 38, 41]
+const STATUS: Record<ReconStatus, { label: string; cls: string }> = {
+  matched: { label: 'Matched', cls: 'bg-sage text-sage-deep' },
+  timing: { label: 'Timing', cls: 'border border-line bg-ivory text-ink-soft' },
+  review: { label: 'For review', cls: 'bg-copper-soft text-copper-ink' },
+}
+
+function StatusChip({ status }: { status: ReconStatus }) {
+  return (
+    <span
+      className={cn(
+        'inline-block whitespace-nowrap rounded px-1.5 py-0.5 text-[0.7rem]',
+        STATUS[status].cls,
+      )}
+    >
+      {STATUS[status].label}
+    </span>
+  )
+}
+
+const DEFINITION =
+  'Net payout is gross sales less discounts, refunds & adjustments and platform fees, as reported by each source. It is not profit or a verified bank deposit.'
+
+function Footnote({ children }: { children: React.ReactNode }) {
+  return <p className="t-caption text-[0.7rem] leading-snug">{children}</p>
+}
+
+// --- trend chart ------------------------------------------------------------------------------
 
 function TrendChart() {
-  const w = 480
-  const h = 150
-  const max = 64
-  const x = (i: number) => 8 + (i * (w - 16)) / (weeks.length - 1)
-  const y = (v: number) => h - 14 - ((v - 20) / (max - 20)) * (h - 28)
-  const path = (arr: number[]) =>
-    arr.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ')
+  const w = 400
+  const h = 168
+  const left = 44
+  const right = 8
+  const top = 10
+  const bottom = 24
+  const lo = 50000
+  const hi = 80000
+  const x = (i: number) => left + (i * (w - left - right)) / (weekly.length - 1)
+  const y = (v: number) => top + (1 - (v - lo) / (hi - lo)) * (h - top - bottom)
+  const line = (key: 'gross' | 'net') =>
+    weekly.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(p[key]).toFixed(1)}`).join(' ')
+  const last = weekly.length - 1
+  const lastPoint = weekly[last]
+  if (!lastPoint) return null
   return (
     <svg
       viewBox={`0 0 ${w} ${h}`}
       role="img"
-      aria-label="Illustrative 12-week trend of gross sales and net payout"
-      className="h-auto w-full"
+      aria-label={`Illustrative weekly gross sales and net payout over 12 weeks. In ${PERIOD.label}, gross sales were ${usd(lastPoint.gross)} and net payout was ${usd(lastPoint.net)}.`}
+      className="h-auto w-full text-ink-mute"
     >
-      {[0, 1, 2, 3].map((g) => (
-        <line
-          key={g}
-          x1="0"
-          x2={w}
-          y1={14 + g * 36}
-          y2={14 + g * 36}
-          stroke="#dbd5c6"
-          strokeWidth="1"
-          strokeDasharray="2 4"
-        />
+      {[50000, 60000, 70000, 80000].map((g) => (
+        <g key={g}>
+          <line
+            x1={left}
+            x2={w - right}
+            y1={y(g)}
+            y2={y(g)}
+            stroke="#dbd5c6"
+            strokeWidth="1"
+            strokeDasharray="2 4"
+          />
+          <text x={left - 6} y={y(g) + 4} textAnchor="end" fontSize="12" fill="currentColor">
+            {`$${g / 1000}k`}
+          </text>
+        </g>
       ))}
-      <path d={path(weeks)} fill="none" stroke="#25282c" strokeWidth="2" />
-      <path d={path(nets)} fill="none" stroke="#f26a1b" strokeWidth="2.5" />
-      <circle cx={x(11)} cy={y(weeks[11] ?? 0)} r="3.5" fill="#25282c" />
-      <circle cx={x(11)} cy={y(nets[11] ?? 0)} r="3.5" fill="#f26a1b" />
+      {[1, 4, 8, 12].map((wk) => (
+        <text
+          key={wk}
+          x={x(wk - 1)}
+          y={h - 6}
+          textAnchor={wk === 1 ? 'start' : wk === 12 ? 'end' : 'middle'}
+          fontSize="12"
+          fill="currentColor"
+        >
+          {`W${wk}`}
+        </text>
+      ))}
+      <path d={line('gross')} fill="none" stroke="#25282c" strokeWidth="2" strokeLinejoin="round" />
+      <path d={line('net')} fill="none" stroke="#f26a1b" strokeWidth="2.5" strokeLinejoin="round" />
+      <circle cx={x(last)} cy={y(lastPoint.gross)} r="3.5" fill="#25282c" />
+      <circle cx={x(last)} cy={y(lastPoint.net)} r="3.5" fill="#f26a1b" />
     </svg>
   )
 }
 
-export function RevenueOverviewMock({ compact = false }: { compact?: boolean }) {
-  const rows = [
-    ['Location 01', 18420, 13310],
-    ['Location 02', 15960, 11620],
-    ['Location 03', 13820, 10550],
-  ] as const
+function TrendCard() {
   return (
-    <div className="space-y-4 text-ink">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <p className="font-display text-lg tracking-tight">Revenue overview</p>
-        <p className="t-label text-[0.62rem] text-ink-mute">Last 12 weeks · All locations</p>
-      </div>
-      <div className="grid grid-cols-3 gap-2 sm:gap-3">
-        <Kpi label="Gross sales" value={usd(48200)} />
-        <Kpi label="Platform fees" value={usd(8980)} />
-        <Kpi label="Net payout" value={usd(35480)} />
-      </div>
-      <div className="rounded border border-line p-3">
-        <div className="mb-2 flex items-center gap-4 text-[0.7rem] text-ink-soft">
+    <div className="rounded border border-line bg-paper p-3">
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+        <p className="text-[0.8rem] font-medium">Weekly gross sales and net payout</p>
+        <span className="flex items-center gap-4 text-[0.7rem] text-ink-soft">
           <span className="flex items-center gap-1.5">
             <i className="inline-block h-0.5 w-4 bg-ink" /> Gross sales
           </span>
           <span className="flex items-center gap-1.5">
             <i className="inline-block h-[3px] w-4 bg-copper" /> Net payout
           </span>
-        </div>
-        <TrendChart />
+        </span>
       </div>
+      <TrendChart />
+    </div>
+  )
+}
+
+function OverviewKpis() {
+  return (
+    <div className="grid grid-cols-1 gap-2 min-[480px]:grid-cols-3 sm:gap-3">
+      <Kpi
+        label="Gross sales"
+        value={usd(total.gross)}
+        note={`${pctSigned(change(total.gross, priorTotal.gross))} vs ${PERIOD.prior}`}
+      />
+      <Kpi
+        label="Platform fees"
+        value={usd(total.fees)}
+        note={`${pct(rate(total.fees, total.gross))} of gross`}
+      />
+      <Kpi
+        label="Net payout"
+        value={usd(netTotal)}
+        note={`${pctSigned(change(netTotal, netOf(priorTotal)))} vs ${PERIOD.prior}`}
+      />
+    </div>
+  )
+}
+
+// --- panels -----------------------------------------------------------------------------------
+
+export function RevenueOverviewMock({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className="space-y-4 text-ink">
+      <PanelHead title="Revenue overview" scope={`${PERIOD.label} · All locations`} />
+      <OverviewKpis />
+      <TrendCard />
       {!compact && (
-        <table className="w-full text-left text-[0.8rem] tabular-nums">
-          <caption className="sr-only">Illustrative gross and net by location</caption>
-          <thead>
-            <tr className="t-label border-b border-line text-[0.62rem] text-ink-mute">
-              <th className="py-2 font-medium">Location</th>
-              <th className="py-2 text-right font-medium">Gross</th>
-              <th className="py-2 text-right font-medium">Net</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map(([name, g, n]) => (
-              <tr key={name} className="border-b border-line/60">
-                <td className="py-2">{name}</td>
-                <td className="py-2 text-right">{usd(g)}</td>
-                <td className="py-2 text-right">{usd(n)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[26rem] text-left text-[0.8rem] tabular-nums">
+              <caption className="sr-only">
+                Illustrative {PERIOD.label} gross sales, platform fees and net payout by location
+              </caption>
+              <thead>
+                <tr className="t-label border-b border-line text-[0.62rem] text-ink-mute">
+                  <th scope="col" className="py-2 font-medium">
+                    Location
+                  </th>
+                  <th scope="col" className="py-2 text-right font-medium">
+                    Gross sales
+                  </th>
+                  <th scope="col" className="py-2 text-right font-medium">
+                    Platform fees
+                  </th>
+                  <th scope="col" className="py-2 text-right font-medium">
+                    Net payout
+                  </th>
+                  <th scope="col" className="py-2 text-right font-medium">
+                    % of gross
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {locations.map((l) => {
+                  const a = byLocation[l.id]
+                  return (
+                    <tr key={l.id} className="border-b border-line/60">
+                      <th scope="row" className="py-2 font-normal">
+                        {l.name}
+                      </th>
+                      <td className="py-2 text-right">{usd(a.gross)}</td>
+                      <td className="py-2 text-right text-ink-soft">{deduct(a.fees)}</td>
+                      <td className="py-2 text-right">{usd(netOf(a))}</td>
+                      <td className="py-2 text-right text-ink-soft">
+                        {pct(rate(netOf(a), a.gross))}
+                      </td>
+                    </tr>
+                  )
+                })}
+                <tr className="border-t border-ink/60 font-medium">
+                  <th scope="row" className="py-2 font-medium">
+                    All locations
+                  </th>
+                  <td className="py-2 text-right">{usd(total.gross)}</td>
+                  <td className="py-2 text-right">{deduct(total.fees)}</td>
+                  <td className="py-2 text-right">{usd(netTotal)}</td>
+                  <td className="py-2 text-right">{pct(rate(netTotal, total.gross))}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <Footnote>{DEFINITION}</Footnote>
+        </>
       )}
     </div>
   )
 }
 
 export function GrossToNetMock() {
+  const d = deliveryPlatforms
   const steps = [
-    { label: 'Gross sales', value: 48200, type: 'total' },
-    { label: 'Discounts & promotions', value: -3100, type: 'less' },
-    { label: 'Refunds & adjustments', value: -640, type: 'less' },
-    { label: 'Platform commissions', value: -7830, type: 'less' },
-    { label: 'Marketing & other fees', value: -1150, type: 'less' },
-    { label: 'Net payout', value: 35480, type: 'total' },
+    { label: 'Gross sales', value: d.gross, type: 'total' },
+    { label: 'Discounts & promotions', value: -d.discounts, type: 'less' },
+    { label: 'Refunds & adjustments', value: -d.refunds, type: 'less' },
+    { label: 'Platform fees', value: -d.fees, type: 'less' },
+    { label: 'Net payout', value: netOf(d), type: 'total' },
   ] as const
-  const max = 48200
   let running = 0
   return (
     <div className="space-y-3 text-ink">
-      <p className="font-display text-lg tracking-tight">Gross to net, one platform</p>
+      <PanelHead
+        title="Gross sales to net payout"
+        scope={`${PERIOD.label} · Delivery platforms A + B · All locations`}
+      />
       <ul className="space-y-2.5">
-        {steps.map((s) => {
+        {steps.map((s, i) => {
+          const width = (Math.abs(s.value) / d.gross) * 100
           const start = s.type === 'total' ? 0 : running + s.value
-          const width = (Math.abs(s.value) / max) * 100
-          const left = s.type === 'total' ? 0 : (start / max) * 100
+          const left = s.type === 'total' ? 0 : (start / d.gross) * 100
           if (s.type === 'total') running = s.value
           else running += s.value
           return (
             <li
               key={s.label}
-              className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1.5 text-[0.8rem] sm:grid-cols-[minmax(0,9.5rem)_1fr_4.75rem]"
+              className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1.5 text-[0.8rem] sm:grid-cols-[minmax(0,9.5rem)_1fr_4.5rem_3.25rem]"
             >
-              <span className="truncate text-ink-soft">{s.label}</span>
+              <span
+                className={cn('truncate', s.type === 'total' ? 'font-medium' : 'text-ink-soft')}
+              >
+                {s.label}
+              </span>
               <span className="relative order-3 col-span-2 h-5 rounded-sm bg-ivory sm:order-none sm:col-span-1">
                 <span
                   className={cn(
@@ -143,64 +303,241 @@ export function GrossToNetMock() {
                   style={{ left: `${left}%`, width: `${width}%` }}
                 />
               </span>
-              <span className="text-right tabular-nums">
+              <span className={cn('text-right tabular-nums', s.type === 'total' && 'font-medium')}>
                 {s.value < 0 ? `−${usd(-s.value)}` : usd(s.value)}
+              </span>
+              <span className="hidden text-right tabular-nums text-ink-mute sm:block">
+                {i === 0 ? '100%' : pct(Math.abs(s.value) / d.gross)}
               </span>
             </li>
           )
         })}
       </ul>
+      <Footnote>
+        Percentages are shares of gross sales. Net payout is the amount the platforms report as
+        payable, not profit or a bank deposit.
+      </Footnote>
     </div>
   )
 }
 
 export function PayoutVisibilityMock() {
-  const rows = [
-    { src: 'Delivery platform A', expected: 14210, received: 14210, note: 'Matches' },
-    { src: 'Delivery platform B', expected: 9840, received: 9402, note: 'Review' },
-    { src: 'Direct online orders', expected: 6320, received: 6320, note: 'Matches' },
-    { src: 'Delivery platform C', expected: 5110, received: 4765, note: 'Review' },
-  ]
+  const sum = (k: 'calculated' | 'reported' | 'difference') =>
+    reconciliation.reduce((t, r) => t + r[k], 0)
+  const flagged = reconciliation.filter((r) => r.note)
   return (
     <div className="space-y-3 text-ink">
-      <div className="flex items-baseline justify-between gap-2">
-        <p className="font-display text-lg tracking-tight">Payouts: reported vs. platform payout</p>
-        <p className="t-label text-[0.62rem] text-ink-mute">Week 12</p>
-      </div>
+      <PanelHead
+        title="Payout reconciliation"
+        scope={`${PERIOD.label} (${PERIOD.span}) · All locations`}
+      />
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[26rem] text-left text-[0.8rem] tabular-nums">
+        <table className="w-full text-left text-[0.72rem] tabular-nums sm:text-[0.8rem]">
           <caption className="sr-only">
-            Illustrative comparison of reported sales and platform payout by source
+            Illustrative comparison of calculated net payout and reported payout by source for{' '}
+            {PERIOD.label}
           </caption>
           <thead>
             <tr className="t-label border-b border-line text-[0.62rem] text-ink-mute">
-              <th className="py-2 font-medium">Source</th>
-              <th className="py-2 text-right font-medium">Expected</th>
-              <th className="py-2 text-right font-medium">Payout</th>
-              <th className="py-2 text-right font-medium">Difference</th>
+              <th scope="col" className="py-2 font-medium">
+                Source
+              </th>
+              <th scope="col" className="py-2 pl-2 text-right font-medium">
+                Calculated
+              </th>
+              <th scope="col" className="py-2 pl-2 text-right font-medium">
+                <span className="sm:hidden">Reported</span>
+                <span className="hidden sm:inline">Reported payout</span>
+              </th>
+              <th scope="col" className="py-2 pl-2 text-right font-medium">
+                <span className="sm:hidden">Diff.</span>
+                <span className="hidden sm:inline">Difference</span>
+              </th>
+              <th scope="col" className="hidden py-2 pl-3 text-right font-medium sm:table-cell">
+                Status
+              </th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((r) => {
-              const diff = r.received - r.expected
+            {reconciliation.map((r) => (
+              <tr key={r.id} className="border-b border-line/60">
+                <th scope="row" className="py-2.5 pr-2 font-normal">
+                  {r.label}
+                  <span className="mt-1 block sm:hidden">
+                    <StatusChip status={r.status} />
+                  </span>
+                </th>
+                <td className="py-2.5 text-right">{usd(r.calculated)}</td>
+                <td className="py-2.5 text-right">{usd(r.reported)}</td>
+                <td
+                  className={cn(
+                    'py-2.5 text-right',
+                    r.difference === 0 ? 'text-ink-mute' : 'text-copper-ink',
+                  )}
+                >
+                  {r.difference === 0 ? '$0' : usdSigned(r.difference)}
+                </td>
+                <td className="hidden py-2.5 pl-3 text-right sm:table-cell">
+                  <StatusChip status={r.status} />
+                </td>
+              </tr>
+            ))}
+            <tr className="border-t border-ink/60 font-medium">
+              <th scope="row" className="py-2.5 font-medium">
+                Total
+              </th>
+              <td className="py-2.5 text-right">{usd(sum('calculated'))}</td>
+              <td className="py-2.5 text-right">{usd(sum('reported'))}</td>
+              <td className="py-2.5 text-right">{usdSigned(sum('difference'))}</td>
+              <td className="hidden sm:table-cell" />
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ul className="space-y-1">
+        {flagged.map((r) => (
+          <li key={r.id}>
+            <Footnote>
+              <strong className="font-medium text-ink">{r.label}:</strong> {r.note}
+            </Footnote>
+          </li>
+        ))}
+      </ul>
+      <Footnote>
+        Calculated is net payout from the order-level report for the same period and locations.
+        In-store sales are not part of payout reconciliation.
+      </Footnote>
+    </div>
+  )
+}
+
+export function LocationComparisonMock() {
+  const rows = locations
+    .map((l) => ({ ...l, a: byLocation[l.id], net: netOf(byLocation[l.id]) }))
+    .sort((p, q) => q.net - p.net)
+  const max = Math.max(...rows.map((r) => r.net))
+  return (
+    <div className="space-y-3 text-ink">
+      <PanelHead title="Location comparison" scope={`${PERIOD.label} · Net payout`} />
+      <div className="t-label hidden grid-cols-[5.5rem_1fr_5rem_4.75rem] gap-3 border-b border-line pb-2 text-[0.62rem] text-ink-mute sm:grid">
+        <span>Location</span>
+        <span>Net payout</span>
+        <span className="text-right">Gross sales</span>
+        <span className="text-right">% of gross</span>
+      </div>
+      <ul className="space-y-3">
+        {rows.map((r) => (
+          <li
+            key={r.id}
+            className="grid grid-cols-[5.5rem_1fr] items-center gap-x-3 gap-y-0.5 text-[0.8rem] sm:grid-cols-[5.5rem_1fr_5rem_4.75rem]"
+          >
+            <span className="text-ink-soft">{r.name}</span>
+            <span className="flex items-center gap-2">
+              <span className="h-4 flex-1 rounded-sm bg-ivory">
+                <span
+                  className="block h-4 rounded-sm bg-sage-deep"
+                  style={{ width: `${(r.net / max) * 100}%` }}
+                />
+              </span>
+              <span className="w-[4.25rem] text-right tabular-nums">{usd(r.net)}</span>
+            </span>
+            <span className="col-start-2 text-[0.7rem] tabular-nums text-ink-mute sm:hidden">
+              Gross {usd(r.a.gross)} · {pct(rate(r.net, r.a.gross))} of gross
+            </span>
+            <span className="hidden text-right tabular-nums sm:block">{usd(r.a.gross)}</span>
+            <span className="hidden text-right tabular-nums text-ink-soft sm:block">
+              {pct(rate(r.net, r.a.gross))}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <Footnote>
+        Sales volume and net payout can rank locations differently. Compare the share of gross sales
+        that remains after discounts, refunds and platform fees. Net payout is not profit.
+      </Footnote>
+    </div>
+  )
+}
+
+export function ChannelMixMock() {
+  const colors: Record<string, string> = {
+    pos: 'bg-ink',
+    platformA: 'bg-copper',
+    platformB: 'bg-sage-deep',
+    direct: 'bg-copper-soft',
+  }
+  return (
+    <div className="space-y-4 text-ink">
+      <PanelHead title="Sales by channel" scope={`${PERIOD.label} · All locations`} />
+      <div
+        className="flex h-9 overflow-hidden rounded-sm"
+        role="img"
+        aria-label={`Illustrative share of ${PERIOD.label} gross sales by channel: ${channels
+          .map((c) => `${c.label} ${pct(rate(byChannel[c.id].gross, total.gross))}`)
+          .join(', ')}`}
+      >
+        {channels.map((c) => (
+          <span
+            key={c.id}
+            className={colors[c.id]}
+            style={{ width: `${rate(byChannel[c.id].gross, total.gross) * 100}%` }}
+          />
+        ))}
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-left text-[0.72rem] tabular-nums sm:text-[0.8rem]">
+          <caption className="sr-only">
+            Illustrative gross sales, share of gross and platform fee rate by channel
+          </caption>
+          <thead>
+            <tr className="t-label border-b border-line text-[0.62rem] text-ink-mute">
+              <th scope="col" className="py-2 font-medium">
+                Channel
+              </th>
+              <th scope="col" className="py-2 pl-2 text-right font-medium">
+                <span className="sm:hidden">Gross</span>
+                <span className="hidden sm:inline">Gross sales</span>
+              </th>
+              <th scope="col" className="py-2 pl-2 text-right font-medium">
+                Share
+              </th>
+              <th scope="col" className="py-2 pl-2 text-right font-medium">
+                <span className="sm:hidden">Fees</span>
+                <span className="hidden sm:inline">Fee rate</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {channels.map((c) => {
+              const a = byChannel[c.id]
               return (
-                <tr key={r.src} className="border-b border-line/60">
-                  <td className="py-2.5 pr-2">{r.src}</td>
-                  <td className="py-2.5 text-right">{usd(r.expected)}</td>
-                  <td className="py-2.5 text-right">{usd(r.received)}</td>
-                  <td className="py-2.5 text-right">
-                    <span
-                      className={cn(
-                        'inline-block rounded px-1.5 py-0.5 text-[0.72rem]',
-                        diff === 0 ? 'bg-sage text-sage-deep' : 'bg-copper-soft text-copper-ink',
-                      )}
-                    >
-                      {diff === 0 ? 'Matches' : `−${usd(-diff)}`}
+                <tr key={c.id} className="border-b border-line/60">
+                  <th scope="row" className="py-2 font-normal">
+                    <span className="flex items-center gap-2">
+                      <i
+                        className={cn('inline-block h-2.5 w-2.5 shrink-0 rounded-sm', colors[c.id])}
+                      />
+                      {c.label}
                     </span>
+                  </th>
+                  <td className="py-2 text-right">{usd(a.gross)}</td>
+                  <td className="py-2 text-right text-ink-soft">
+                    {pct(rate(a.gross, total.gross))}
+                  </td>
+                  <td className="py-2 text-right text-ink-soft">
+                    {a.fees === 0 ? '—' : pct(rate(a.fees, a.gross))}
                   </td>
                 </tr>
               )
             })}
+            <tr className="border-t border-ink/60 font-medium">
+              <th scope="row" className="py-2 font-medium">
+                All channels
+              </th>
+              <td className="py-2 text-right">{usd(total.gross)}</td>
+              <td className="py-2 text-right">100%</td>
+              <td className="py-2 text-right">{pct(rate(total.fees, total.gross))}</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -208,77 +545,7 @@ export function PayoutVisibilityMock() {
   )
 }
 
-export function LocationComparisonMock() {
-  const locs = [
-    { n: 'Location 01', v: 92 },
-    { n: 'Location 02', v: 81 },
-    { n: 'Location 03', v: 70 },
-    { n: 'Location 04', v: 58 },
-    { n: 'Location 05', v: 49 },
-  ]
-  return (
-    <div className="space-y-3 text-ink">
-      <div className="flex items-baseline justify-between gap-2">
-        <p className="font-display text-lg tracking-tight">Net payout by location</p>
-        <p className="t-label text-[0.62rem] text-ink-mute">Indexed to top location</p>
-      </div>
-      <ul className="space-y-2.5">
-        {locs.map((l) => (
-          <li
-            key={l.n}
-            className="grid grid-cols-[5.5rem_1fr_2.25rem] items-center gap-3 text-[0.8rem]"
-          >
-            <span className="text-ink-soft">{l.n}</span>
-            <span className="h-4 rounded-sm bg-ivory">
-              <span className="block h-4 rounded-sm bg-sage-deep" style={{ width: `${l.v}%` }} />
-            </span>
-            <span className="text-right tabular-nums">{l.v}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-export function ChannelMixMock() {
-  const channels = [
-    { n: 'Dine-in & counter (POS)', v: 41, c: 'bg-ink' },
-    { n: 'Delivery platform A', v: 24, c: 'bg-copper' },
-    { n: 'Delivery platform B', v: 17, c: 'bg-sage-deep' },
-    { n: 'Direct online orders', v: 18, c: 'bg-copper-soft' },
-  ]
-  return (
-    <div className="space-y-4 text-ink">
-      <div className="flex items-baseline justify-between gap-2">
-        <p className="font-display text-lg tracking-tight">Sales by channel</p>
-        <p className="t-label text-[0.62rem] text-ink-mute">Share of gross sales</p>
-      </div>
-      <div
-        className="flex h-9 overflow-hidden rounded-sm"
-        role="img"
-        aria-label="Illustrative share of gross sales by channel"
-      >
-        {channels.map((c) => (
-          <span key={c.n} className={c.c} style={{ width: `${c.v}%` }} />
-        ))}
-      </div>
-      <ul className="space-y-2 text-[0.8rem]">
-        {channels.map((c) => (
-          <li
-            key={c.n}
-            className="flex items-center justify-between gap-3 border-b border-line/60 pb-2"
-          >
-            <span className="flex items-center gap-2">
-              <i className={`inline-block h-2.5 w-2.5 rounded-sm ${c.c}`} />
-              {c.n}
-            </span>
-            <span className="tabular-nums text-ink-soft">{c.v}%</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
+// --- application shell ------------------------------------------------------------------------
 
 const shellNav = ['Overview', 'Revenue', 'Statements', 'Payouts', 'Locations']
 
@@ -322,184 +589,200 @@ function AppShell({
   )
 }
 
-const series = [
-  [14, 17, 19, 22, 24, 23, 27, 30, 29, 33, 34, 38],
-  [11, 13, 15, 16, 19, 18, 21, 23, 22, 25, 27, 29],
-  [8, 9, 11, 12, 13, 14, 15, 17, 17, 19, 20, 22],
-  [5, 6, 7, 7, 9, 9, 10, 11, 12, 12, 13, 15],
-]
-const seriesColors = ['#f26a1b', '#25282c', '#8a8f96', '#fbb27d']
-
-function LocationLines() {
-  const w = 560
-  const h = 170
-  const x = (i: number) => 10 + (i * (w - 20)) / 11
-  const y = (v: number) => h - 16 - (v / 40) * (h - 30)
-  return (
-    <svg
-      viewBox={`0 0 ${w} ${h}`}
-      role="img"
-      aria-label="Illustrative 12-week net payout trend for four locations"
-      className="h-auto w-full"
-    >
-      {[0, 1, 2, 3].map((g) => (
-        <line
-          key={g}
-          x1="0"
-          x2={w}
-          y1={14 + g * 42}
-          y2={14 + g * 42}
-          stroke="#dbd5c6"
-          strokeDasharray="2 4"
-        />
-      ))}
-      {series.map((s, k) => (
-        <path
-          key={k}
-          d={s.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ')}
-          fill="none"
-          stroke={seriesColors[k]}
-          strokeWidth={k === 0 ? 3 : 2}
-          strokeLinejoin="round"
-        />
-      ))}
-    </svg>
-  )
-}
-
 export function DashboardMock() {
   return (
     <AppShell active="Overview">
-      <div className="grid grid-cols-3 gap-2">
-        <Kpi label="Gross sales" value={usd(184200)} note="POS + delivery platforms" />
-        <Kpi label="Platform fees" value={usd(31480)} note="17.1% of gross" />
-        <Kpi label="Net payout" value={usd(139650)} note="+5.4% vs prior period" />
-      </div>
-      <div className="rounded border border-line bg-paper p-3">
-        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-          <p className="font-display text-[0.95rem] tracking-tight">Net payout by location</p>
-          <span className="flex flex-wrap gap-x-3 text-[0.65rem] text-ink-soft">
-            {seriesColors.map((c, i) => (
-              <span key={c} className="flex items-center gap-1">
-                <i className="inline-block h-2 w-2 rounded-full" style={{ background: c }} />
-                Location 0{i + 1}
-              </span>
-            ))}
-          </span>
-        </div>
-        <LocationLines />
-      </div>
+      <PanelHead title="Overview" scope={`${PERIOD.label} · All locations`} />
+      <OverviewKpis />
+      <TrendCard />
     </AppShell>
   )
+}
+
+type StatementRow = {
+  label: string
+  indent?: boolean
+  kind?: 'section' | 'subtotal' | 'total' | 'deduction'
+  value?: (key: string, a: Amounts) => number
 }
 
 export function StatementMock({ compact = false }: { compact?: boolean }) {
-  const days = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'].slice(0, compact ? 3 : 5)
-  const rows: Array<{ n: string; v: number[]; bold?: boolean; neg?: boolean; tick: string }> = [
-    { n: 'Total revenue', v: [5905, 6129, 6378, 5654, 5124], bold: true, tick: 'bg-ink' },
-    { n: 'Delivery platform A', v: [2163, 2123, 2471, 1664, 1571], tick: 'bg-copper' },
-    { n: 'Delivery platform B', v: [1928, 1669, 1987, 2088, 1479], tick: 'bg-ink-mute' },
-    { n: 'In-store sales (POS)', v: [1014, 1324, 1232, 1294, 1491], tick: 'bg-copper-soft' },
-    { n: 'Platform fees', v: [-620, -613, -611, -598, -478], neg: true, tick: 'bg-line' },
-    {
-      n: 'Revenue after platform fees',
-      v: [5285, 5516, 5767, 5056, 4646],
-      bold: true,
-      tick: 'bg-ink',
-    },
+  const columns = compact
+    ? [{ key: 'all', label: PERIOD.label, amounts: total }]
+    : [
+        ...locations.map((l) => ({
+          key: l.id,
+          label: l.name.replace('Location ', 'Loc '),
+          amounts: byLocation[l.id],
+        })),
+        { key: 'all', label: 'Total', amounts: total },
+      ]
+  const span = columns.length + 1 + (compact ? 1 : 0)
+  const channelGross = (key: string, ch: (typeof channels)[number]['id']) =>
+    key === 'all' ? byChannel[ch].gross : cell(key as LocationId, ch).gross
+
+  const rows: StatementRow[] = [
+    { label: 'Gross sales', kind: 'section' },
+    ...channels.map((c) => ({
+      label: c.label,
+      indent: true,
+      value: (key: string) => channelGross(key, c.id),
+    })),
+    { label: 'Total gross sales', kind: 'subtotal', value: (_k, a) => a.gross },
+    { label: 'Discounts & promotions', kind: 'deduction', value: (_k, a) => a.discounts },
+    { label: 'Refunds & adjustments', kind: 'deduction', value: (_k, a) => a.refunds },
+    { label: 'Platform fees', kind: 'deduction', value: (_k, a) => a.fees },
+    { label: 'Net payout', kind: 'total', value: (_k, a) => netOf(a) },
   ]
-  const fmt = (n: number) => (n < 0 ? `−${usd(-n)}` : usd(n))
+
   return (
     <AppShell active="Statements" nav={!compact}>
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <p className="font-display text-base tracking-tight">Statement</p>
-        <p className="t-label text-[0.6rem] text-ink-mute">All locations · POS + delivery</p>
-      </div>
+      <PanelHead
+        title="Statement"
+        scope={`${PERIOD.label} (${PERIOD.span}) · ${compact ? 'All locations' : 'By location'}`}
+      />
       <div className="overflow-x-auto rounded border border-line bg-paper">
         <table
           className={cn(
-            'w-full text-left text-[0.72rem] tabular-nums',
-            !compact && 'min-w-[30rem]',
+            'w-full text-left tabular-nums',
+            compact ? 'text-[0.72rem]' : 'min-w-[34rem] text-[0.75rem]',
           )}
         >
-          <caption className="sr-only">Illustrative statement by day and channel</caption>
+          <caption className="sr-only">
+            Illustrative {PERIOD.label} statement: gross sales by channel, deductions and net payout
+          </caption>
           <thead>
             <tr className="t-label border-b border-line text-[0.58rem] text-ink-mute">
-              <th className="px-3 py-2 font-medium">Category</th>
-              {days.map((d) => (
-                <th key={d} className="px-2 py-2 text-right font-medium">
-                  {d}
+              <th scope="col" className="px-3 py-2 font-medium">
+                USD
+              </th>
+              {columns.map((c) => (
+                <th key={c.key} scope="col" className="px-2 py-2 text-right font-medium">
+                  {c.label}
                 </th>
               ))}
+              {compact && (
+                <th scope="col" className="px-2 py-2 text-right font-medium">
+                  % of gross
+                </th>
+              )}
             </tr>
           </thead>
           <tbody>
-            {rows.map((r) => (
-              <tr key={r.n} className="border-b border-line/60 last:border-0">
-                <td className={cn('px-3 py-2', r.bold && 'font-medium')}>
-                  <i className={cn('mr-2 inline-block h-3 w-0.5 align-middle', r.tick)} />
-                  {r.n}
-                </td>
-                {r.v.slice(0, days.length).map((v, i) => (
-                  <td
-                    key={i}
+            {rows.map((r) => {
+              if (r.kind === 'section')
+                return (
+                  <tr key={r.label} className="bg-ivory/50">
+                    <th
+                      scope="colgroup"
+                      colSpan={span}
+                      className="t-label px-3 py-1.5 text-[0.58rem] font-medium text-ink-mute"
+                    >
+                      {r.label}
+                    </th>
+                  </tr>
+                )
+              const strong = r.kind === 'subtotal' || r.kind === 'total'
+              return (
+                <tr
+                  key={r.label}
+                  className={cn(
+                    'border-b border-line/60 last:border-0',
+                    strong && 'border-t border-t-ink/50 font-medium',
+                    r.kind === 'total' && 'bg-ivory/60',
+                  )}
+                >
+                  <th
+                    scope="row"
                     className={cn(
-                      'px-2 py-2 text-right',
-                      r.bold && 'font-medium',
-                      r.neg && 'text-ink-soft',
+                      'px-3 py-2 font-normal',
+                      strong && 'font-medium',
+                      r.indent && 'pl-6',
+                      r.kind === 'deduction' && 'text-ink-soft',
                     )}
                   >
-                    {fmt(v)}
-                  </td>
-                ))}
-              </tr>
-            ))}
+                    {r.label}
+                  </th>
+                  {columns.map((c) => {
+                    const v = r.value?.(c.key, c.amounts) ?? 0
+                    return (
+                      <td
+                        key={c.key}
+                        className={cn(
+                          'px-2 py-2 text-right',
+                          r.kind === 'deduction' && 'text-ink-soft',
+                        )}
+                      >
+                        {r.kind === 'deduction' ? deduct(v) : usd(v)}
+                      </td>
+                    )
+                  })}
+                  {compact && (
+                    <td className="px-2 py-2 text-right text-ink-mute">
+                      {pct(rate(r.value?.('all', total) ?? 0, total.gross))}
+                    </td>
+                  )}
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>
+      <Footnote>{DEFINITION}</Footnote>
     </AppShell>
   )
 }
 
+// --- AI interfaces ----------------------------------------------------------------------------
+
 /** Illustrative natural-language analysis experience. Invented question, figures and locations. */
 export function AskYourDataMock() {
-  const drivers = [
-    { n: 'Platform fees', v: -412 },
-    { n: 'Promotions', v: -188 },
-    { n: 'Refunds', v: -96 },
-  ]
-  const max = 412
+  const { items, netNow, netBefore, netDelta } = askDrivers
+  const max = Math.max(...items.map((i) => Math.abs(i.delta)))
+  const name = locationName(askLocation)
+  const deltaOf = (l: string) => items.find((i) => i.label === l)?.delta ?? 0
+  const feesAndRefunds = deltaOf('Platform fees') + deltaOf('Refunds & adjustments')
+  const grossDelta = deltaOf('Gross sales')
   return (
     <div className="space-y-4 text-ink">
       <div>
         <p className="font-display text-lg tracking-tight">Ask your financial data</p>
-        <p className="t-label mt-0.5 text-[0.62rem] text-ink-mute">Natural-language analysis</p>
+        <p className="t-label mt-0.5 text-[0.62rem] text-ink-mute">
+          Natural-language analysis · {name} · {PERIOD.label} vs {PERIOD.prior}
+        </p>
       </div>
       <div className="ml-auto max-w-[88%] rounded-lg rounded-br-sm bg-ink px-4 py-3 text-[0.85rem] text-ivory">
-        Why did net payout fall at Location 03 last week?
+        Why did net payout fall at {name} last week?
       </div>
       <div className="max-w-[96%] rounded-lg rounded-bl-sm border border-line bg-ivory/60 p-4 text-[0.85rem]">
         <p>
-          Net payout at Location 03 was <strong className="tabular-nums">$9,840</strong>, down{' '}
-          <strong className="tabular-nums">8.1%</strong> on the prior week. Most of the change comes
-          from higher platform fees and promotions, not from a drop in sales.
+          Net payout at {name} was <strong className="tabular-nums">{usd(netNow)}</strong> in{' '}
+          {PERIOD.label}, down <strong className="tabular-nums">{usd(-netDelta)}</strong> (
+          {pct(-change(netNow, netBefore))}) from {PERIOD.prior}. Platform fees and refunds account
+          for {usd(-feesAndRefunds)} of that change; gross sales were{' '}
+          {grossDelta < 0 ? 'down' : 'up'} {usd(Math.abs(grossDelta))}.
         </p>
-        <ul className="mt-4 space-y-2">
-          {drivers.map((d) => (
+        <p className="t-label mb-2 mt-4 text-[0.6rem] text-ink-mute">Effect on net payout</p>
+        <ul className="space-y-2">
+          {items.map((d) => (
             <li
-              key={d.n}
-              className="grid grid-cols-[6.5rem_1fr_3.25rem] items-center gap-3 text-[0.75rem]"
+              key={d.label}
+              className="grid grid-cols-[7.5rem_1fr_3.5rem] items-center gap-3 text-[0.75rem]"
             >
-              <span className="text-ink-soft">{d.n}</span>
+              <span className="text-ink-soft">{d.label}</span>
               <span className="h-2.5 rounded-sm bg-paper">
                 <span
                   className="block h-2.5 rounded-sm bg-copper"
-                  style={{ width: `${(-d.v / max) * 100}%` }}
+                  style={{ width: `${(Math.abs(d.delta) / max) * 100}%` }}
                 />
               </span>
-              <span className="text-right tabular-nums">−{usd(-d.v)}</span>
+              <span className="text-right tabular-nums">{usdSigned(d.delta)}</span>
             </li>
           ))}
+          <li className="grid grid-cols-[7.5rem_1fr_3.5rem] items-center gap-3 border-t border-ink/50 pt-2 text-[0.75rem] font-medium">
+            <span className="col-span-2">Change in net payout</span>
+            <span className="text-right tabular-nums">{usdSigned(netDelta)}</span>
+          </li>
         </ul>
       </div>
       <ul className="flex flex-wrap gap-2 text-[0.72rem] text-ink-soft">
@@ -520,61 +803,47 @@ const spark = (vals: number[], color: string) => {
   const h = 28
   const lo = Math.min(...vals)
   const hi = Math.max(...vals)
-  const pts = vals
-    .map(
-      (v, i) =>
-        `${((i * w) / (vals.length - 1)).toFixed(1)},${(h - 3 - ((v - lo) / (hi - lo || 1)) * (h - 6)).toFixed(1)}`,
-    )
-    .join(' ')
+  const px = (i: number) => (i * (w - 6)) / (vals.length - 1) + 3
+  const py = (v: number) => h - 3 - ((v - lo) / (hi - lo || 1)) * (h - 6)
+  const pts = vals.map((v, i) => `${px(i).toFixed(1)},${py(v).toFixed(1)}`).join(' ')
+  const lastV = vals[vals.length - 1] ?? 0
   return (
     <svg viewBox={`0 0 ${w} ${h}`} className="h-7 w-24" aria-hidden>
       <polyline points={pts} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" />
+      <circle cx={px(vals.length - 1)} cy={py(lastV)} r="2.5" fill={color} />
     </svg>
   )
 }
 
 /** Illustrative anomaly insights. Invented locations and figures; for review, not verdicts. */
 export function AnomalyInsightsMock() {
-  const items = [
-    {
-      t: 'Platform fee rate above its usual range',
-      d: 'Location 02 · 21.4% of gross this week, against a typical 17–18%.',
-      s: [17, 17.5, 18, 17.2, 17.8, 18, 19.5, 21.4],
-    },
-    {
-      t: 'Refunds higher than usual',
-      d: 'Delivery platform B · refund volume 2.3× the 8-week average.',
-      s: [3, 4, 3, 5, 4, 4, 6, 9],
-    },
-    {
-      t: 'Payout lower than reported sales imply',
-      d: 'Delivery platform C · $345 below expected for the week.',
-      s: [0, 0, 20, 0, 10, 0, 80, 345],
-    },
-  ]
   return (
     <div className="space-y-3 text-ink">
-      <div className="flex items-baseline justify-between gap-2">
-        <p className="font-display text-lg tracking-tight">Insights for review</p>
-        <p className="t-label text-[0.62rem] text-ink-mute">Anomaly detection · Week 12</p>
-      </div>
+      <PanelHead
+        title="Insights for review"
+        scope={`Anomaly detection · ${PERIOD.label} · ${insights.length} items`}
+      />
       <ul className="space-y-2.5">
-        {items.map((it) => (
+        {insights.map((it) => (
           <li
-            key={it.t}
+            key={it.id}
             className="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1 rounded border border-line bg-ivory/60 p-3.5"
           >
             <span>
-              <span className="block text-[0.85rem] font-medium">{it.t}</span>
-              <span className="t-caption block text-[0.75rem]">{it.d}</span>
+              <span className="block text-[0.85rem] font-medium">{it.title}</span>
+              <span className="t-caption block text-[0.75rem]">{it.detail}</span>
             </span>
-            {spark(it.s, '#f26a1b')}
+            {spark(it.trend, '#f26a1b')}
             <span className="col-span-2 mt-1 inline-flex w-fit rounded-full bg-copper-soft px-2.5 py-0.5 text-[0.68rem] text-copper-ink">
               For review
             </span>
           </li>
         ))}
       </ul>
+      <Footnote>
+        Sparklines show recent weeks, ending with {PERIOD.label}. Items are flagged for a person to
+        review, not treated as errors.
+      </Footnote>
     </div>
   )
 }

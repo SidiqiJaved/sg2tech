@@ -1,5 +1,5 @@
 /** Company-wide facts and navigation. Only verified facts belong here. */
-export const SITE_URL = (import.meta.env?.VITE_SITE_URL ?? 'https://www.sg2tech.com').replace(
+export const SITE_URL = (import.meta.env.VITE_SITE_URL ?? 'https://www.sg2tech.com').replace(
   /\/$/,
   '',
 )

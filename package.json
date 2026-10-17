@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "typecheck": "tsc --noEmit",
+    "validate:fi-demo": "node scripts/validate-fi-demo.mjs",
     "lint": "eslint .",
     "format": "prettier --write .",
     "build:client": "vite build --outDir dist",

@@ -14,7 +14,8 @@ type Errors = Partial<Record<'name' | 'email' | 'company' | 'message', string>>
  * It is only treated as live when VITE_FORMS_ENABLED === 'true', so a local or
  * unconfigured build can never report a false success. See README.
  */
-const FORMS_ENABLED = import.meta.env?.VITE_FORMS_ENABLED === 'true'
+// Read as a plain `import.meta.env.X` member so Vite substitutes it at build time.
+const FORMS_ENABLED = import.meta.env.VITE_FORMS_ENABLED === 'true'
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
@@ -79,6 +80,8 @@ export function ContactPage() {
   const [errors, setErrors] = useState<Errors>({})
   const formRef = useRef<HTMLFormElement>(null)
   const summaryRef = useRef<HTMLDivElement>(null)
+  // Synchronous guard: state updates are async, so a fast double click could otherwise post twice.
+  const inFlight = useRef(false)
 
   // Read the query after hydration so server and client markup match.
   useEffect(() => {
@@ -93,6 +96,7 @@ export function ContactPage() {
 
   const onSubmit = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
+    if (inFlight.current) return
     const data = new FormData(ev.currentTarget)
     const found = validate(data)
     setErrors(found)
@@ -110,6 +114,7 @@ export function ContactPage() {
       setStatus('not-configured')
       return
     }
+    inFlight.current = true
     setStatus('sending')
     try {
       const res = await fetch('/', {
@@ -122,6 +127,8 @@ export function ContactPage() {
       formRef.current?.reset()
     } catch {
       setStatus('error')
+    } finally {
+      inFlight.current = false
     }
   }
 
@@ -281,6 +288,7 @@ export function ContactPage() {
                     id="name"
                     name="name"
                     autoComplete="name"
+                    maxLength={120}
                     required
                     aria-invalid={!!errors.name}
                     aria-describedby={desc('name')}
@@ -293,6 +301,7 @@ export function ContactPage() {
                     name="email"
                     type="email"
                     autoComplete="email"
+                    maxLength={254}
                     required
                     aria-invalid={!!errors.email}
                     aria-describedby={desc('email')}
@@ -307,6 +316,7 @@ export function ContactPage() {
                     id="company"
                     name="company"
                     autoComplete="organization"
+                    maxLength={160}
                     required
                     aria-invalid={!!errors.company}
                     aria-describedby={desc('company')}

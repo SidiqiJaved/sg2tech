@@ -50,6 +50,19 @@ The form posts to **Netlify Forms** (it is detected from the prerendered HTML). 
 
 **Safety behavior:** the form only reports success when `VITE_FORMS_ENABLED=true`. Without it (local, previews) a valid submission shows _"Message not sent. Form delivery is not connected"_, so the site can never pretend a message was delivered.
 
+### Turning delivery on (required once per site)
+
+The form never reports success unless `VITE_FORMS_ENABLED=true` was set **at build time**. (Earlier builds read it with `import.meta.env?.…`, which Vite does not substitute, so the flag could never take effect. It is now read as a plain `import.meta.env.VITE_FORMS_ENABLED`.)
+
+1. Deploy once with the flag unset. In Netlify → **Forms**, confirm a form named `contact` is detected (enable form detection if it is not).
+2. Netlify → **Forms → Form notifications → Add notification → Email**, destination `hello@sg2tech.com`. This is a dashboard setting; it cannot be configured from the repository.
+3. Set `VITE_FORMS_ENABLED=true` in Netlify → **Environment variables** and redeploy.
+4. Submit one real test message on the deployed site. Confirm it appears under Forms → Submissions **and** that the email arrives at hello@sg2tech.com. Only then treat contact delivery as working.
+
+A 200 response to the POST is not proof of delivery on its own: some static hosts answer 200 to any POST. The Submissions list and the received email are the proof.
+
+Run `npm run validate:fi-demo` after editing `src/content/fiDemoData.ts` to re-check the Financial Intelligence demo arithmetic.
+
 ## Environment variables
 
 Set in Netlify → Site configuration → Environment variables. Copy `.env.example` for local use. Never commit `.env`.

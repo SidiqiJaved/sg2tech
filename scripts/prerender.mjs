@@ -50,8 +50,14 @@ function page(meta, urlPath, opts) {
   const app = render(urlPath)
   const hoisted = app.match(/^(?:<link[^>]*>)+/)?.[0] ?? ''
   return template
-    .replace('<!--head-->', head(meta, opts) + (hoisted ? `
-    ${hoisted}` : ''))
+    .replace(
+      '<!--head-->',
+      head(meta, opts) +
+        (hoisted
+          ? `
+    ${hoisted}`
+          : ''),
+    )
     .replace('<!--app-->', () => app.slice(hoisted.length))
 }
 
