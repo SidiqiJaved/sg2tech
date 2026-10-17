@@ -18,9 +18,9 @@ export const routeMeta: RouteMeta[] = [
   },
   {
     path: '/solutions/financial-intelligence',
-    title: 'Restaurant Financial Analytics Software | SG2 Financial Intelligence',
+    title: 'AI-Enabled Financial Intelligence for Restaurants | SG2',
     description:
-      'Bring revenue, delivery platform fees and payouts from every location into one view. Multi-location restaurant reporting, payout reconciliation and discrepancy identification from SG2.',
+      'AI-Enabled Financial Intelligence for multi-location restaurants: revenue, platform fees and payouts in one view, with reconciliation, discrepancy identification, natural-language analysis and AI anomaly detection.',
     indexable: true,
   },
   {

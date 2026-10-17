@@ -437,3 +437,121 @@ export function StatementMock() {
     </AppShell>
   )
 }
+
+/** Illustrative natural-language analysis experience. Invented question, figures and locations. */
+export function AskYourDataMock() {
+  const drivers = [
+    { n: 'Platform fees', v: -412 },
+    { n: 'Promotions', v: -188 },
+    { n: 'Refunds', v: -96 },
+  ]
+  const max = 412
+  return (
+    <div className="space-y-4 text-ink">
+      <div className="flex items-baseline justify-between gap-2">
+        <p className="font-display text-lg tracking-tight">Ask your financial data</p>
+        <p className="t-label text-[0.62rem] text-ink-mute">Natural-language analysis</p>
+      </div>
+      <div className="ml-auto max-w-[88%] rounded-lg rounded-br-sm bg-ink px-4 py-3 text-[0.85rem] text-ivory">
+        Why did net payout fall at Location 03 last week?
+      </div>
+      <div className="max-w-[96%] rounded-lg rounded-bl-sm border border-line bg-ivory/60 p-4 text-[0.85rem]">
+        <p>
+          Net payout at Location 03 was <strong className="tabular-nums">$9,840</strong>, down{' '}
+          <strong className="tabular-nums">8.1%</strong> on the prior week. Most of the change comes
+          from higher platform fees and promotions, not from a drop in sales.
+        </p>
+        <ul className="mt-4 space-y-2">
+          {drivers.map((d) => (
+            <li
+              key={d.n}
+              className="grid grid-cols-[6.5rem_1fr_3.25rem] items-center gap-3 text-[0.75rem]"
+            >
+              <span className="text-ink-soft">{d.n}</span>
+              <span className="h-2.5 rounded-sm bg-paper">
+                <span
+                  className="block h-2.5 rounded-sm bg-copper"
+                  style={{ width: `${(-d.v / max) * 100}%` }}
+                />
+              </span>
+              <span className="text-right tabular-nums">−{usd(-d.v)}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <ul className="flex flex-wrap gap-2 text-[0.72rem] text-ink-soft">
+        {['Compare with Location 01', 'Show by delivery platform', 'Summarize the month'].map(
+          (q) => (
+            <li key={q} className="rounded-full border border-line bg-paper px-3 py-1.5">
+              {q}
+            </li>
+          ),
+        )}
+      </ul>
+    </div>
+  )
+}
+
+const spark = (vals: number[], color: string) => {
+  const w = 96
+  const h = 28
+  const lo = Math.min(...vals)
+  const hi = Math.max(...vals)
+  const pts = vals
+    .map(
+      (v, i) =>
+        `${((i * w) / (vals.length - 1)).toFixed(1)},${(h - 3 - ((v - lo) / (hi - lo || 1)) * (h - 6)).toFixed(1)}`,
+    )
+    .join(' ')
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} className="h-7 w-24" aria-hidden>
+      <polyline points={pts} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+/** Illustrative anomaly insights. Invented locations and figures; for review, not verdicts. */
+export function AnomalyInsightsMock() {
+  const items = [
+    {
+      t: 'Platform fee rate above its usual range',
+      d: 'Location 02 · 21.4% of gross this week, against a typical 17–18%.',
+      s: [17, 17.5, 18, 17.2, 17.8, 18, 19.5, 21.4],
+    },
+    {
+      t: 'Refunds higher than usual',
+      d: 'Delivery platform B · refund volume 2.3× the 8-week average.',
+      s: [3, 4, 3, 5, 4, 4, 6, 9],
+    },
+    {
+      t: 'Payout lower than reported sales imply',
+      d: 'Delivery platform C · $345 below expected for the week.',
+      s: [0, 0, 20, 0, 10, 0, 80, 345],
+    },
+  ]
+  return (
+    <div className="space-y-3 text-ink">
+      <div className="flex items-baseline justify-between gap-2">
+        <p className="font-display text-lg tracking-tight">Insights for review</p>
+        <p className="t-label text-[0.62rem] text-ink-mute">Anomaly detection · Week 12</p>
+      </div>
+      <ul className="space-y-2.5">
+        {items.map((it) => (
+          <li
+            key={it.t}
+            className="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1 rounded border border-line bg-ivory/60 p-3.5"
+          >
+            <span>
+              <span className="block text-[0.85rem] font-medium">{it.t}</span>
+              <span className="t-caption block text-[0.75rem]">{it.d}</span>
+            </span>
+            {spark(it.s, '#f26a1b')}
+            <span className="col-span-2 mt-1 inline-flex w-fit rounded-full bg-copper-soft px-2.5 py-0.5 text-[0.68rem] text-copper-ink">
+              For review
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}

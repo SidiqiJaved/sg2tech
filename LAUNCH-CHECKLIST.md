@@ -77,3 +77,11 @@ The build contains **no invented company facts**. Everything below needs your in
 - The site presents SG2's solution capabilities and what SG2 can build, not a changelog. Per-capability "Planned" / "Illustrative" badges were removed from Franchise Management. The "Illustrative data" label stays on fictional visuals only. The one remaining "Planned" badge marks the AI capabilities, as agreed.
 - Franchise Management copy now covers oversight, inspections and checklists, training, employee management workflows, invoicing, royalties and reporting, with a "Configure / Build" section so nothing promises every feature as standard software.
 - Security copy states a security-focused approach to architecture and data protection. **Add verified safeguards when the engineering lead supplies them.** No certifications, encryption standards or compliance claims appear anywhere.
+
+### AI-Enabled Financial Intelligence (owner decision)
+- Product descriptor is now "AI-Enabled Financial Intelligence" on the homepage and Financial Intelligence page (title, meta, hero, product section, FAQ). Company identity stays "Software Products & Engineering".
+- Natural-language financial analysis and AI anomaly detection are shown as capabilities introduced through the next rollout phase and included in customer implementations by agreed requirements and scope. They are **not** claimed as enabled for every customer or generally available today.
+- The broad "Planned" badges on AI were removed. Copy never claims autonomous AI reconciliation or guaranteed anomaly-detection accuracy.
+- The AI visuals (`AskYourDataMock`, `AnomalyInsightsMock`) use invented questions and figures and carry the "Illustrative data" label plus a caption saying they are not live product screenshots.
+- Earlier "AI-generated summaries" and "revenue forecasting" were removed because only natural-language analysis and anomaly detection have been confirmed. Re-add if Adil confirms them.
+- [ ] Ask Adil to review the example question, answer and anomaly wording so the illustrative experience reflects how the feature really behaves.

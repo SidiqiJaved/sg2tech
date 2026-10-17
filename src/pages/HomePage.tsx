@@ -2,12 +2,13 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
 import { SectionHeader } from '@/components/ui/SectionHeader'
-import { StatusBadge } from '@/components/ui/StatusBadge'
 import { ProductFrame } from '@/components/product/ProductFrame'
 import { FeatureTabs, type FeatureTab } from '@/components/product/FeatureTabs'
 import { contact } from '@/content/site'
 import { InspectionChecklistMock, NetworkOverviewMock } from '@/components/product/fmMocks'
 import {
+  AnomalyInsightsMock,
+  AskYourDataMock,
   DashboardMock,
   GrossToNetMock,
   LocationComparisonMock,
@@ -68,6 +69,22 @@ const featureTabs: FeatureTab[] = [
     visual: <PayoutVisibilityMock />,
   },
   {
+    id: 'ask',
+    label: 'Natural-language analysis',
+    heading: 'Ask your financial data a question',
+    body: 'Ask why net payout moved or which platform is driving fees, and get an answer grounded in your reconciled figures. Illustrative experience; introduced through our next rollout phase and included by agreed scope.',
+    frameTitle: 'AI-Enabled Financial Intelligence · Ask',
+    visual: <AskYourDataMock />,
+  },
+  {
+    id: 'anomalies',
+    label: 'AI anomaly detection',
+    heading: 'Surface what looks unusual',
+    body: 'Unusual fee rates, refund spikes and payout gaps are surfaced for review, so your team investigates early. Illustrative experience; introduced through our next rollout phase and included by agreed scope.',
+    frameTitle: 'AI-Enabled Financial Intelligence · Insights',
+    visual: <AnomalyInsightsMock />,
+  },
+  {
     id: 'locations',
     label: 'Location comparison',
     heading: 'Compare locations on the same basis',
@@ -119,9 +136,9 @@ export function HomePage() {
           </h1>
           <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
             <p className="t-lead max-w-2xl">
-              SG2 Technologies builds intelligent financial analytics and business software that
-              connect data, surface discrepancies and support better decisions, with AI capabilities
-              being introduced across our products.
+              SG2 Technologies builds AI-Enabled Financial Intelligence and custom business software
+              that connect data, reconcile reported figures, surface discrepancies and support
+              better decisions.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button to="/solutions/financial-intelligence">Explore Our Solutions</Button>
@@ -146,8 +163,8 @@ export function HomePage() {
                   </ProductFrame>
                 </div>
                 <div className="min-w-0 lg:col-span-4 lg:mt-24">
-                  <ProductFrame title="Franchise Management · Network">
-                    <NetworkOverviewMock />
+                  <ProductFrame title="AI-Enabled Financial Intelligence · Ask">
+                    <AskYourDataMock />
                   </ProductFrame>
                 </div>
               </div>
@@ -201,16 +218,17 @@ export function HomePage() {
       <Section tone="ink">
         <SectionHeader
           index="02"
-          eyebrow="Featured product · Financial Intelligence"
+          eyebrow="Product · AI-Enabled Financial Intelligence"
           title="Know what your restaurants earn, not just what they sell."
-          lead="Sales are the start of the story. Fees, adjustments and payout timing are where margin quietly changes."
+          lead="Sales are the start of the story. Fees, adjustments and payout timing are where margin quietly changes. Ask questions in plain language and surface what looks unusual."
         />
         <div className="mt-14">
           <FeatureTabs tabs={featureTabs} dark />
         </div>
         <div className="rule-tick mt-14 flex flex-col gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-xl text-[0.95rem] text-[#cdd0d4]">
-            AI-enabled analysis is being introduced on top of this foundation.
+            Natural-language analysis and AI anomaly detection are introduced through our next
+            rollout phase and included in implementations by agreed scope.
           </p>
           <Button to="/solutions/financial-intelligence" variant="ghost-dark">
             See the full product
@@ -306,21 +324,18 @@ export function HomePage() {
             </p>
           </article>
           <article className="bg-ink p-8 sm:p-10">
-            <p className="t-label flex flex-wrap items-center gap-3 text-[#ff9a55]">
-              AI-enabled intelligence
-              <StatusBadge status="planned" className="!text-ivory/80" />
-            </p>
-            <h3 className="t-h3 mt-4">AI built on trusted, reconciled data.</h3>
+            <p className="t-label text-[#ff9a55]">AI-Enabled Financial Intelligence</p>
+            <h3 className="t-h3 mt-4">Ask your data. Catch what looks unusual.</h3>
             <p className="t-body mt-4 text-[0.95rem]">
-              Being introduced, and not yet generally available. Today’s reporting, reconciliation
-              and discrepancy identification are part of the existing platform:
+              Natural-language financial analysis and AI anomaly detection, built on reconciled
+              data. Introduced through our next rollout phase and included in customer
+              implementations based on agreed requirements and scope.
             </p>
             <ul className="mt-4 space-y-2 text-[0.9rem]">
               {[
-                'Natural-language financial questions',
-                'AI-generated summaries',
-                'Anomaly detection',
-                'Revenue forecasting',
+                'Natural-language financial analysis',
+                'AI anomaly detection',
+                'Built on existing reporting and reconciliation',
               ].map((x) => (
                 <li key={x} className="flex gap-3">
                   <span aria-hidden className="mt-2.5 h-px w-4 shrink-0 bg-copper" />

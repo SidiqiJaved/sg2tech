@@ -6,6 +6,8 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { IntegrationFlow } from '@/components/product/IntegrationFlow'
 import { ProductFrame } from '@/components/product/ProductFrame'
 import {
+  AnomalyInsightsMock,
+  AskYourDataMock,
   ChannelMixMock,
   DashboardMock,
   GrossToNetMock,
@@ -54,13 +56,24 @@ const faqs = [
     ),
   },
   {
-    q: 'Where does AI fit?',
+    q: 'Is AI available in Financial Intelligence?',
     a: (
       <p>
-        AI-enabled analysis is being introduced on top of the existing platform, and it is not yet
-        generally available. Today’s reporting, reconciliation and discrepancy identification are
-        part of the platform now, and we will not describe a feature as AI-powered until it is
-        released.
+        AI-Enabled Financial Intelligence is SG2’s product direction. Natural-language financial
+        analysis and AI anomaly detection have been developed and are being introduced through our
+        next rollout phase. They can be included in customer-specific implementations based on your
+        requirements and scope. They are not switched on for every customer today, and we confirm
+        exactly what is included before you commit.
+      </p>
+    ),
+  },
+  {
+    q: 'Does AI perform the reconciliation?',
+    a: (
+      <p>
+        Reporting, reconciliation and discrepancy identification are established capabilities of the
+        platform. AI analysis builds on that reconciled data. It supports a person’s review rather
+        than replacing it, and we do not guarantee that any particular anomaly will be detected.
       </p>
     ),
   },
@@ -79,9 +92,9 @@ export function FinancialIntelligencePage() {
   return (
     <>
       <PageIntro
-        eyebrow="Solutions · Financial Intelligence"
+        eyebrow="Solutions · AI-Enabled Financial Intelligence"
         title="Know what your restaurants earn, not just what they sell."
-        lead="Restaurants generate financial data across point-of-sale (POS) systems, delivery platforms and direct ordering. Financial Intelligence connects it, reconciles sales against payouts and surfaces the discrepancies, so your team spends less time assembling reports and more time acting on them."
+        lead="Restaurants generate financial data across point-of-sale (POS) systems, delivery platforms and direct ordering. AI-Enabled Financial Intelligence connects it, reconciles reported sales against platform fees and payouts, identifies the discrepancies, and adds natural-language analysis and AI anomaly detection on top, so your team spends less time assembling reports and more time acting on them."
         actions={
           <>
             <Button to="/contact?inquiry=demo">Book a Demo</Button>
@@ -232,15 +245,46 @@ export function FinancialIntelligencePage() {
 
           <FeatureRow
             index="G"
-            eyebrow="AI-enabled intelligence"
-            title="Intelligent insight, built on reconciled data."
-            status="planned"
+            eyebrow="Natural-language analysis"
+            title="Ask your financial data a question."
+            visual={
+              <ProductFrame title="AI-Enabled Financial Intelligence · Ask">
+                <AskYourDataMock />
+              </ProductFrame>
+            }
           >
             <p>
-              AI-enabled capabilities are being introduced: natural-language questions, generated
-              summaries, anomaly detection and revenue forecasting. They build on the data
-              engineering and reconciliation already in the platform, and they are not yet generally
-              available.
+              Ask in plain language why net payout moved, how locations compare or which platform is
+              driving fees, and get an answer grounded in your reconciled figures.
+            </p>
+            <p>Built on the reporting and reconciliation already in the platform.</p>
+            <p className="t-caption">
+              Illustrative experience with invented data, not a live product screenshot. AI
+              functionality is introduced through our next rollout phase and may be included in
+              customer implementations based on agreed requirements and scope.
+            </p>
+          </FeatureRow>
+
+          <FeatureRow
+            index="H"
+            eyebrow="AI anomaly detection"
+            title="Surface what looks unusual, before it becomes a surprise."
+            flip
+            visual={
+              <ProductFrame title="AI-Enabled Financial Intelligence · Insights">
+                <AnomalyInsightsMock />
+              </ProductFrame>
+            }
+          >
+            <p>
+              Unusual fee rates, refund spikes and payout gaps are surfaced for review, with the
+              context to investigate them quickly.
+            </p>
+            <p>Insights point your team to what deserves attention. A person decides what to do.</p>
+            <p className="t-caption">
+              Illustrative experience with invented data, not a live product screenshot. AI
+              functionality is introduced through our next rollout phase and may be included in
+              customer implementations based on agreed requirements and scope.
             </p>
           </FeatureRow>
         </div>
