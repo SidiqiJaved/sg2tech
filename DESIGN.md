@@ -44,13 +44,13 @@ Starting palette from the brief, refined for accessibility. All tokens live in `
 | `ivory` | `#F5F2EA` | Page background |
 | `ivory-deep` | `#ECE7DA` | Alternate section background |
 | `paper` | `#FFFFFF` | Product frames, form fields |
-| `ink` | `#1B2829` | Primary text, dark sections |
-| `ink-soft` | `#435052` | Body text |
-| `ink-mute` | `#5D6A6B` | Captions, labels |
-| `copper` | `#B66B42` | Decorative rules, chart line, large accents only |
-| `copper-deep` | `#944F2C` | Copper **text** and links, button hover |
-| `copper-ink` | `#7A3E20` | Text on `copper-soft` badges |
-| `copper-soft` | `#E9CDB9` | Badge backgrounds |
+| `ink` | `#25282C` | Primary text, charcoal sections |
+| `ink-soft` | `#474C52` | Body text |
+| `ink-mute` | `#5F656B` | Captions, labels |
+| `copper` | `#F26A1B` | SG2 orange: rules, chart line, large accents only |
+| `copper-deep` | `#A8400A` | Orange **text** and links on light backgrounds (5.5:1 on ivory); lifted to `#FF9A55` on charcoal |
+| `copper-ink` | `#7A3208` | Text on `copper-soft` badges |
+| `copper-soft` | `#FBD9BF` | Badge backgrounds |
 | `sage` / `sage-deep` | `#D3DDCE` / `#3E5A48` | Section tone, positive/"matches" states |
 
 **Contrast (measured, WCAG relative luminance):** ink on ivory 13.6:1 · ink-soft on ivory 7.5:1 · ink-mute on ivory 5.0:1 · copper-deep on ivory 5.5:1 · copper-ink on copper-soft 5.5:1 · sage-deep on sage 5.4:1 · light text on ink ≥ 6.7:1. The brand copper `#B66B42` is only 3.6:1 on ivory, so it is never used for small text.
@@ -65,7 +65,7 @@ Starting palette from the brief, refined for accessibility. All tokens live in `
 ## Components
 
 `src/components/`
-- **layout/**: `Header` (disclosure dropdowns, full-screen mobile nav, Escape-to-close), `Footer`, `Layout` (skip link, scroll and hash handling), `Logo` (typographic wordmark until the official asset is supplied).
+- **layout/**: `Header` (disclosure dropdowns, full-screen mobile nav, Escape-to-close), `Footer`, `Layout` (skip link, scroll and hash handling), `Logo` (official SG2 artwork from `public/logo.png`).
 - **ui/**: `Button`/`TextLink`, `Section` (tone variants), `SectionHeader`, `Reveal`, `StatusBadge`, and `Blocks` (`FeatureRow`, `Faq` on native `<details>`, `CtaBand`, `PageIntro`).
 - **product/**: `ProductFrame` plus the mock interfaces (`fiMocks`, `fmMocks`) and `FeatureTabs`.
 

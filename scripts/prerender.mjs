@@ -13,6 +13,8 @@ const { render, routeMeta, notFoundMeta, SITE_URL } = await import(
 )
 
 const template = await readFile(join(dist, 'index.html'), 'utf8')
+// Set VITE_NOINDEX=true on staging/preview deploys so they are never indexed.
+const NOINDEX = process.env.VITE_NOINDEX === 'true'
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
 
 const orgJsonLd = {
@@ -29,8 +31,8 @@ function head(meta, { home = false } = {}) {
   const tags = [
     `<title>${esc(meta.title)}</title>`,
     `<meta name="description" content="${esc(meta.description)}" />`,
-    meta.indexable ? '' : '<meta name="robots" content="noindex" />',
-    meta.indexable ? `<link rel="canonical" href="${url}" />` : '',
+    meta.indexable && !NOINDEX ? '' : '<meta name="robots" content="noindex" />',
+    meta.indexable && !NOINDEX ? `<link rel="canonical" href="${url}" />` : '',
     `<meta property="og:type" content="website" />`,
     `<meta property="og:site_name" content="SG2 Technologies" />`,
     `<meta property="og:title" content="${esc(meta.title)}" />`,
@@ -43,7 +45,14 @@ function head(meta, { home = false } = {}) {
 }
 
 function page(meta, urlPath, opts) {
-  return template.replace('<!--head-->', head(meta, opts)).replace('<!--app-->', render(urlPath))
+  // React hoists resource hints (e.g. <link rel="preload" as="image">) to the start of the
+  // rendered string. Inside #root they break hydration, so move them into <head>.
+  const app = render(urlPath)
+  const hoisted = app.match(/^(?:<link[^>]*>)+/)?.[0] ?? ''
+  return template
+    .replace('<!--head-->', head(meta, opts) + (hoisted ? `
+    ${hoisted}` : ''))
+    .replace('<!--app-->', () => app.slice(hoisted.length))
 }
 
 for (const meta of routeMeta) {

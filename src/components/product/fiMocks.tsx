@@ -154,7 +154,7 @@ export function GrossToNetMock() {
   )
 }
 
-export function PayoutReconciliationMock() {
+export function PayoutVisibilityMock() {
   const rows = [
     { src: 'Delivery platform A', expected: 14210, received: 14210, note: 'Matches' },
     { src: 'Delivery platform B', expected: 9840, received: 9402, note: 'Review' },
@@ -164,17 +164,19 @@ export function PayoutReconciliationMock() {
   return (
     <div className="space-y-3 text-ink">
       <div className="flex items-baseline justify-between gap-2">
-        <p className="font-display text-lg tracking-tight">Payouts: reported vs. received</p>
+        <p className="font-display text-lg tracking-tight">Payouts: reported vs. platform payout</p>
         <p className="t-label text-[0.62rem] text-ink-mute">Week 12</p>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full min-w-[26rem] text-left text-[0.8rem] tabular-nums">
-          <caption className="sr-only">Illustrative payout comparison by source</caption>
+          <caption className="sr-only">
+            Illustrative comparison of reported sales and platform payout by source
+          </caption>
           <thead>
             <tr className="t-label border-b border-line text-[0.62rem] text-ink-mute">
               <th className="py-2 font-medium">Source</th>
               <th className="py-2 text-right font-medium">Expected</th>
-              <th className="py-2 text-right font-medium">Received</th>
+              <th className="py-2 text-right font-medium">Payout</th>
               <th className="py-2 text-right font-medium">Difference</th>
             </tr>
           </thead>

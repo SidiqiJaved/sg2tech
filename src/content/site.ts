@@ -1,8 +1,4 @@
-/**
- * Company-wide facts and navigation. Only verified facts belong here.
- * Contact details (email / phone / address) are deliberately absent until
- * confirmed — see LAUNCH-CHECKLIST.md.
- */
+/** Company-wide facts and navigation. Only verified facts belong here. */
 export const SITE_URL = (import.meta.env?.VITE_SITE_URL ?? 'https://www.sg2tech.com').replace(
   /\/$/,
   '',
@@ -14,6 +10,13 @@ export const company = {
   tagline: 'Software Products & Engineering',
   mission: 'We build software that makes businesses run better.',
   year: new Date().getFullYear(),
+} as const
+
+export const contact = {
+  email: 'hello@sg2tech.com',
+  phone: '+1 (202) 468-1590',
+  phoneHref: 'tel:+12024681590',
+  emailHref: 'mailto:hello@sg2tech.com',
 } as const
 
 export interface NavLink {

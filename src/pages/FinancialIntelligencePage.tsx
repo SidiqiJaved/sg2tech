@@ -3,13 +3,14 @@ import { CtaBand, Faq, FeatureRow, PageIntro } from '@/components/ui/Blocks'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
 import { SectionHeader } from '@/components/ui/SectionHeader'
+import { IntegrationFlow } from '@/components/product/IntegrationFlow'
 import { ProductFrame } from '@/components/product/ProductFrame'
 import {
   ChannelMixMock,
   DashboardMock,
   GrossToNetMock,
   LocationComparisonMock,
-  PayoutReconciliationMock,
+  PayoutVisibilityMock,
   StatementMock,
 } from '@/components/product/fiMocks'
 
@@ -26,9 +27,10 @@ const faqs = [
     q: 'Which platforms and POS systems are supported?',
     a: (
       <p>
-        It depends on the platform and on your account. We confirm exactly which integrations are
-        available for your setup before you commit to anything, and we will tell you plainly if
-        something is not supported.
+        Uber Eats and DoorDash financial reporting is supported, and Clover POS sales data is
+        ingested today through SFTP or CSV files, with a direct Clover API integration planned.
+        Support for any other platform is confirmed with you before you commit, and we will say
+        plainly if something is not supported.
       </p>
     ),
   },
@@ -99,7 +101,7 @@ export function FinancialIntelligencePage() {
           index="01"
           eyebrow="The gap"
           title="Sold is not the same as earned."
-          lead="A delivery order rings up at one number and lands in your bank account at another. The difference is made of pieces that rarely appear in one report."
+          lead="A delivery order rings up at one number and is paid out at another. The difference is made of pieces that rarely appear in one report."
         />
         <Reveal className="mt-14 grid gap-px border border-line bg-line md:grid-cols-4">
           {[
@@ -182,18 +184,18 @@ export function FinancialIntelligencePage() {
 
           <FeatureRow
             index="D"
-            eyebrow="Payout reconciliation"
-            title="Spot payouts that don’t match what you expected."
+            eyebrow="Payout visibility"
+            title="Spot payouts that differ from the sales reported."
             flip
             visual={
-              <ProductFrame title="Payout reconciliation">
-                <PayoutReconciliationMock />
+              <ProductFrame title="Payout visibility">
+                <PayoutVisibilityMock />
               </ProductFrame>
             }
           >
             <p>
-              Compare reported sales and expected payouts with the money that arrived, and surface
-              the differences.
+              Compare the sales reported by each source with the payout figures available, and
+              surface the differences.
             </p>
             <p>
               The product highlights what to look into. A person still decides what is an error and
@@ -257,7 +259,7 @@ export function FinancialIntelligencePage() {
                 'Log in to each delivery platform and download last week’s statement.',
                 'Export sales from the POS for every location.',
                 'Combine everything in a spreadsheet and fix the column differences.',
-                'Notice a deposit is lower than expected and start searching for why.',
+                'Notice a payout is lower than the sales reported and start searching for why.',
               ],
             },
             {
@@ -287,31 +289,14 @@ export function FinancialIntelligencePage() {
 
       {/* INTEGRATIONS */}
       <Section>
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <SectionHeader
-              index="04"
-              eyebrow="Integrations"
-              title="Works with the systems restaurants already use."
-              lead="Names below are given for context. Availability of each integration is confirmed per customer before any commitment."
-            />
-          </div>
-          <dl className="lg:col-span-6 lg:col-start-7">
-            {[
-              ['Point of sale', 'For example Clover and Toast'],
-              ['Delivery platforms', 'For example Uber Eats and DoorDash'],
-              ['Direct ordering', 'Online ordering sources you operate yourself'],
-              ['Bank and payout data', 'Deposits received, for comparison with expected payouts'],
-            ].map(([k, v]) => (
-              <div
-                key={k}
-                className="grid gap-1 border-b border-line py-5 first:border-t sm:grid-cols-[11rem_1fr] sm:gap-6"
-              >
-                <dt className="font-medium">{k}</dt>
-                <dd className="t-body">{v}</dd>
-              </div>
-            ))}
-          </dl>
+        <SectionHeader
+          index="04"
+          eyebrow="Integrations"
+          title="From source data to one financial view."
+          lead="Financial data arrives from the platforms and point-of-sale (POS) systems you already use, is structured into a single model, and surfaces as reports your team can read."
+        />
+        <div className="mt-14">
+          <IntegrationFlow />
         </div>
       </Section>
 
@@ -329,7 +314,7 @@ export function FinancialIntelligencePage() {
             'Franchise operators',
             'Finance managers',
             'Operations directors',
-            'Owners working across several delivery and POS platforms',
+            'Owners working across several delivery platforms and POS systems',
           ].map((x) => (
             <li key={x} className="border-b border-ink/20 py-4 font-display text-xl tracking-tight">
               {x}

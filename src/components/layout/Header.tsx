@@ -5,10 +5,19 @@ import { demoCta, navGroups, topLevelLinks } from '@/content/site'
 import { cn } from '@/lib/cn'
 import { Logo } from './Logo'
 
+/** A nav link is active only when it matches the real route (and hash, when the link has one). */
+function isActive(to: string, pathname: string, hash: string) {
+  const [path = '', h = ''] = to.split('#')
+  if (pathname !== path) return false
+  if (h) return hash === `#${h}`
+  return !hash || !navGroups.some((g) => g.links.some((l) => l.to === `${path}${hash}`))
+}
+
 function DesktopGroup({ group }: { group: (typeof navGroups)[number] }) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
+  const groupActive = group.links.some((l) => isActive(l.to, pathname, hash))
 
   useEffect(() => setOpen(false), [pathname])
   useEffect(() => {
@@ -38,7 +47,12 @@ function DesktopGroup({ group }: { group: (typeof navGroups)[number] }) {
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-1 rounded px-3 py-2 text-[0.95rem] font-medium text-ink hover:text-copper-deep"
+        className={cn(
+          'relative flex items-center gap-1 rounded px-3 py-2 text-[0.95rem] font-medium hover:text-copper-deep',
+          'text-ink',
+          groupActive &&
+            'after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:bg-copper',
+        )}
       >
         {group.label}
         <ChevronDown
@@ -51,8 +65,24 @@ function DesktopGroup({ group }: { group: (typeof navGroups)[number] }) {
         <ul className="border border-line bg-paper p-2 shadow-[0_18px_40px_-20px_rgba(27,40,41,0.35)]">
           {group.links.map((l) => (
             <li key={l.to}>
-              <Link to={l.to} className="block rounded px-3 py-3 hover:bg-ivory">
-                <span className="block font-medium text-ink">{l.label}</span>
+              <Link
+                to={l.to}
+                aria-current={isActive(l.to, pathname, hash) ? 'page' : undefined}
+                className={cn(
+                  'block rounded border-l-2 px-3 py-3 hover:bg-ivory',
+                  isActive(l.to, pathname, hash)
+                    ? 'border-copper bg-ivory/60'
+                    : 'border-transparent',
+                )}
+              >
+                <span
+                  className={cn(
+                    'block font-medium',
+                    isActive(l.to, pathname, hash) ? 'text-copper-deep' : 'text-ink',
+                  )}
+                >
+                  {l.label}
+                </span>
                 {l.description && <span className="t-caption block">{l.description}</span>}
               </Link>
             </li>
@@ -66,7 +96,7 @@ function DesktopGroup({ group }: { group: (typeof navGroups)[number] }) {
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const { pathname, search } = useLocation()
+  const { pathname, search, hash } = useLocation()
   const menuBtn = useRef<HTMLButtonElement>(null)
 
   useEffect(() => setMobileOpen(false), [pathname, search])
@@ -109,8 +139,9 @@ export function Header() {
               to={l.to}
               className={({ isActive }) =>
                 cn(
-                  'rounded px-3 py-2 text-[0.95rem] font-medium hover:text-copper-deep',
-                  isActive ? 'text-copper-deep' : 'text-ink',
+                  'relative rounded px-3 py-2 text-[0.95rem] font-medium text-ink hover:text-copper-deep',
+                  isActive &&
+                    'after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:bg-copper',
                 )
               }
             >
@@ -153,7 +184,14 @@ export function Header() {
               <ul className="space-y-1">
                 {g.links.map((l) => (
                   <li key={l.to}>
-                    <Link to={l.to} className="block py-2 font-display text-2xl tracking-tight">
+                    <Link
+                      to={l.to}
+                      aria-current={isActive(l.to, pathname, hash) ? 'page' : undefined}
+                      className={cn(
+                        'block py-2 font-display text-2xl tracking-tight',
+                        isActive(l.to, pathname, hash) && 'text-copper-deep',
+                      )}
+                    >
                       {l.label}
                     </Link>
                   </li>
@@ -166,7 +204,11 @@ export function Header() {
               <Link
                 key={l.to}
                 to={l.to}
-                className="block py-2 font-display text-2xl tracking-tight"
+                aria-current={pathname === l.to ? 'page' : undefined}
+                className={cn(
+                  'block py-2 font-display text-2xl tracking-tight',
+                  pathname === l.to && 'text-copper-deep',
+                )}
               >
                 {l.label}
               </Link>

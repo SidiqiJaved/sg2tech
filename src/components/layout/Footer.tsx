@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { company, footerGroups } from '@/content/site'
+import { company, contact, footerGroups } from '@/content/site'
 import { Logo } from './Logo'
 
 export function Footer() {
@@ -11,6 +11,18 @@ export function Footer() {
           <p className="mt-6 font-display text-2xl leading-snug tracking-tight text-ivory">
             {company.mission}
           </p>
+          <ul className="mt-6 space-y-1.5 text-[0.95rem]">
+            <li>
+              <a href={contact.emailHref} className="text-ivory underline-offset-4 hover:underline">
+                {contact.email}
+              </a>
+            </li>
+            <li>
+              <a href={contact.phoneHref} className="text-ivory underline-offset-4 hover:underline">
+                {contact.phone}
+              </a>
+            </li>
+          </ul>
         </div>
         {footerGroups.map((g) => (
           <nav key={g.label} aria-label={g.label}>

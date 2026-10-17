@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom'
-import { ArrowUpRight } from 'lucide-react'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
@@ -7,13 +5,13 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { ProductFrame } from '@/components/product/ProductFrame'
 import { FeatureTabs, type FeatureTab } from '@/components/product/FeatureTabs'
-import { NetworkOverviewMock } from '@/components/product/fmMocks'
+import { contact } from '@/content/site'
+import { InspectionChecklistMock, NetworkOverviewMock } from '@/components/product/fmMocks'
 import {
   DashboardMock,
-  StatementMock,
   GrossToNetMock,
   LocationComparisonMock,
-  PayoutReconciliationMock,
+  PayoutVisibilityMock,
   RevenueOverviewMock,
 } from '@/components/product/fiMocks'
 
@@ -32,7 +30,7 @@ const problems = [
   },
   {
     t: 'Limited financial visibility',
-    d: 'Sales are easy to see. What actually reached the bank, after fees and adjustments, is not.',
+    d: 'Sales are easy to see. What you actually keep, after fees and adjustments, is not.',
   },
   {
     t: 'Inefficient processes',
@@ -41,30 +39,6 @@ const problems = [
   {
     t: 'Many locations, no common view',
     d: 'Each new location adds another set of numbers to reconcile and another standard to check.',
-  },
-]
-
-const solutions = [
-  {
-    n: '01',
-    title: 'Financial Intelligence',
-    kind: 'Software product',
-    body: 'Financial visibility across restaurants, platforms, and locations.',
-    to: '/solutions/financial-intelligence',
-  },
-  {
-    n: '02',
-    title: 'Franchise Management',
-    kind: 'Software product',
-    body: 'Operational oversight, compliance workflows, and franchise administration.',
-    to: '/solutions/franchise-management',
-  },
-  {
-    n: '03',
-    title: 'Custom Software & Engineering',
-    kind: 'Engineering service',
-    body: 'Purpose-built applications, integrations, and automation.',
-    to: '/services/custom-software-development',
   },
 ]
 
@@ -87,11 +61,11 @@ const featureTabs: FeatureTab[] = [
   },
   {
     id: 'payouts',
-    label: 'Payout reconciliation',
-    heading: 'Compare what was expected with what arrived',
-    body: 'Line up reported sales against deposits and flag the differences worth a closer look.',
-    frameTitle: 'Payout reconciliation',
-    visual: <PayoutReconciliationMock />,
+    label: 'Payout visibility',
+    heading: 'See where payouts differ from sales',
+    body: 'Line up reported sales against platform payout figures and flag the differences worth a closer look.',
+    frameTitle: 'Payout visibility',
+    visual: <PayoutVisibilityMock />,
   },
   {
     id: 'locations',
@@ -158,84 +132,32 @@ export function HomePage() {
           </div>
         </div>
 
-        <div className="container-page mt-14 grid gap-8 lg:mt-20 lg:grid-cols-12 lg:gap-12">
-          <Reveal className="lg:col-span-4 lg:pt-6">
-            <p className="t-label mb-5 text-ink-mute">Financial Intelligence, in view</p>
-            <ol className="space-y-5">
-              {[
-                [
-                  'Gross sales and net payout',
-                  'Two lines, one chart. The distance between them is what fees and adjustments cost.',
-                ],
-                [
-                  'By week, by location',
-                  'The same definitions everywhere, so locations are comparable.',
-                ],
-                [
-                  'Built for the finance question',
-                  'Fewer exports. More time spent on the decision itself.',
-                ],
-              ].map(([t, d], i) => (
-                <li key={t} className="flex gap-4">
-                  <span className="t-label mt-1 text-copper-deep">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span>
-                    <span className="block font-medium">{t}</span>
-                    <span className="t-caption block">{d}</span>
-                  </span>
-                </li>
-              ))}
-            </ol>
-          </Reveal>
-          <Reveal delay={120} className="min-w-0 lg:col-span-8">
-            <ProductFrame title="Financial Intelligence · Overview">
-              <DashboardMock />
-            </ProductFrame>
-            <p className="t-caption mt-3">
-              Illustrative interface with sample data. Approved product screenshots will replace
-              this view.
-            </p>
+        <div className="container-page mt-14 lg:mt-20">
+          <Reveal>
+            <div className="relative overflow-hidden rounded-xl bg-ink p-4 sm:p-8 lg:p-12">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-copper/20 blur-3xl"
+              />
+              <div className="relative grid gap-6 lg:grid-cols-12">
+                <div className="min-w-0 lg:col-span-8">
+                  <ProductFrame title="Financial Intelligence · Overview">
+                    <DashboardMock />
+                  </ProductFrame>
+                </div>
+                <div className="min-w-0 lg:col-span-4 lg:mt-24">
+                  <ProductFrame title="Franchise Management · Network">
+                    <NetworkOverviewMock />
+                  </ProductFrame>
+                </div>
+              </div>
+              <p className="relative mt-5 text-[0.8rem] text-[#a9adb3]">
+                Illustrative interfaces with invented sample data.
+              </p>
+            </div>
           </Reveal>
         </div>
       </section>
-
-      {/* PRODUCT SHOWCASE: Financial Intelligence ~60%, Franchise Management ~40% */}
-      <Section tone="paper">
-        <SectionHeader
-          index="01"
-          eyebrow="The products"
-          title="See the software, not just the pitch."
-        />
-        <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-12">
-          <Reveal className="min-w-0">
-            <ProductFrame title="Financial Intelligence · Statement">
-              <StatementMock />
-            </ProductFrame>
-            <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
-              <div className="max-w-md">
-                <p className="t-label text-copper-deep">Financial Intelligence</p>
-                <p className="t-h3 mt-2">
-                  Point-of-sale (POS) sales, platform fees and payouts in one statement.
-                </p>
-              </div>
-              <TextLink to="/solutions/financial-intelligence">Explore the product</TextLink>
-            </div>
-          </Reveal>
-          <Reveal delay={120} className="min-w-0">
-            <ProductFrame title="Franchise Management · Network">
-              <NetworkOverviewMock />
-            </ProductFrame>
-            <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
-              <div className="max-w-md">
-                <p className="t-label text-copper-deep">Franchise Management</p>
-                <p className="t-h3 mt-2">Oversight and compliance across every location.</p>
-              </div>
-              <TextLink to="/solutions/franchise-management">Explore the product</TextLink>
-            </div>
-          </Reveal>
-        </div>
-      </Section>
 
       {/* PROBLEM */}
       <Section tone="deep">
@@ -243,7 +165,7 @@ export function HomePage() {
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-28">
               <SectionHeader
-                index="02"
+                index="01"
                 eyebrow="The problem we solve"
                 title={
                   <>
@@ -275,42 +197,10 @@ export function HomePage() {
         </div>
       </Section>
 
-      {/* SOLUTIONS */}
-      <Section>
-        <SectionHeader
-          index="03"
-          eyebrow="Our solutions"
-          title="Two products and an engineering practice."
-          lead="Products for the problems we see repeatedly. Engineering for the ones that need something built from scratch."
-        />
-        <ul className="mt-14 border-t border-ink/80">
-          {solutions.map((s) => (
-            <li key={s.to} className="border-b border-line">
-              <Link
-                to={s.to}
-                className="group grid items-center gap-3 py-8 transition-colors hover:bg-ivory-deep/60 sm:grid-cols-[4rem_1.2fr_1fr_auto] sm:gap-8 sm:px-4 sm:py-10"
-              >
-                <span className="t-label text-copper-deep">{s.n}</span>
-                <span>
-                  <span className="t-label mb-2 block text-ink-mute">{s.kind}</span>
-                  <span className="font-display text-3xl tracking-tight transition-transform duration-500 group-hover:translate-x-1 sm:text-4xl">
-                    {s.title}
-                  </span>
-                </span>
-                <span className="t-body max-w-sm">{s.body}</span>
-                <span className="hidden h-12 w-12 place-items-center rounded-full border border-ink/60 transition-colors group-hover:bg-ink group-hover:text-ivory sm:grid">
-                  <ArrowUpRight aria-hidden size={20} />
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </Section>
-
-      {/* FEATURED PRODUCT */}
+      {/* FINANCIAL INTELLIGENCE */}
       <Section tone="ink">
         <SectionHeader
-          index="04"
+          index="02"
           eyebrow="Featured product · Financial Intelligence"
           title="Know what your restaurants earn, not just what they sell."
           lead="Sales are the start of the story. Fees, adjustments and payout timing are where margin quietly changes."
@@ -329,34 +219,126 @@ export function HomePage() {
         </div>
       </Section>
 
-      {/* HOW WE WORK */}
-      <Section>
-        <SectionHeader
-          index="05"
-          eyebrow="How we work"
-          title="We start with the business, not the code."
-          lead="Every engagement and every product decision follows the same five steps."
-        />
-        <ol className="mt-16 grid gap-0 md:grid-cols-5">
-          {steps.map(([t, d], i) => (
-            <Reveal as="li" key={t} delay={i * 70} className="rule-tick py-6 md:pr-6">
-              <span className="t-label text-copper-deep">{String(i + 1).padStart(2, '0')}</span>
-              <h3 className="t-h3 mt-3">{t}</h3>
-              <p className="t-body mt-3 text-[0.95rem]">{d}</p>
-            </Reveal>
-          ))}
-        </ol>
+      {/* FRANCHISE MANAGEMENT */}
+      <Section tone="paper">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-5">
+            <SectionHeader
+              index="03"
+              eyebrow="Product · Franchise Management"
+              title="One network. One standard. Full visibility."
+              lead="Headquarters and every location work from the same standards, checklists and records."
+            />
+            <ul className="mt-8">
+              {[
+                'Franchise location oversight',
+                'Inspection workflows and quality-control checklists',
+                'Training and documentation',
+                'Operational follow-ups',
+                'Franchise invoicing and royalty calculation workflows',
+              ].map((x) => (
+                <li
+                  key={x}
+                  className="flex gap-3 border-b border-line py-3 text-[0.95rem] first:border-t"
+                >
+                  <span aria-hidden className="mt-2.5 h-px w-4 shrink-0 bg-copper" />
+                  {x}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8">
+              <Button to="/solutions/franchise-management" variant="secondary">
+                Explore Franchise Management
+              </Button>
+            </div>
+          </div>
+          <Reveal className="grid min-w-0 gap-6 lg:col-span-7">
+            <ProductFrame title="Network overview">
+              <NetworkOverviewMock />
+            </ProductFrame>
+            <ProductFrame title="Inspection checklist">
+              <InspectionChecklistMock />
+            </ProductFrame>
+          </Reveal>
+        </div>
       </Section>
 
-      {/* ENGINEERING */}
+      {/* TECHNOLOGY, SECURITY & INNOVATION */}
+      <Section tone="ink">
+        <SectionHeader
+          index="04"
+          eyebrow="Technology, security & innovation"
+          title="The engineering behind the numbers."
+          lead="Software that handles financial and operational data has to be dependable first and clever second."
+        />
+        <div className="mt-14 grid gap-px bg-line-dark lg:grid-cols-3">
+          <article className="bg-ink p-8 sm:p-10">
+            <p className="t-label text-[#ff9a55]">Advanced data engineering</p>
+            <h3 className="t-h3 mt-4">Reliable data. More informed decisions.</h3>
+            <p className="t-body mt-4 text-[0.95rem]">
+              Source reports and files are brought through structured pipelines into one consistent
+              model, so every location and channel is measured the same way before it reaches a
+              report.
+            </p>
+            <ol className="mt-6 space-y-2 text-[0.9rem]">
+              {[
+                'Ingest source data',
+                'Structure and map it',
+                'Check for gaps and mismatches',
+                'Report',
+              ].map((x, i) => (
+                <li key={x} className="flex gap-3">
+                  <span className="t-label mt-0.5 text-ivory/50">{i + 1}</span>
+                  {x}
+                </li>
+              ))}
+            </ol>
+          </article>
+          <article className="bg-ink p-8 sm:p-10">
+            <p className="t-label text-[#ff9a55]">Security &amp; data protection</p>
+            <h3 className="t-h3 mt-4">Security considered throughout the architecture.</h3>
+            <p className="t-body mt-4 text-[0.95rem]">
+              We treat customer financial data as sensitive from the first design decision, not as
+              something added at the end. Security questions are part of how we scope, build and
+              review our software.
+            </p>
+            <p className="t-caption mt-6">
+              Questions about specific controls are welcome during a demo or evaluation.
+            </p>
+          </article>
+          <article className="bg-ink p-8 sm:p-10">
+            <p className="t-label flex flex-wrap items-center gap-3 text-[#ff9a55]">
+              AI-enhanced Financial Intelligence
+              <StatusBadge status="planned" className="!text-ivory/80" />
+            </p>
+            <h3 className="t-h3 mt-4">Intelligence that builds on trustworthy data.</h3>
+            <p className="t-body mt-4 text-[0.95rem]">On our roadmap, not yet released:</p>
+            <ul className="mt-4 space-y-2 text-[0.9rem]">
+              {[
+                'Natural-language financial questions',
+                'AI-generated summaries',
+                'Anomaly detection',
+                'Revenue forecasting',
+              ].map((x) => (
+                <li key={x} className="flex gap-3">
+                  <span aria-hidden className="mt-2.5 h-px w-4 shrink-0 bg-copper" />
+                  {x}
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
+      </Section>
+
+      {/* CUSTOM SOFTWARE */}
       <Section tone="sage">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <SectionHeader
-              index="06"
+              index="05"
               eyebrow="Engineering capabilities"
               title="When off-the-shelf stops fitting, we build."
-              lead="Custom software for organizations in any industry, delivered by the same team that builds our products."
+              lead="Custom software for organizations in any industry, delivered by the same team that builds our products. Your systems should work together. No black boxes. No unnecessary complexity."
             />
             <div className="mt-8">
               <TextLink to="/services/custom-software-development">
@@ -381,45 +363,23 @@ export function HomePage() {
         </div>
       </Section>
 
-      {/* WORK */}
+      {/* HOW WE WORK */}
       <Section>
         <SectionHeader
-          index="07"
-          eyebrow="Our work"
-          title="Case studies, published with permission."
-          lead="We only name clients, show their screens or report outcomes once they have approved it, and we do not publish numbers we cannot verify."
+          index="06"
+          eyebrow="How we work"
+          title="We start with the business, not the code."
+          lead="Every engagement and every product decision follows the same five steps."
         />
-        <Reveal className="mt-14 grid gap-px overflow-hidden border border-line bg-line md:grid-cols-[1.2fr_1fr]">
-          <div className="bg-paper p-8 sm:p-12">
-            <StatusBadge status="planned" />
-            <h3 className="t-h2 mt-6">Multi-location restaurant group</h3>
-            <p className="t-body mt-4 max-w-lg">
-              A walkthrough of how a restaurant group consolidates platform reporting and payouts is
-              in preparation. It will be published once the client has reviewed and approved it.
-            </p>
-            <div className="mt-8">
-              <TextLink to="/work">See how we document our work</TextLink>
-            </div>
-          </div>
-          <div className="bg-ivory-deep p-8 sm:p-12">
-            <p className="t-label mb-4 text-ink-mute">Every case study covers</p>
-            <ul className="space-y-2.5 text-[0.95rem] text-ink-soft">
-              {[
-                'The business challenge',
-                'Where things stood',
-                'Our approach',
-                'What was built',
-                'Technology and integrations',
-                'Verified outcomes',
-              ].map((x) => (
-                <li key={x} className="flex gap-3">
-                  <span aria-hidden className="mt-2.5 h-px w-4 shrink-0 bg-copper" />
-                  {x}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Reveal>
+        <ol className="mt-16 grid gap-0 md:grid-cols-5">
+          {steps.map(([t, d], i) => (
+            <Reveal as="li" key={t} delay={i * 70} className="rule-tick py-6 md:pr-6">
+              <span className="t-label text-copper-deep">{String(i + 1).padStart(2, '0')}</span>
+              <h3 className="t-h3 mt-3">{t}</h3>
+              <p className="t-body mt-3 text-[0.95rem]">{d}</p>
+            </Reveal>
+          ))}
+        </ol>
       </Section>
 
       {/* FINAL CTA */}
@@ -427,9 +387,20 @@ export function HomePage() {
         <div className="container-page">
           <Reveal>
             <h2 className="t-h1 max-w-4xl">Let’s build something that works for your business.</h2>
-            <div className="mt-12 flex flex-wrap gap-3">
-              <Button to="/solutions/financial-intelligence" variant="copper">
-                Explore Our Products
+            <p className="mt-8 text-lg text-ivory/80">
+              <a href={contact.emailHref} className="underline underline-offset-4">
+                {contact.email}
+              </a>
+              <span aria-hidden className="mx-3 opacity-50">
+                ·
+              </span>
+              <a href={contact.phoneHref} className="underline underline-offset-4">
+                {contact.phone}
+              </a>
+            </p>
+            <div className="mt-10 flex flex-wrap gap-3">
+              <Button to="/contact?inquiry=demo" variant="copper">
+                Book a Demo
               </Button>
               <Button to="/contact?inquiry=custom" variant="ghost-dark">
                 Discuss a Custom Project

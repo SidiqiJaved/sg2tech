@@ -13,8 +13,8 @@ The build contains **no invented company facts**. Everything below needs your in
 
 ## 2. Company details to supply
 
-- [ ] Contact email (and phone/address if you want them shown). **None are on the site today**: the old site publishes none, and I did not guess. Footer and contact page currently show only the form.
-- [ ] Official logo (SVG). The current wordmark is typographic (`Logo.tsx`).
+- [x] Contact details added: hello@sg2tech.com and +1 (202) 468-1590 (footer, contact page, homepage CTA). **Mailbox delivery is not yet tested**: the Microsoft 365 mailbox is still being configured. Send a test message before launch. Postal address: not supplied, not shown.
+- [x] Official logo applied from the supplied JPEG (`public/logo.png`, background removed, no redrawing). **A vector (SVG) master is still needed** for perfectly crisp rendering at all sizes and for a white/reversed variant on dark backgrounds (the footer uses an ivory chip as a stopgap).
 - [ ] Open Graph share image (1200×630 PNG). Not included. Add `og:image` in `scripts/prerender.mjs` once available.
 - [ ] Privacy policy (and terms, if wanted). The form should link to one before launch.
 - [ ] Legal entity name confirmation ("SG2 Technologies, LLC" is used in the footer and structured data).
@@ -28,7 +28,7 @@ The build contains **no invented company facts**. Everything below needs your in
 
 ## 4. Case studies
 
-- [ ] **Halal Munchies:** written authorization to publish the name, logo, screenshots and any outcomes. Until then it is not mentioned anywhere on the site.
+- [ ] **Halal Munchies:** written authorization to publish the name, logo, screenshots and any outcomes. Until then it is not mentioned anywhere on the site. The supplied dashboard screenshots are confidential references: they are not in the repository, `public/` or the build, and must stay out. A scan of `src`, `public`, `dist` and `index.html` for client names finds nothing.
 - [ ] Verified outcomes only. If none exist, publish an anonymous write-up with no metrics (`anonymous: true`).
 
 ## 5. Technical launch tasks
@@ -46,3 +46,15 @@ The build contains **no invented company facts**. Everything below needs your in
 
 - Dedicated "Integrations & Automation" page (currently a section on the Custom Software page, linked from the nav as `#integrations`).
 - Healthcare / clinic products: intentionally not mentioned anywhere. When they exist, add a product page and a nav entry.
+
+## 7. Added in the executive review (needs human verification)
+
+- [ ] **Uber Eats / DoorDash:** the integration diagram marks both "Available now" for financial reports. Confirm that is true and which report types are ingested.
+- [ ] **Clover:** confirm the SFTP/CSV ingestion description and that the direct API is planned, not in development.
+- [ ] **Toast and Grubhub** were removed from the site (availability unverified). Re-add only when confirmed.
+- [ ] **Payout language:** copy now says "payout visibility" and compares reported sales with platform payout figures. No bank connectivity or bank reconciliation is claimed. Confirm that matches the product, or say if bank deposit comparison exists.
+- [ ] **Security & data protection** copy is philosophy only. No controls, certifications, encryption, backup or monitoring claims are made. Supply verified specifics from engineering if you want them published.
+- [ ] **Technology section** describes ingest → structure → check for gaps/mismatches → report. Confirm the "check for gaps and mismatches" step exists.
+- [ ] **Franchise Management** capability list (inspections, checklists, training, follow-ups, invoicing, royalty workflows) is shown with illustrative visuals. Confirm each is shipped, and mark any that are not.
+- [ ] **Staging:** set `VITE_NOINDEX=true` on the staging site so it is not indexed, and leave it unset on production. Set `VITE_FORMS_ENABLED=true` and confirm the `contact` form appears in Netlify Forms, then route notifications to the shared mailbox.
+- [ ] Open Graph image, privacy policy, Lighthouse run and screen-reader pass are still outstanding.

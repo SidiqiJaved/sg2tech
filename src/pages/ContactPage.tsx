@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { CircleAlert, CircleCheck } from 'lucide-react'
 import { PageIntro } from '@/components/ui/Blocks'
 import { cn } from '@/lib/cn'
+import { contact } from '@/content/site'
 
 type Inquiry = 'demo' | 'custom'
 type Status = 'idle' | 'sending' | 'sent' | 'error' | 'not-configured'
@@ -138,6 +139,27 @@ export function ContactPage() {
       <section className="pb-24 sm:pb-32">
         <div className="container-page grid gap-14 lg:grid-cols-12 lg:gap-20">
           <aside className="lg:col-span-4">
+            <h2 className="t-label mb-6 text-copper-deep">Reach us directly</h2>
+            <ul className="mb-12 space-y-3">
+              <li>
+                <span className="t-label block text-ink-mute">Email</span>
+                <a
+                  href={contact.emailHref}
+                  className="font-display text-2xl tracking-tight underline decoration-copper/50 underline-offset-4 hover:decoration-copper-deep"
+                >
+                  {contact.email}
+                </a>
+              </li>
+              <li>
+                <span className="t-label block text-ink-mute">Phone</span>
+                <a
+                  href={contact.phoneHref}
+                  className="font-display text-2xl tracking-tight underline decoration-copper/50 underline-offset-4 hover:decoration-copper-deep"
+                >
+                  {contact.phone}
+                </a>
+              </li>
+            </ul>
             <h2 className="t-label mb-6 text-copper-deep">Two ways to start</h2>
             <dl className="space-y-8">
               <div className="rule-tick pt-5">
