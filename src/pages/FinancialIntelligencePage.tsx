@@ -59,11 +59,11 @@ const faqs = [
     q: 'Is AI available in Financial Intelligence?',
     a: (
       <p>
-        AI-Enabled Financial Intelligence is SG2’s product direction. Natural-language financial
-        analysis and AI anomaly detection have been developed and are being introduced through our
-        next rollout phase. They can be included in customer-specific implementations based on your
-        requirements and scope. They are not switched on for every customer today, and we confirm
-        exactly what is included before you commit.
+        AI-Enabled Financial Intelligence is SG2’s product. Natural-language financial analysis and
+        AI anomaly detection have been developed and are being introduced through our next rollout
+        phase. They can be included in customer-specific implementations based on your requirements
+        and scope. They are not switched on for every customer today, and we confirm exactly what is
+        included before you commit.
       </p>
     ),
   },
@@ -102,6 +102,30 @@ export function FinancialIntelligencePage() {
               See the workflows
             </Button>
           </>
+        }
+        footer={
+          <ul aria-label="Capabilities" className="flex flex-wrap gap-2">
+            {[
+              ['Revenue reporting', false],
+              ['Financial reconciliation', false],
+              ['Discrepancy identification', false],
+              ['Delivery platform fees and payouts', false],
+              ['Multi-location comparison', false],
+              ['Natural-language analytics', true],
+              ['AI anomaly detection', true],
+            ].map(([x, ai]) => (
+              <li
+                key={String(x)}
+                className={
+                  ai
+                    ? 't-label rounded-full bg-copper-soft px-3.5 py-2 text-[0.68rem] text-copper-ink'
+                    : 't-label rounded-full border border-line px-3.5 py-2 text-[0.68rem] text-ink-soft'
+                }
+              >
+                {x}
+              </li>
+            ))}
+          </ul>
         }
         aside={
           <ProductFrame title="Statement">

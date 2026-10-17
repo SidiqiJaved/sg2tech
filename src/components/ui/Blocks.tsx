@@ -108,12 +108,14 @@ export function PageIntro({
   lead,
   actions,
   aside,
+  footer,
 }: {
   eyebrow: string
   title: ReactNode
   lead: ReactNode
   actions?: ReactNode
   aside?: ReactNode
+  footer?: ReactNode
 }) {
   return (
     <section className="pb-16 pt-14 sm:pt-20 lg:pb-24">
@@ -134,6 +136,7 @@ export function PageIntro({
         </div>
         {aside && <div className="min-w-0 lg:col-span-5">{aside}</div>}
       </div>
+      {footer && <div className="container-page mt-12 lg:mt-16">{footer}</div>}
     </section>
   )
 }

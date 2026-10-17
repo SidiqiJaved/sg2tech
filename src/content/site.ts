@@ -36,7 +36,7 @@ export const navGroups: NavGroup[] = [
       {
         label: 'Financial Intelligence',
         to: '/solutions/financial-intelligence',
-        description: 'Revenue, fees and payouts across every location.',
+        description: 'AI-enabled reporting, reconciliation and analysis across every location.',
       },
       {
         label: 'Franchise Management',

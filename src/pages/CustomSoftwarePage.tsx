@@ -43,6 +43,34 @@ const capabilities = [
   ],
 ]
 
+const examples = [
+  [
+    'Integration',
+    'Systems that don’t talk to each other',
+    'For example, a multi-site operator re-keys orders from one system into another every day. We connect them so the data moves once, accurately.',
+  ],
+  [
+    'Analytics',
+    'Reports assembled by hand',
+    'For example, a distributor’s weekly performance pack takes a day to build from three exports. A data pipeline and dashboard produce it from the same sources every time.',
+  ],
+  [
+    'Automation',
+    'Approvals and handoffs in email',
+    'For example, purchase and expense approvals chased across inboxes become a workflow application with clear owners and statuses.',
+  ],
+  [
+    'Custom application',
+    'A legacy tool nobody can change',
+    'For example, an aging internal application the business depends on is rebuilt or extended without losing the rules it encodes.',
+  ],
+  [
+    'AI-enabled application',
+    'Questions the data could already answer',
+    'For example, a services firm wants plain-language answers from its own operational data. We design applications that make that possible where it fits the problem.',
+  ],
+] as const
+
 const process = [
   {
     t: 'Discovery and requirements',
@@ -129,11 +157,29 @@ export function CustomSoftwarePage() {
         </ul>
       </Section>
 
-      <Section tone="sage" id="integrations">
+      <Section tone="ivory">
+        <SectionHeader
+          index="03"
+          eyebrow="Problems we solve"
+          title="What this looks like in practice."
+          lead="Illustrative examples of the business problems our integrations, custom applications, automation and analytics work addresses."
+        />
+        <ul className="mt-14 grid gap-x-16 md:grid-cols-2">
+          {examples.map(([kind, t, d], i) => (
+            <Reveal as="li" key={t} delay={(i % 2) * 70} className="rule-tick py-7">
+              <p className="t-label text-[0.68rem] text-copper-deep">{kind}</p>
+              <h3 className="t-h3 mt-2">{t}</h3>
+              <p className="t-body mt-2 text-[0.95rem]">{d}</p>
+            </Reveal>
+          ))}
+        </ul>
+      </Section>
+
+      <Section id="integrations" className="border-t border-line">
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-6">
             <SectionHeader
-              index="03"
+              index="04"
               eyebrow="Integrations & automation"
               title="Make your systems talk, and stop re-entering data."
               lead="Most of the cost of running a business on several tools is the manual work between them. We build the connections and automations that remove it."
@@ -155,9 +201,9 @@ export function CustomSoftwarePage() {
         </div>
       </Section>
 
-      <Section id="process">
+      <Section id="process" className="border-t border-line">
         <SectionHeader
-          index="04"
+          index="05"
           eyebrow="Process"
           title="Six steps, each with something you can review."
           lead="We agree on scope and priorities with you at each stage. Timelines depend on the project and are set after discovery, not promised up front."
@@ -186,7 +232,7 @@ export function CustomSoftwarePage() {
       <Section tone="deep">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <SectionHeader index="05" eyebrow="Working with us" title="What to expect." />
+            <SectionHeader index="06" eyebrow="Working with us" title="What to expect." />
           </div>
           <dl className="lg:col-span-6 lg:col-start-7">
             {[

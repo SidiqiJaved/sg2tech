@@ -23,7 +23,7 @@ const orgJsonLd = {
   name: 'SG2 Technologies, LLC',
   url: SITE_URL,
   description:
-    'Software products and engineering: financial intelligence and franchise management software, plus custom business applications.',
+    'Software products and engineering: AI-Enabled Financial Intelligence and franchise management software, plus custom business applications.',
 }
 
 function head(meta, { home = false } = {}) {

@@ -13,7 +13,7 @@ export const routeMeta: RouteMeta[] = [
     path: '/',
     title: 'SG2 Technologies | Software Products & Engineering',
     description:
-      'SG2 builds software products for multi-location restaurants and franchises, plus custom business applications that connect data and simplify operations.',
+      'SG2 builds AI-Enabled Financial Intelligence and Franchise Management software for multi-location restaurants and franchises, plus custom business applications that connect data and simplify operations.',
     indexable: true,
   },
   {

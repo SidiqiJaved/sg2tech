@@ -5,18 +5,28 @@ import { demoCta, navGroups, topLevelLinks } from '@/content/site'
 import { cn } from '@/lib/cn'
 import { Logo } from './Logo'
 
+/** Location with the hash applied after mount, so the first client render matches the prerendered HTML. */
+function useNavLocation() {
+  const { pathname, search, hash: current } = useLocation()
+  const [hash, setHash] = useState('')
+  useEffect(() => setHash(current), [current])
+  return { pathname, search, hash }
+}
+
 /** A nav link is active only when it matches the real route (and hash, when the link has one). */
+const trimSlash = (p: string) => (p.length > 1 ? p.replace(/\/+$/, '') : p)
+
 function isActive(to: string, pathname: string, hash: string) {
   const [path = '', h = ''] = to.split('#')
-  if (pathname !== path) return false
+  if (trimSlash(pathname) !== trimSlash(path)) return false
   if (h) return hash === `#${h}`
-  return !hash || !navGroups.some((g) => g.links.some((l) => l.to === `${path}${hash}`))
+  return !hash || !navGroups.some((g) => g.links.some((l) => l.to === `${trimSlash(path)}${hash}`))
 }
 
 function DesktopGroup({ group }: { group: (typeof navGroups)[number] }) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-  const { pathname, hash } = useLocation()
+  const { pathname, hash } = useNavLocation()
   const groupActive = group.links.some((l) => isActive(l.to, pathname, hash))
 
   useEffect(() => setOpen(false), [pathname])
@@ -96,7 +106,7 @@ function DesktopGroup({ group }: { group: (typeof navGroups)[number] }) {
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const { pathname, search, hash } = useLocation()
+  const { pathname, search, hash } = useNavLocation()
   const menuBtn = useRef<HTMLButtonElement>(null)
 
   useEffect(() => setMobileOpen(false), [pathname, search])
@@ -204,10 +214,10 @@ export function Header() {
               <Link
                 key={l.to}
                 to={l.to}
-                aria-current={pathname === l.to ? 'page' : undefined}
+                aria-current={trimSlash(pathname) === l.to ? 'page' : undefined}
                 className={cn(
                   'block py-2 font-display text-2xl tracking-tight',
-                  pathname === l.to && 'text-copper-deep',
+                  trimSlash(pathname) === l.to && 'text-copper-deep',
                 )}
               >
                 {l.label}

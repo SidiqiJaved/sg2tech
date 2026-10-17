@@ -54,7 +54,7 @@ const lifecycle = [
 const capabilities = [
   {
     t: 'Centralized franchise oversight',
-    d: 'One place to see every location in the network and where each one stands.',
+    d: 'One place to see every location in the network and where each one stands, so headquarters spots problems early.',
     g: 'Oversee',
   },
   {
@@ -300,17 +300,29 @@ export function FranchiseManagementPage() {
           <div className="lg:col-span-5">
             <SectionHeader
               index="05"
-              eyebrow="Why a product"
-              title="A system of record, not a consulting engagement."
-              lead="Franchise oversight is a recurring need. It should live in software that your whole network uses every week."
+              eyebrow="Why Franchise Management"
+              title="Keep your standard intact as the network grows."
+              lead="Every new location is another place for the brand standard to drift. Franchise Management gives headquarters the visibility and accountability to keep up."
             />
           </div>
           <ul className="lg:col-span-6 lg:col-start-7">
             {[
-              ['Same standard everywhere', 'Every location is checked against the same criteria.'],
-              ['Evidence, not recollection', 'Findings carry notes and photos.'],
-              ['Follow-up that closes', 'Open actions are visible until they are resolved.'],
-              ['Room to grow', 'Add locations without adding administrative overhead.'],
+              [
+                'One standard, checked the same way',
+                'Every location is inspected against the same checklist, so results are comparable across the network.',
+              ],
+              [
+                'Evidence, not recollection',
+                'Findings carry notes and photos, so conversations with operators start from facts.',
+              ],
+              [
+                'Follow-up that closes',
+                'Open actions have an owner and stay visible until resolved, so findings do not fade away.',
+              ],
+              [
+                'Headquarters stays in control',
+                'Bring new locations, training and employees into the same workflows, and see invoicing and royalties alongside operations.',
+              ],
             ].map(([t, d]) => (
               <li key={t} className="rule-tick py-6">
                 <h3 className="t-h3">{t}</h3>

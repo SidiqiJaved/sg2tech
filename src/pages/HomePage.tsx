@@ -18,30 +18,29 @@ import {
 
 const problems = [
   {
-    t: 'Disconnected systems',
-    d: 'Point of sale, delivery apps, accounting and scheduling each hold part of the picture. None of them hold all of it.',
+    t: 'Four systems, four versions of last week',
+    d: 'Your POS, each delivery platform, direct ordering and accounting all report the same week differently, so nobody can say with confidence what the number is.',
+    help: [['Financial Intelligence', '/solutions/financial-intelligence']],
   },
   {
-    t: 'Fragmented operational data',
-    d: 'The same week is described differently depending on which report you open.',
+    t: 'Sales that don’t match the payout',
+    d: 'Between an order and the deposit sit commissions, promotions, refunds and adjustments. When a payout comes in short, finding out why means digging through statements.',
+    help: [['Reconciliation and discrepancy identification', '/solutions/financial-intelligence']],
   },
   {
-    t: 'Manual reporting',
-    d: 'Someone exports spreadsheets every week and stitches them together before anyone can ask a question.',
+    t: 'Locations you can’t compare',
+    d: 'Each location’s numbers are assembled differently and its standards are checked differently, so a strong location and a struggling one are hard to tell apart.',
+    help: [
+      ['Multi-location comparison', '/solutions/financial-intelligence'],
+      ['Franchise Management', '/solutions/franchise-management'],
+    ],
   },
   {
-    t: 'Limited financial visibility',
-    d: 'Sales are easy to see. What you actually keep, after fees and adjustments, is not.',
+    t: 'Work held together by spreadsheets and email',
+    d: 'Weekly exports, re-keyed data, approvals and follow-ups that live in inboxes and memory: the manual glue between tools that nobody planned.',
+    help: [['Custom software and integrations', '/services/custom-software-development']],
   },
-  {
-    t: 'Inefficient processes',
-    d: 'Approvals, follow-ups and handoffs live in email threads and memory.',
-  },
-  {
-    t: 'Many locations, no common view',
-    d: 'Each new location adds another set of numbers to reconcile and another standard to check.',
-  },
-]
+] as const
 
 const featureTabs: FeatureTab[] = [
   {
@@ -207,6 +206,14 @@ export function HomePage() {
                 <div>
                   <h3 className="t-h3">{p.t}</h3>
                   <p className="t-body mt-2 max-w-xl">{p.d}</p>
+                  <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.9rem]">
+                    <span className="t-label text-[0.65rem] text-ink-mute">How SG2 helps</span>
+                    {p.help.map(([label, to]) => (
+                      <TextLink key={label} to={to}>
+                        {label}
+                      </TextLink>
+                    ))}
+                  </p>
                 </div>
               </Reveal>
             ))}

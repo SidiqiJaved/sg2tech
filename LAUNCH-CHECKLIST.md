@@ -119,3 +119,18 @@ The build contains **no invented company facts**. Everything below needs your in
 - The AI visuals (`AskYourDataMock`, `AnomalyInsightsMock`) use invented questions and figures and carry the "Illustrative data" label plus a caption saying they are not live product screenshots.
 - Earlier "AI-generated summaries" and "revenue forecasting" were removed because only natural-language analysis and anomaly detection have been confirmed. Re-add if Adil confirms them.
 - [ ] Ask Adil to review the example question, answer and anomaly wording so the illustrative experience reflects how the feature really behaves.
+
+## 9. Final content, navigation and brand refinement
+
+- Header now shows the official logo with a quiet "TECHNOLOGIES" wordmark (hidden below 400px width). Active navigation: Solutions (Financial Intelligence, Franchise Management), Engineering (Custom Software, Integrations & Automation), Company (About, Our Work) and Contact each show a persistent orange underline, with `aria-current="page"` on the active link in dropdowns and the mobile menu. Verified on all eight routes at desktop and mobile widths. The hash link (`#integrations`) only applies after hydration, which is intended.
+- Homepage problem section reduced from six items to four concrete restaurant and multi-location problems, each linking to the relevant SG2 solution.
+- Financial Intelligence: capability strip under the hero (revenue reporting, financial reconciliation, discrepancy identification, delivery platform fees and payouts, multi-location comparison, natural-language analytics, AI anomaly detection). FAQ now calls AI-Enabled Financial Intelligence SG2's product (not a "direction"). Home and Financial Intelligence metadata, navigation description and structured data carry the AI-enabled positioning.
+- Franchise Management: value messaging tightened around keeping the brand standard intact as the network grows.
+- Custom Software: new "Problems we solve" section with five illustrative examples (integration, analytics, automation, custom application, AI-enabled application). Examples are labelled illustrative and are not claims about past customers.
+- Staging check: the staging site was fetched and matched the repository's AI-enabled structure, but it predates this refinement (no TECHNOLOGIES wordmark yet). Redeploy staging to review these changes.
+- No forecasting, AI-generated summaries, bank connectivity, certifications or customer metrics were added. Claim scan of the build found none.
+
+### Items needing owner decision before launch
+- [ ] Approve the illustrative Custom Software examples (they are generic, not client stories).
+- [ ] Confirm the four homepage problem statements describe your customers' real pain points.
+- [ ] Decide whether to keep the "Technologies" wordmark hidden on very narrow phones (<400px) or show it everywhere.
