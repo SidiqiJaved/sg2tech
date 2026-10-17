@@ -166,7 +166,7 @@ function LifecycleStepper() {
                   {String(n + 1).padStart(2, '0')}
                 </span>
                 <span>
-                  <span className="t-label block text-[0.65rem]">{s.who}</span>
+                  <span className="t-label block text-[0.75rem]">{s.who}</span>
                   <span className="font-display text-xl tracking-tight sm:text-2xl">{s.title}</span>
                   {n === i && <span className="t-body mt-2 block text-[0.95rem]">{s.body}</span>}
                 </span>
@@ -205,7 +205,7 @@ export function FranchiseManagementPage() {
       />
 
       {/* WORKFLOW */}
-      <Section tone="deep" id="workflow">
+      <Section tone="soft" id="workflow">
         <SectionHeader
           index="01"
           eyebrow="Workflow"
@@ -295,7 +295,7 @@ export function FranchiseManagementPage() {
       </Section>
 
       {/* WHY PRODUCT */}
-      <Section>
+      <Section divider>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <SectionHeader
@@ -333,7 +333,7 @@ export function FranchiseManagementPage() {
         </div>
       </Section>
 
-      <Section>
+      <Section divider>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <SectionHeader index="06" eyebrow="Questions" title="Straight answers." />

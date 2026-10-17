@@ -49,7 +49,7 @@ export function WorkPage() {
         lead="Every solution begins with understanding the business behind it. At SG2 Technologies, we bring discovery, product thinking, engineering, testing and documentation together to develop software around practical operational needs."
       />
 
-      <Section tone="deep">
+      <Section tone="soft">
         <SectionHeader
           eyebrow="From challenge to delivery"
           title="How a business problem becomes working software."

@@ -51,7 +51,8 @@ export function TextLink({
     <Link
       to={to}
       className={cn(
-        'group inline-flex items-center gap-2 font-medium text-copper-deep underline decoration-copper/40 underline-offset-[6px] hover:decoration-copper-deep',
+        // Padding with an equal negative margin enlarges the tap area (24px+, 44px on phones) without moving the layout.
+        'group -my-1.5 inline-flex items-center gap-2 py-1.5 font-medium text-copper-deep underline decoration-copper/40 underline-offset-[6px] hover:decoration-copper-deep max-sm:-my-3 max-sm:py-3',
         className,
       )}
     >

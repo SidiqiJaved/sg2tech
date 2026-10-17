@@ -15,7 +15,7 @@ export function Logo({ inverted = false }: { inverted?: boolean }) {
       <span
         aria-hidden
         className={cn(
-          't-label ml-2.5 text-[0.62rem] font-medium leading-none tracking-[0.2em] sm:ml-3 sm:text-[0.68rem]',
+          't-label ml-2.5 text-[0.75rem] font-medium leading-none tracking-[0.2em] sm:ml-3 sm:text-[0.75rem]',
           inverted ? 'text-ivory/85' : 'text-ink-soft',
         )}
       >

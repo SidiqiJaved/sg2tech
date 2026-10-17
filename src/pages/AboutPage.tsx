@@ -57,7 +57,7 @@ export function AboutPage() {
         }
       />
 
-      <Section tone="deep">
+      <Section divider>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <SectionHeader
@@ -80,7 +80,7 @@ export function AboutPage() {
         </div>
       </Section>
 
-      <Section>
+      <Section tone="soft">
         <SectionHeader
           index="02"
           eyebrow="Why SG2 exists"
@@ -187,7 +187,7 @@ export function AboutPage() {
         </div>
       </Section>
 
-      <Section tone="deep">
+      <Section divider>
         <SectionHeader
           index="06"
           eyebrow="What guides our work"
@@ -196,7 +196,6 @@ export function AboutPage() {
         <ul className="mt-14 grid gap-x-16 md:grid-cols-2">
           {principles.map(([t, d], i) => (
             <Reveal as="li" key={t} delay={(i % 2) * 70} className="rule-tick py-7">
-              <p className="t-label mb-2 text-copper-deep">{String(i + 1).padStart(2, '0')}</p>
               <h3 className="t-h3">{t}</h3>
               <p className="t-body mt-2">{d}</p>
             </Reveal>

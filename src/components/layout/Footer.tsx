@@ -4,7 +4,7 @@ import { Logo } from './Logo'
 
 export function Footer() {
   return (
-    <footer className="on-dark bg-ink text-ivory">
+    <footer className="on-dark border-t border-line-dark bg-ink-deep text-ivory">
       <div className="container-page grid gap-14 py-16 md:grid-cols-[1.4fr_repeat(4,1fr)] md:py-20">
         <div className="max-w-sm">
           <Logo inverted />

@@ -81,7 +81,7 @@ export function FeatureTabs({ tabs, dark = false }: { tabs: FeatureTab[]; dark?:
                 )}
               >
                 <span className="flex items-baseline gap-4">
-                  <span className="t-label text-[0.7rem] text-copper">
+                  <span className="t-label text-[0.75rem] text-copper">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <span className="font-display text-xl tracking-tight sm:text-2xl">{t.label}</span>

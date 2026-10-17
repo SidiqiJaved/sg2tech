@@ -88,7 +88,7 @@ export function CustomSoftwarePage() {
         }
       />
 
-      <Section tone="deep">
+      <Section divider>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <SectionHeader
@@ -112,7 +112,7 @@ export function CustomSoftwarePage() {
         </div>
       </Section>
 
-      <Section>
+      <Section divider>
         <SectionHeader index="02" eyebrow="Capabilities" title="What we build." />
         <ul className="mt-14 grid gap-x-16 md:grid-cols-2">
           {capabilities.map(([t, d], i) => (
@@ -124,7 +124,7 @@ export function CustomSoftwarePage() {
         </ul>
       </Section>
 
-      <Section tone="ivory">
+      <Section tone="soft">
         <SectionHeader
           index="03"
           eyebrow="Problems we solve"
@@ -134,7 +134,7 @@ export function CustomSoftwarePage() {
         <ul className="mt-14 grid gap-x-16 md:grid-cols-2">
           {examples.map(([kind, t, d], i) => (
             <Reveal as="li" key={t} delay={(i % 2) * 70} className="rule-tick py-7">
-              <p className="t-label text-[0.68rem] text-copper-deep">{kind}</p>
+              <p className="t-label text-[0.75rem] text-copper-deep">{kind}</p>
               <h3 className="t-h3 mt-2">{t}</h3>
               <p className="t-body mt-2 text-[0.95rem]">{d}</p>
             </Reveal>
@@ -142,7 +142,7 @@ export function CustomSoftwarePage() {
         </ul>
       </Section>
 
-      <Section id="integrations" className="border-t border-line">
+      <Section id="integrations">
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-6">
             <SectionHeader
@@ -168,7 +168,7 @@ export function CustomSoftwarePage() {
         </div>
       </Section>
 
-      <Section id="process" className="border-t border-line">
+      <Section id="process" divider>
         <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
             <SectionHeader
@@ -186,7 +186,7 @@ export function CustomSoftwarePage() {
         </div>
       </Section>
 
-      <Section tone="deep">
+      <Section divider>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <SectionHeader index="06" eyebrow="Working with us" title="What to expect." />

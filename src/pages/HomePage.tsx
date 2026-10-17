@@ -179,7 +179,7 @@ export function HomePage() {
       </section>
 
       {/* PROBLEM */}
-      <Section tone="deep">
+      <Section tone="soft">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-28">
@@ -209,8 +209,8 @@ export function HomePage() {
                 <div>
                   <h3 className="t-h3">{p.t}</h3>
                   <p className="t-body mt-2 max-w-xl">{p.d}</p>
-                  <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.9rem]">
-                    <span className="t-label text-[0.65rem] text-ink-mute">How SG2 helps</span>
+                  <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.9rem]">
+                    <span className="t-label text-[0.75rem] text-ink-mute">How SG2 helps</span>
                     {p.help.map(([label, to]) => (
                       <TextLink key={label} to={to}>
                         {label}
@@ -247,7 +247,7 @@ export function HomePage() {
       </Section>
 
       {/* FRANCHISE MANAGEMENT */}
-      <Section tone="ivory">
+      <Section tone="soft">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <SectionHeader
@@ -391,7 +391,7 @@ export function HomePage() {
       </Section>
 
       {/* HOW WE WORK */}
-      <Section className="border-t border-line">
+      <Section divider>
         <SectionHeader
           index="06"
           eyebrow="How we work"

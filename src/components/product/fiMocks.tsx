@@ -48,7 +48,7 @@ function PanelHead({ title, scope }: { title: string; scope: string }) {
   return (
     <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
       <p className="font-display text-lg tracking-tight">{title}</p>
-      <p className="t-label text-[0.62rem] text-ink-mute">{scope}</p>
+      <p className="t-label text-[0.75rem] text-ink-mute">{scope}</p>
     </div>
   )
 }
@@ -56,9 +56,9 @@ function PanelHead({ title, scope }: { title: string; scope: string }) {
 function Kpi({ label, value, note }: { label: string; value: string; note?: string }) {
   return (
     <div className="min-w-0 rounded border border-line bg-ivory/60 p-3">
-      <p className="t-label truncate text-[0.62rem] text-ink-mute">{label}</p>
+      <p className="t-label truncate text-[0.75rem] text-ink-mute">{label}</p>
       <p className="mt-1 font-display text-xl tabular-nums tracking-tight sm:text-2xl">{value}</p>
-      {note && <p className="mt-0.5 text-[0.7rem] tabular-nums text-ink-mute">{note}</p>}
+      {note && <p className="mt-0.5 text-[0.75rem] tabular-nums text-ink-mute">{note}</p>}
     </div>
   )
 }
@@ -73,7 +73,7 @@ function StatusChip({ status }: { status: ReconStatus }) {
   return (
     <span
       className={cn(
-        'inline-block whitespace-nowrap rounded px-1.5 py-0.5 text-[0.7rem]',
+        'inline-block whitespace-nowrap rounded px-1.5 py-0.5 text-[0.75rem]',
         STATUS[status].cls,
       )}
     >
@@ -90,7 +90,7 @@ const RATES_NOTE =
   'All figures are invented. Fee percentages are hypothetical examples, not the rates of any specific delivery platform or payment provider.'
 
 function Footnote({ children }: { children: React.ReactNode }) {
-  return <p className="t-caption text-[0.7rem] leading-snug">{children}</p>
+  return <p className="t-caption text-[0.75rem] leading-snug">{children}</p>
 }
 
 // --- trend chart ------------------------------------------------------------------------------
@@ -125,7 +125,7 @@ function TrendChart() {
             x2={w - right}
             y1={y(g)}
             y2={y(g)}
-            stroke="#dbd5c6"
+            stroke="#e0ddd4"
             strokeWidth="1"
             strokeDasharray="2 4"
           />
@@ -159,7 +159,7 @@ function TrendCard() {
     <div className="rounded border border-line bg-paper p-3">
       <div className="mb-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
         <p className="text-[0.8rem] font-medium">Weekly gross sales and net payout</p>
-        <span className="flex items-center gap-4 text-[0.7rem] text-ink-soft">
+        <span className="flex items-center gap-4 text-[0.75rem] text-ink-soft">
           <span className="flex items-center gap-1.5">
             <i className="inline-block h-0.5 w-4 bg-ink" /> Gross sales
           </span>
@@ -206,26 +206,30 @@ export function RevenueOverviewMock({ compact = false }: { compact?: boolean }) 
       {!compact && (
         <>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[26rem] text-left text-[0.8rem] tabular-nums">
+            <table className="w-full text-left text-[0.75rem] tabular-nums sm:text-[0.8rem]">
               <caption className="sr-only">
                 Illustrative {PERIOD.label} gross sales, platform fees and net payout by location
               </caption>
               <thead>
-                <tr className="t-label border-b border-line text-[0.62rem] text-ink-mute">
+                <tr className="t-label border-b border-line text-[0.75rem] text-ink-mute">
                   <th scope="col" className="py-2 font-medium">
                     Location
                   </th>
                   <th scope="col" className="py-2 text-right font-medium">
-                    Gross sales
+                    <span className="sm:hidden">Gross</span>
+                    <span className="hidden sm:inline">Gross sales</span>
                   </th>
                   <th scope="col" className="py-2 text-right font-medium">
-                    Platform fees
+                    <span className="sm:hidden">Fees</span>
+                    <span className="hidden sm:inline">Platform fees</span>
                   </th>
                   <th scope="col" className="py-2 text-right font-medium">
-                    Net payout
+                    <span className="sm:hidden">Net</span>
+                    <span className="hidden sm:inline">Net payout</span>
                   </th>
                   <th scope="col" className="py-2 text-right font-medium">
-                    % of gross
+                    <span className="sm:hidden">Net %</span>
+                    <span className="hidden sm:inline">% of gross</span>
                   </th>
                 </tr>
               </thead>
@@ -336,24 +340,24 @@ export function PayoutVisibilityMock() {
         scope={`${PERIOD.label} (${PERIOD.span}) · All locations`}
       />
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-[0.72rem] tabular-nums sm:text-[0.8rem]">
+        <table className="w-full text-left text-[0.75rem] tabular-nums sm:text-[0.8rem]">
           <caption className="sr-only">
             Illustrative comparison of calculated net payout and reported payout by source for{' '}
             {PERIOD.label}
           </caption>
           <thead>
-            <tr className="t-label border-b border-line text-[0.62rem] text-ink-mute">
+            <tr className="t-label border-b border-line text-[0.75rem] text-ink-mute">
               <th scope="col" className="py-2 font-medium">
                 Source
               </th>
-              <th scope="col" className="py-2 pl-2 text-right font-medium">
+              <th scope="col" className="py-2 pl-1.5 text-right sm:pl-2 font-medium">
                 Calculated
               </th>
-              <th scope="col" className="py-2 pl-2 text-right font-medium">
+              <th scope="col" className="py-2 pl-1.5 text-right sm:pl-2 font-medium">
                 <span className="sm:hidden">Reported</span>
                 <span className="hidden sm:inline">Reported payout</span>
               </th>
-              <th scope="col" className="py-2 pl-2 text-right font-medium">
+              <th scope="col" className="py-2 pl-1.5 text-right sm:pl-2 font-medium">
                 <span className="sm:hidden">Diff.</span>
                 <span className="hidden sm:inline">Difference</span>
               </th>
@@ -365,7 +369,7 @@ export function PayoutVisibilityMock() {
           <tbody>
             {reconciliation.map((r) => (
               <tr key={r.id} className="border-b border-line/60">
-                <th scope="row" className="py-2.5 pr-2 font-normal">
+                <th scope="row" className="py-2.5 pr-1 font-normal sm:pr-2">
                   {r.label}
                   <span className="mt-1 block sm:hidden">
                     <StatusChip status={r.status} />
@@ -422,7 +426,7 @@ export function PayoutVisibilityMock() {
             <dt>
               <StatusChip status={status} />
             </dt>
-            <dd className="t-caption text-[0.7rem] leading-snug">{meaning}</dd>
+            <dd className="t-caption text-[0.75rem] leading-snug">{meaning}</dd>
           </div>
         ))}
       </dl>
@@ -442,7 +446,7 @@ export function LocationComparisonMock() {
   return (
     <div className="space-y-3 text-ink">
       <PanelHead title="Location comparison" scope={`${PERIOD.label} · Net payout`} />
-      <div className="t-label hidden grid-cols-[5.5rem_1fr_5rem_4.75rem] gap-3 border-b border-line pb-2 text-[0.62rem] text-ink-mute sm:grid">
+      <div className="t-label hidden grid-cols-[5.5rem_1fr_5rem_4.75rem] gap-3 border-b border-line pb-2 text-[0.75rem] text-ink-mute sm:grid">
         <span>Location</span>
         <span>Net payout</span>
         <span className="text-right">Gross sales</span>
@@ -464,7 +468,7 @@ export function LocationComparisonMock() {
               </span>
               <span className="w-[4.25rem] text-right tabular-nums">{usd(r.net)}</span>
             </span>
-            <span className="col-start-2 text-[0.7rem] tabular-nums text-ink-mute sm:hidden">
+            <span className="col-start-2 text-[0.75rem] tabular-nums text-ink-mute sm:hidden">
               Gross {usd(r.a.gross)} · {pct(rate(r.net, r.a.gross))} of gross
             </span>
             <span className="hidden text-right tabular-nums sm:block">{usd(r.a.gross)}</span>
@@ -509,12 +513,12 @@ export function ChannelMixMock() {
         ))}
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-[0.72rem] tabular-nums sm:text-[0.8rem]">
+        <table className="w-full text-left text-[0.75rem] tabular-nums sm:text-[0.8rem]">
           <caption className="sr-only">
             Illustrative gross sales, share of gross and platform fee rate by channel
           </caption>
           <thead>
-            <tr className="t-label border-b border-line text-[0.62rem] text-ink-mute">
+            <tr className="t-label border-b border-line text-[0.75rem] text-ink-mute">
               <th scope="col" className="py-2 font-medium">
                 Channel
               </th>
@@ -670,14 +674,14 @@ export function StatementMock({ compact = false }: { compact?: boolean }) {
         <table
           className={cn(
             'w-full text-left tabular-nums',
-            compact ? 'text-[0.72rem]' : 'min-w-[34rem] text-[0.75rem]',
+            compact ? 'text-[0.75rem]' : 'min-w-[34rem] text-[0.75rem]',
           )}
         >
           <caption className="sr-only">
             Illustrative {PERIOD.label} statement: gross sales by channel, deductions and net payout
           </caption>
           <thead>
-            <tr className="t-label border-b border-line text-[0.58rem] text-ink-mute">
+            <tr className="t-label border-b border-line text-[0.75rem] text-ink-mute">
               <th scope="col" className="px-3 py-2 font-medium">
                 USD
               </th>
@@ -701,7 +705,7 @@ export function StatementMock({ compact = false }: { compact?: boolean }) {
                     <th
                       scope="colgroup"
                       colSpan={span}
-                      className="t-label px-3 py-1.5 text-[0.58rem] font-medium text-ink-mute"
+                      className="t-label px-3 py-1.5 text-[0.75rem] font-medium text-ink-mute"
                     >
                       {r.label}
                     </th>
@@ -772,7 +776,7 @@ export function AskYourDataMock() {
     <div className="space-y-4 text-ink">
       <div>
         <p className="font-display text-lg tracking-tight">Ask your financial data</p>
-        <p className="t-label mt-0.5 text-[0.62rem] text-ink-mute">
+        <p className="t-label mt-0.5 text-[0.75rem] text-ink-mute">
           Natural-language analysis · {name} · {PERIOD.label} vs {PERIOD.prior}
         </p>
       </div>
@@ -787,7 +791,7 @@ export function AskYourDataMock() {
           for {usd(-feesAndRefunds)} of that change; gross sales were{' '}
           {grossDelta < 0 ? 'down' : 'up'} {usd(Math.abs(grossDelta))}.
         </p>
-        <p className="t-label mb-2 mt-4 text-[0.6rem] text-ink-mute">Effect on net payout</p>
+        <p className="t-label mb-2 mt-4 text-[0.75rem] text-ink-mute">Effect on net payout</p>
         <ul className="space-y-2">
           {items.map((d) => (
             <li
@@ -810,7 +814,7 @@ export function AskYourDataMock() {
           </li>
         </ul>
       </div>
-      <ul className="flex flex-wrap gap-2 text-[0.72rem] text-ink-soft">
+      <ul className="flex flex-wrap gap-2 text-[0.75rem] text-ink-soft">
         {['Compare with Location 01', 'Show by delivery platform', 'Summarize the month'].map(
           (q) => (
             <li key={q} className="rounded-full border border-line bg-paper px-3 py-1.5">
@@ -859,7 +863,7 @@ export function AnomalyInsightsMock() {
               <span className="t-caption block text-[0.75rem]">{it.detail}</span>
             </span>
             {spark(it.trend, '#f26a1b')}
-            <span className="col-span-2 mt-1 inline-flex w-fit rounded-full bg-copper-soft px-2.5 py-0.5 text-[0.68rem] text-copper-ink">
+            <span className="col-span-2 mt-1 inline-flex w-fit rounded-full bg-copper-soft px-2.5 py-0.5 text-[0.75rem] text-copper-ink">
               For review
             </span>
           </li>

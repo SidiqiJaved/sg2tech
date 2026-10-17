@@ -19,7 +19,7 @@ export function InspectionChecklistMock() {
     <div className="space-y-3 text-ink">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <p className="font-display text-lg tracking-tight">Quarterly inspection · Location 07</p>
-        <p className="t-label text-[0.62rem] text-ink-mute">3 of 5 passed</p>
+        <p className="t-label text-[0.75rem] text-ink-mute">3 of 5 passed</p>
       </div>
       <ul className="divide-y divide-line/70 rounded border border-line">
         {items.map((i) => (
@@ -40,7 +40,7 @@ export function InspectionChecklistMock() {
             <span className="min-w-0 flex-1">
               <span className="block">{i.t}</span>
               {'note' in i && (
-                <span className="mt-0.5 flex items-center gap-1.5 text-[0.72rem] text-ink-mute">
+                <span className="mt-0.5 flex items-center gap-1.5 text-[0.75rem] text-ink-mute">
                   <Camera aria-hidden size={12} /> {i.note}
                 </span>
               )}
@@ -91,15 +91,18 @@ export function RoyaltyViewMock() {
     <div className="space-y-3 text-ink">
       <div className="flex items-baseline justify-between gap-2">
         <p className="font-display text-lg tracking-tight">Royalty statement · March</p>
-        <p className="t-label text-[0.62rem] text-ink-mute">Draft</p>
+        <p className="t-label text-[0.75rem] text-ink-mute">Draft</p>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[24rem] text-left text-[0.8rem] tabular-nums">
+        <table className="w-full text-left text-[0.75rem] tabular-nums sm:text-[0.8rem]">
           <caption className="sr-only">Illustrative royalty calculation by location</caption>
           <thead>
-            <tr className="t-label border-b border-line text-[0.62rem] text-ink-mute">
+            <tr className="t-label border-b border-line text-[0.75rem] text-ink-mute">
               <th className="py-2 font-medium">Location</th>
-              <th className="py-2 text-right font-medium">Reported sales</th>
+              <th className="py-2 pl-1.5 text-right font-medium">
+                <span className="sm:hidden">Sales</span>
+                <span className="hidden sm:inline">Reported sales</span>
+              </th>
               <th className="py-2 text-right font-medium">Rate</th>
               <th className="py-2 text-right font-medium">Royalty</th>
             </tr>
@@ -139,7 +142,7 @@ export function NetworkOverviewMock() {
     <div className="space-y-3 text-ink">
       <div className="flex items-baseline justify-between gap-2">
         <p className="font-display text-lg tracking-tight">Network overview</p>
-        <p className="t-label text-[0.62rem] text-ink-mute">6 locations</p>
+        <p className="t-label text-[0.75rem] text-ink-mute">6 locations</p>
       </div>
       <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         {locs.map((l) => (
@@ -150,7 +153,7 @@ export function NetworkOverviewMock() {
             <span>{l.n}</span>
             <span
               className={cn(
-                'flex items-center gap-1 rounded px-1.5 py-0.5 text-[0.7rem]',
+                'flex items-center gap-1 rounded px-1.5 py-0.5 text-[0.75rem]',
                 l.st === 'On standard' && 'bg-sage text-sage-deep',
                 l.st === 'Follow-up due' && 'bg-copper-soft text-copper-ink',
                 l.st === 'Inspection scheduled' && 'border border-line text-ink-soft',

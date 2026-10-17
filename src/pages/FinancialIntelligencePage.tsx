@@ -118,8 +118,8 @@ export function FinancialIntelligencePage() {
                 key={String(x)}
                 className={
                   ai
-                    ? 't-label rounded-full bg-copper-soft px-3.5 py-2 text-[0.68rem] text-copper-ink'
-                    : 't-label rounded-full border border-line px-3.5 py-2 text-[0.68rem] text-ink-soft'
+                    ? 't-label rounded-full bg-copper-soft px-3.5 py-2 text-[0.75rem] text-copper-ink'
+                    : 't-label rounded-full border border-line px-3.5 py-2 text-[0.75rem] text-ink-soft'
                 }
               >
                 {x}
@@ -135,7 +135,7 @@ export function FinancialIntelligencePage() {
       />
 
       {/* THE GAP */}
-      <Section>
+      <Section divider>
         <SectionHeader
           index="01"
           eyebrow="The gap"
@@ -162,7 +162,7 @@ export function FinancialIntelligencePage() {
       </Section>
 
       {/* WORKFLOWS */}
-      <section id="workflows" className="pb-8">
+      <section id="workflows" className="border-t border-line pb-8">
         <div className="container-page">
           <div className="pt-[var(--section-y)]">
             <SectionHeader
@@ -331,7 +331,7 @@ export function FinancialIntelligencePage() {
       </Section>
 
       {/* SCENARIO */}
-      <Section tone="ivory">
+      <Section tone="soft">
         <SectionHeader
           index="04"
           eyebrow="A typical Monday"
@@ -388,7 +388,7 @@ export function FinancialIntelligencePage() {
       </Section>
 
       {/* AUDIENCE */}
-      <Section tone="sage">
+      <Section tone="soft">
         <SectionHeader
           index="06"
           eyebrow="Who it is for"

@@ -51,6 +51,13 @@ function DesktopGroup({ group }: { group: (typeof navGroups)[number] }) {
       className="relative"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
+      onKeyDown={(e) => {
+        // Keyboard only: after Tab, close the panel if focus has moved outside this group.
+        if (e.key !== 'Tab') return
+        setTimeout(() => {
+          if (!ref.current?.contains(document.activeElement)) setOpen(false)
+        }, 0)
+      }}
     >
       <button
         type="button"
@@ -200,7 +207,7 @@ export function Header() {
           <button
             ref={menuBtn}
             type="button"
-            className="-mr-2 rounded p-2 lg:hidden"
+            className="-mr-2.5 rounded p-2.5 lg:hidden"
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav"
             onClick={() => setMobileOpen((o) => !o)}
@@ -217,8 +224,14 @@ export function Header() {
         hidden={!mobileOpen}
         className="fixed inset-x-0 bottom-0 top-[4.5rem] overflow-y-auto bg-paper lg:hidden"
       >
-        <div className="container-page py-8">
-          <div className="border-b border-line pb-5">
+        <div className="container-page py-6">
+          <Link
+            to={demoCta.to}
+            className="block rounded-full bg-copper px-6 py-4 text-center font-medium text-ink transition-colors hover:bg-ink hover:text-white"
+          >
+            {demoCta.label}
+          </Link>
+          <div className="mt-6 border-b border-line pb-5">
             <MobileTopLink link={homeLink} pathname={pathname} />
           </div>
           {navGroups.map((g) => (
@@ -247,12 +260,6 @@ export function Header() {
               <MobileTopLink key={l.to} link={l} pathname={pathname} />
             ))}
           </div>
-          <Link
-            to={demoCta.to}
-            className="mt-8 block rounded-full bg-copper px-6 py-4 text-center font-medium text-ink"
-          >
-            {demoCta.label}
-          </Link>
         </div>
       </nav>
     </header>

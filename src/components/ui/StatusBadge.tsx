@@ -20,7 +20,7 @@ export function StatusBadge({ status, className }: { status: Status; className?:
   return (
     <span
       className={cn(
-        't-label inline-block rounded-full px-2.5 py-1 text-[0.68rem]',
+        't-label inline-block rounded-full px-2.5 py-1 text-[0.75rem]',
         styles[status],
         className,
       )}
