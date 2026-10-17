@@ -93,13 +93,13 @@ const capabilities = [
     g: 'Standardize',
   },
   {
-    t: 'Franchise invoicing',
-    d: 'Generate and manage franchise-related invoices.',
+    t: 'Royalty & Franchise Fee Management',
+    d: 'Calculate and report royalties and franchise fees from reported sales and agreed rates.',
     g: 'Administer',
   },
   {
-    t: 'Royalty calculations',
-    d: 'Calculate and report royalties from reported sales and agreed rates.',
+    t: 'Franchise invoicing',
+    d: 'Generate and manage franchise-related invoices.',
     g: 'Administer',
   },
 ]

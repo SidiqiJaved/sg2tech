@@ -41,7 +41,7 @@ export const navGroups: NavGroup[] = [
       {
         label: 'Franchise Management',
         to: '/solutions/franchise-management',
-        description: 'Inspections, standards and invoicing in one system.',
+        description: 'Franchise oversight, inspections, invoicing and royalties.',
       },
     ],
   },
