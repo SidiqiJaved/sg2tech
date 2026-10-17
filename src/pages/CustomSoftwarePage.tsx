@@ -30,6 +30,10 @@ const capabilities = [
     'Dashboards and reporting built on your definitions, not a generic template.',
   ],
   [
+    'AI-enabled applications',
+    'Applications that put AI to work on your own data, where it genuinely fits the problem.',
+  ],
+  [
     'Cloud-based systems',
     'Applications designed to run reliably in the cloud and to be maintained over time.',
   ],
@@ -78,7 +82,7 @@ export function CustomSoftwarePage() {
       <PageIntro
         eyebrow="Engineering · Custom Software Development"
         title="Built around your business, not the other way around."
-        lead="Some requirements cannot be met by off-the-shelf tools. SG2 designs and builds custom software for organizations whose workflows, data or integrations are specific to them, in any industry."
+        lead="Some requirements cannot be met by off-the-shelf tools. SG2 designs and builds the software your organization actually needs, from connected data and integrations to workflow platforms and intelligent applications, in any industry."
         actions={
           <>
             <Button to="/contact?inquiry=custom">Discuss a Project</Button>

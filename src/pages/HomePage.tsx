@@ -210,8 +210,7 @@ export function HomePage() {
         </div>
         <div className="rule-tick mt-14 flex flex-col gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-xl text-[0.95rem] text-[#cdd0d4]">
-            AI-enabled analysis is being introduced on top of this foundation.{' '}
-            <StatusBadge status="planned" className="ml-1 align-middle !text-ivory/80" />
+            AI-enabled analysis is being introduced on top of this foundation.
           </p>
           <Button to="/solutions/financial-intelligence" variant="ghost-dark">
             See the full product
@@ -227,15 +226,15 @@ export function HomePage() {
               index="03"
               eyebrow="Product · Franchise Management"
               title="One network. One standard. Full visibility."
-              lead="Headquarters and every location work from the same standards, checklists and records."
+              lead="Headquarters and every location work from the same standards, checklists and records, with solutions shaped to your network."
             />
             <ul className="mt-8">
               {[
-                'Franchise location oversight',
-                'Inspection workflows and quality-control checklists',
-                'Training and documentation',
+                'Franchise oversight and reporting',
+                'Inspections and operational checklists',
+                'Training and employee management workflows',
                 'Operational follow-ups',
-                'Franchise invoicing and royalty calculation workflows',
+                'Franchise invoicing and royalties',
               ].map((x) => (
                 <li
                   key={x}
@@ -298,12 +297,12 @@ export function HomePage() {
             <p className="t-label text-[#ff9a55]">Security &amp; data protection</p>
             <h3 className="t-h3 mt-4">Security considered throughout the architecture.</h3>
             <p className="t-body mt-4 text-[0.95rem]">
+              SG2 takes a security-focused approach to application architecture and data protection.
               We treat customer financial data as sensitive from the first design decision, not as
-              something added at the end. Security questions are part of how we scope, build and
-              review our software.
+              something added at the end.
             </p>
             <p className="t-caption mt-6">
-              Questions about specific controls are welcome during a demo or evaluation.
+              Questions about specific safeguards are welcome at any stage of an evaluation.
             </p>
           </article>
           <article className="bg-ink p-8 sm:p-10">

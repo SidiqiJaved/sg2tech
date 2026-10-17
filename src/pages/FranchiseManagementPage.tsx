@@ -4,7 +4,6 @@ import { CtaBand, Faq, PageIntro } from '@/components/ui/Blocks'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
 import { SectionHeader } from '@/components/ui/SectionHeader'
-import { StatusBadge } from '@/components/ui/StatusBadge'
 import { ProductFrame } from '@/components/product/ProductFrame'
 import {
   ComplianceStatusMock,
@@ -69,6 +68,11 @@ const capabilities = [
     g: 'Oversee',
   },
   {
+    t: 'Reporting',
+    d: 'Location, regional and network reporting that headquarters and operators can act on.',
+    g: 'Oversee',
+  },
+  {
     t: 'Inspections and quality control',
     d: 'Checklists, observations, photos and follow-up actions.',
     g: 'Standardize',
@@ -81,6 +85,11 @@ const capabilities = [
   {
     t: 'Training and documentation',
     d: 'Keep training material, SOPs and operational documents where teams can find them.',
+    g: 'Standardize',
+  },
+  {
+    t: 'Employee management workflows',
+    d: 'Onboarding, certification and staffing workflows shaped to how your network manages its people.',
     g: 'Standardize',
   },
   {
@@ -106,11 +115,12 @@ const faqs = [
     ),
   },
   {
-    q: 'Which capabilities are available today?',
+    q: 'Is this standard software or built to order?',
     a: (
       <p>
-        We confirm the current status of each capability during your demo, and we separate what is
-        available now from what is in development or planned.
+        Both. Franchise Management combines product functionality with configuration and, where a
+        network needs it, custom development. In your demo we map your requirements to what comes as
+        standard and what we would configure or build, so scope is clear before you commit.
       </p>
     ),
   },
@@ -178,7 +188,7 @@ export function FranchiseManagementPage() {
       <PageIntro
         eyebrow="Solutions · Franchise Management"
         title="One network. One standard. Full visibility."
-        lead="A centralized operational system for franchise organizations: inspections, standards, training, invoicing and royalty reporting in one place, instead of spread across emails, spreadsheets and phone calls."
+        lead="SG2 helps franchise organizations run one standard across every location: inspections, operational checklists, franchise oversight, training, employee workflows, invoicing, royalties and reporting in one connected system, instead of emails, spreadsheets and phone calls."
         actions={
           <>
             <Button to="/contact?inquiry=demo">Book a Demo</Button>
@@ -200,19 +210,14 @@ export function FranchiseManagementPage() {
           index="01"
           eyebrow="Workflow"
           title="Follow one inspection from request to resolution."
-          lead={
-            <>
-              The process below shows how the pieces connect.{' '}
-              <StatusBadge status="illustrative" className="ml-1 align-middle" />
-            </>
-          }
+          lead="The process below shows how the pieces connect, from the first inspection request to a resolved finding."
         />
         <div className="mt-14">
           <LifecycleStepper />
         </div>
         <p className="t-caption mt-8 max-w-2xl">
-          Workflow shown for illustration. Which steps are available today is confirmed during your
-          demo.
+          Screens are illustrative visuals with invented data. Your workflow is configured around
+          how your network operates.
         </p>
       </Section>
 
@@ -252,7 +257,6 @@ export function FranchiseManagementPage() {
               title="Make the monthly royalty cycle routine."
               lead="Reported sales and agreed rates in, a clear statement per location out. Fewer spreadsheets, fewer disputes about how a number was reached."
             />
-            <StatusBadge status="illustrative" className="mt-8 !text-ivory/80" />
           </div>
           <div className="min-w-0 lg:col-span-7">
             <ProductFrame title="Royalty statement">
@@ -262,12 +266,40 @@ export function FranchiseManagementPage() {
         </div>
       </Section>
 
+      {/* DELIVERY MODEL */}
+      <Section tone="deep">
+        <SectionHeader
+          index="04"
+          eyebrow="Shaped to your network"
+          title="Standard where it fits. Built where it matters."
+          lead="Every franchise system has its own standards, fee structures and ways of working. SG2 brings a product foundation and the engineering to fit it to yours."
+        />
+        <div className="mt-14 grid gap-px border border-line bg-line md:grid-cols-2">
+          <div className="bg-ivory p-8 sm:p-10">
+            <p className="t-label text-copper-deep">Configure</p>
+            <h3 className="t-h3 mt-3">Product capabilities, tuned to your brand.</h3>
+            <p className="t-body mt-3 text-[0.95rem]">
+              Inspection checklists, operating standards, training material, reporting views and
+              royalty and invoicing rules set up around your network.
+            </p>
+          </div>
+          <div className="bg-ivory p-8 sm:p-10">
+            <p className="t-label text-copper-deep">Build</p>
+            <h3 className="t-h3 mt-3">Custom workflows and integrations.</h3>
+            <p className="t-body mt-3 text-[0.95rem]">
+              Employee management workflows, connections to your existing systems and anything
+              specific to how your franchise operates, delivered by our engineering team.
+            </p>
+          </div>
+        </div>
+      </Section>
+
       {/* WHY PRODUCT */}
       <Section>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <SectionHeader
-              index="04"
+              index="05"
               eyebrow="Why a product"
               title="A system of record, not a consulting engagement."
               lead="Franchise oversight is a recurring need. It should live in software that your whole network uses every week."
@@ -292,7 +324,7 @@ export function FranchiseManagementPage() {
       <Section tone="deep">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <SectionHeader index="05" eyebrow="Questions" title="Straight answers." />
+            <SectionHeader index="06" eyebrow="Questions" title="Straight answers." />
           </div>
           <div className="lg:col-span-8">
             <Faq items={faqs} />

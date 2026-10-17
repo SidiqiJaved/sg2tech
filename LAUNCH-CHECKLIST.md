@@ -72,3 +72,8 @@ The build contains **no invented company facts**. Everything below needs your in
 - AI items stay **Planned** until engineering confirms which are in development.
 - Reconciliation messaging covers reported sales, platform fees and platform payouts only. No bank-deposit matching or bank connectivity.
 - Corporate positioning stays "Software Products & Engineering".
+
+### Positioning decision: corporate site, not a release log
+- The site presents SG2's solution capabilities and what SG2 can build, not a changelog. Per-capability "Planned" / "Illustrative" badges were removed from Franchise Management. The "Illustrative data" label stays on fictional visuals only. The one remaining "Planned" badge marks the AI capabilities, as agreed.
+- Franchise Management copy now covers oversight, inspections and checklists, training, employee management workflows, invoicing, royalties and reporting, with a "Configure / Build" section so nothing promises every feature as standard software.
+- Security copy states a security-focused approach to architecture and data protection. **Add verified safeguards when the engineering lead supplies them.** No certifications, encryption standards or compliance claims appear anywhere.
