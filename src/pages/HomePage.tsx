@@ -289,7 +289,7 @@ export function HomePage() {
           lead="Connected data, reliable reconciliation and a clear path to AI-enabled analysis."
         />
         <div className="mt-14 grid gap-px bg-line-dark lg:grid-cols-3">
-          <article className="bg-ink p-8 sm:p-10">
+          <article className="bg-ink py-8 sm:py-10 lg:p-10">
             <p className="t-label text-[#ff9a55]">Advanced data engineering</p>
             <h3 className="t-h3 mt-4">Reliable data. More informed decisions.</h3>
             <p className="t-body mt-4 text-[0.95rem]">
@@ -311,7 +311,7 @@ export function HomePage() {
               ))}
             </ol>
           </article>
-          <article className="bg-ink p-8 sm:p-10">
+          <article className="bg-ink py-8 sm:py-10 lg:p-10">
             <p className="t-label text-[#ff9a55]">Security &amp; data protection</p>
             <h3 className="t-h3 mt-4">Security considered throughout the architecture.</h3>
             <p className="t-body mt-4 text-[0.95rem]">
@@ -323,7 +323,7 @@ export function HomePage() {
               Questions about specific safeguards are welcome at any stage of an evaluation.
             </p>
           </article>
-          <article className="bg-ink p-8 sm:p-10">
+          <article className="bg-ink py-8 sm:py-10 lg:p-10">
             <p className="t-label text-[#ff9a55]">AI-Enabled Financial Intelligence</p>
             <h3 className="t-h3 mt-4">Ask your data. Catch what looks unusual.</h3>
             <p className="t-body mt-4 text-[0.95rem]">

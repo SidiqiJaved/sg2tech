@@ -283,10 +283,23 @@ export function ChannelMixMock() {
 const shellNav = ['Overview', 'Revenue', 'Statements', 'Payouts', 'Locations']
 
 /** Application shell with sidebar. Generic labels only; all figures are invented. */
-function AppShell({ active, children }: { active: string; children: React.ReactNode }) {
+function AppShell({
+  active,
+  nav = true,
+  children,
+}: {
+  active: string
+  nav?: boolean
+  children: React.ReactNode
+}) {
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)] overflow-hidden rounded border border-line bg-ivory/50 text-ink sm:grid-cols-[9rem_minmax(0,1fr)]">
-      <aside className="hidden border-r border-line bg-paper p-3 sm:block">
+    <div
+      className={cn(
+        'grid grid-cols-[minmax(0,1fr)] overflow-hidden rounded border border-line bg-ivory/50 text-ink',
+        nav && 'sm:grid-cols-[9rem_minmax(0,1fr)]',
+      )}
+    >
+      <aside className={cn('hidden border-r border-line bg-paper p-3', nav && 'sm:block')}>
         <p className="mb-4 flex items-center gap-2 font-display text-[0.95rem] tracking-tight">
           <i className="inline-block h-4 w-4 rounded-sm bg-copper" /> Financial Intelligence
         </p>
@@ -380,8 +393,8 @@ export function DashboardMock() {
   )
 }
 
-export function StatementMock() {
-  const days = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5']
+export function StatementMock({ compact = false }: { compact?: boolean }) {
+  const days = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'].slice(0, compact ? 3 : 5)
   const rows: Array<{ n: string; v: number[]; bold?: boolean; neg?: boolean; tick: string }> = [
     { n: 'Total revenue', v: [5905, 6129, 6378, 5654, 5124], bold: true, tick: 'bg-ink' },
     { n: 'Delivery platform A', v: [2163, 2123, 2471, 1664, 1571], tick: 'bg-copper' },
@@ -392,13 +405,18 @@ export function StatementMock() {
   ]
   const fmt = (n: number) => (n < 0 ? `−${usd(-n)}` : usd(n))
   return (
-    <AppShell active="Statements">
+    <AppShell active="Statements" nav={!compact}>
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <p className="font-display text-base tracking-tight">Statement</p>
         <p className="t-label text-[0.6rem] text-ink-mute">All locations · POS + delivery</p>
       </div>
       <div className="overflow-x-auto rounded border border-line bg-paper">
-        <table className="w-full min-w-[30rem] text-left text-[0.72rem] tabular-nums">
+        <table
+          className={cn(
+            'w-full text-left text-[0.72rem] tabular-nums',
+            !compact && 'min-w-[30rem]',
+          )}
+        >
           <caption className="sr-only">Illustrative statement by day and channel</caption>
           <thead>
             <tr className="t-label border-b border-line text-[0.58rem] text-ink-mute">
@@ -417,7 +435,7 @@ export function StatementMock() {
                   <i className={cn('mr-2 inline-block h-3 w-0.5 align-middle', r.tick)} />
                   {r.n}
                 </td>
-                {r.v.map((v, i) => (
+                {r.v.slice(0, days.length).map((v, i) => (
                   <td
                     key={i}
                     className={cn(
@@ -448,9 +466,9 @@ export function AskYourDataMock() {
   const max = 412
   return (
     <div className="space-y-4 text-ink">
-      <div className="flex items-baseline justify-between gap-2">
+      <div>
         <p className="font-display text-lg tracking-tight">Ask your financial data</p>
-        <p className="t-label text-[0.62rem] text-ink-mute">Natural-language analysis</p>
+        <p className="t-label mt-0.5 text-[0.62rem] text-ink-mute">Natural-language analysis</p>
       </div>
       <div className="ml-auto max-w-[88%] rounded-lg rounded-br-sm bg-ink px-4 py-3 text-[0.85rem] text-ivory">
         Why did net payout fall at Location 03 last week?

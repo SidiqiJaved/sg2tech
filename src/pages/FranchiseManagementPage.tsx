@@ -198,8 +198,8 @@ export function FranchiseManagementPage() {
           </>
         }
         aside={
-          <ProductFrame title="Network overview">
-            <NetworkOverviewMock />
+          <ProductFrame title="Standards compliance">
+            <ComplianceStatusMock />
           </ProductFrame>
         }
       />

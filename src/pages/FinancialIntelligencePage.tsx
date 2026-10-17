@@ -105,7 +105,7 @@ export function FinancialIntelligencePage() {
         }
         aside={
           <ProductFrame title="Statement">
-            <StatementMock />
+            <StatementMock compact />
           </ProductFrame>
         }
       />
@@ -319,7 +319,7 @@ export function FinancialIntelligencePage() {
               ],
             },
           ].map((col) => (
-            <div key={col.h} className="bg-ink p-8 sm:p-12">
+            <div key={col.h} className="bg-ink py-8 md:p-12">
               <p className="t-label mb-6 text-[#ff9a55]">{col.h}</p>
               <ol className="space-y-4">
                 {col.items.map((x, i) => (

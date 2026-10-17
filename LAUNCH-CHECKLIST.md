@@ -1,5 +1,39 @@
 # Launch checklist: real assets and business details needed
 
+## STATUS SUMMARY (final review)
+
+Content direction is approved. The site is **not yet cleared for production**. Remaining blockers:
+
+### Blockers (must be resolved before pointing sg2tech.com at this site)
+- [ ] **Security details from Adil.** Copy states a security-focused approach only. Add verified safeguards (no certifications, encryption standards or compliance claims until confirmed).
+- [ ] **Final AI demonstration review.** Adil to check the example question, answer and anomaly insights in `AskYourDataMock` / `AnomalyInsightsMock` against real behavior, and confirm which AI features are included in implementations.
+- [ ] **Contact form delivery to hello@sg2tech.com.** The form is wired for Netlify Forms and shows an honest "not connected" message unless `VITE_FORMS_ENABLED=true`. Delivery has **not been tested**. After the Microsoft 365 mailbox is live: deploy, set `VITE_FORMS_ENABLED=true`, submit a test, confirm it appears in Netlify Forms, add an email notification to hello@sg2tech.com, and confirm receipt.
+- [ ] **Privacy policy.** The form promises details are used only to respond to the inquiry, and no privacy page exists yet. Publish one and link it from the form and footer.
+- [ ] **Business-fact confirmations** listed in sections 1 and 7 (Franchise Management scope, engineering-lead confirmation of the reconciliation workflow split, etc.).
+- [ ] **Vector logo (SVG).** The raster logo is faithful but should be replaced by a vector master (and a reversed version for dark backgrounds).
+
+### Production domain migration
+- [ ] Set `VITE_SITE_URL=https://www.sg2tech.com` for the production build. Leave `VITE_NOINDEX` **unset** in production and set it to `true` on staging.
+- [ ] Add redirects for legacy URLs (`/services/`, `/small-business`, `/contact/`) in `netlify.toml`.
+- [ ] Add the custom domain in Netlify, then update DNS **only after explicit approval**. Keep the old site reachable until verified.
+- [ ] Submit `sitemap.xml` to Google Search Console after cutover.
+- [ ] Add an Open Graph image (1200x630) and wire it into `scripts/prerender.mjs`.
+
+### Quality gates still to run
+- [ ] Lighthouse on the deployed preview (not run).
+- [ ] Screen-reader smoke test (not run).
+- [ ] Verify CSP in the browser console on the deployed site.
+
+### Completed in the final review
+- Typecheck, lint and production build pass.
+- Browser regression at 1440, 820 and 390 widths: no console errors, broken images or horizontal overflow on all seven routes.
+- Active navigation, dropdown keyboard handling and mobile menu verified.
+- Contact form validation verified; success is never claimed without configuration.
+- No client names or confidential assets in `src`, `public` or `dist`.
+- Narrow-screen wrapping of the AI demo and the hero statement table fixed; contact form field alignment fixed; mobile and tablet card alignment fixed.
+
+---
+
 The build contains **no invented company facts**. Everything below needs your input before production launch.
 
 ## 1. Facts to verify (blocking)

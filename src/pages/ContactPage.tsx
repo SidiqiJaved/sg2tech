@@ -315,14 +315,13 @@ export function ContactPage() {
                   />
                 </Field>
                 <div hidden={inquiry !== 'demo'}>
-                  <Field id="locations" label="Number of locations" hint="Optional">
+                  <Field id="locations" label="Number of locations (optional)">
                     <input
                       id="locations"
                       name="locations"
                       inputMode="numeric"
                       pattern="[0-9]*"
                       maxLength={5}
-                      aria-describedby="locations-hint"
                       className={inputCls}
                     />
                   </Field>
