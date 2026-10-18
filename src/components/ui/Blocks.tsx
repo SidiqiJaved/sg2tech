@@ -85,7 +85,7 @@ export function CtaBand({
       <div className="container-page">
         <Reveal>
           <h2 className="t-h1 max-w-4xl">{title}</h2>
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-5 flex flex-wrap gap-3">
             <Button to={primary.to} variant="copper">
               {primary.label}
             </Button>
@@ -132,7 +132,7 @@ export function PageIntro({
           </p>
           <h1 className="t-h1">{title}</h1>
           <p className="t-lead mt-5 max-w-2xl">{lead}</p>
-          {actions && <div className="mt-6 flex flex-wrap gap-3">{actions}</div>}
+          {actions && <div className="mt-5 flex flex-wrap gap-3">{actions}</div>}
         </div>
         {aside && <div className="min-w-0 lg:col-span-5">{aside}</div>}
       </div>

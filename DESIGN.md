@@ -109,3 +109,12 @@ its trigger. Mobile navigation contains five destinations plus the demo action, 
 containment, Escape-to-close and an inert background. The contact form precedes direct contact
 details in DOM order and carries product context from demo links. Available/planned integration
 distinctions, AI rollout scope, illustrative data and net-payout definitions stay visible.
+
+
+## Typography and copy refinement
+
+The latest approved direction replaces Fraunces headings with Instrument Sans throughout.
+Headings use medium/semibold weights with no italic hero treatment. Labels also use Instrument
+Sans. Homepage copy is limited to a short hero, two product summaries, one engineering sentence
+and a demo action; mission remains in the footer and About page. Product demonstrations are
+optional disclosures, and supporting pages use brief statements rather than repeated narratives.

@@ -30,7 +30,7 @@ export interface NavGroup {
 }
 
 export const aiAvailability =
-  'Natural-language analysis and AI anomaly detection are being introduced through our next rollout phase. They are not enabled for every customer; availability and scope are confirmed before you commit.'
+  'AI analysis and anomaly detection are rolling out by agreed scope, not enabled for every customer. Availability is confirmed before you commit.'
 
 export const navGroups: NavGroup[] = [
   {
