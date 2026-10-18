@@ -88,3 +88,18 @@ Security headers (CSP, frame denial, referrer policy, HSTS) and asset caching ar
 - The current live site uses different URLs (`/services/`, `/small-business`). Decide on redirects before cutover so existing links and search rankings are not lost. Add them to `netlify.toml` as `[[redirects]]`.
 - Lower DNS TTL ahead of cutover. Keep the old deployment available for rollback.
 - After launch, submit `sitemap.xml` in Google Search Console and verify the canonical URLs resolve.
+
+
+## Simplified mobile experience
+
+The homepage routes visitors to the two products and custom engineering. Existing routes and the
+`#products`, `#workflows`, `#workflow`, `#integrations`, `#process` and `#documentation` anchors are
+preserved. `/work` is labeled **How we work**.
+
+Product demo links may include `product=financial-intelligence` or `product=franchise-management`.
+The contact form includes that choice in the Netlify form schema. Demo messages are optional;
+custom project descriptions require at least 20 characters. Preview locally without
+`VITE_FORMS_ENABLED=true` to exercise validation without transmitting a submission.
+
+After building, run `npm run validate:site` to check prerendered routes, internal links, anchors,
+page headings and contact field detection. Run `npm run validate:fi-demo` for financial arithmetic.

@@ -14,5 +14,5 @@ const app = (
 )
 
 // Production pages are prerendered, so hydrate. In `vite dev` the root is empty.
-if (container.hasChildNodes()) hydrateRoot(container, app)
+if (container.childElementCount > 0) hydrateRoot(container, app)
 else createRoot(container).render(app)

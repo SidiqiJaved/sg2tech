@@ -29,63 +29,35 @@ export interface NavGroup {
   links: NavLink[]
 }
 
+export const aiAvailability =
+  'AI analysis and anomaly detection are rolling out by agreed scope, not enabled for every customer. Availability is confirmed before you commit.'
+
 export const navGroups: NavGroup[] = [
   {
-    label: 'Solutions',
+    label: 'Products',
     links: [
       {
         label: 'Financial Intelligence',
         to: '/solutions/financial-intelligence',
-        description: 'AI-enabled reporting, reconciliation and analysis across every location.',
+        description: 'Revenue, fees, payouts and reconciliation.',
       },
       {
         label: 'Franchise Management',
         to: '/solutions/franchise-management',
-        description: 'Franchise oversight, inspections, invoicing and royalties.',
-      },
-    ],
-  },
-  {
-    label: 'Engineering',
-    links: [
-      {
-        label: 'Custom Software Development',
-        to: '/services/custom-software-development',
-        description: 'Applications built around how your business works.',
-      },
-      {
-        label: 'Integrations & Automation',
-        to: '/services/custom-software-development#integrations',
-        description: 'Connect systems and remove repeat manual work.',
-      },
-    ],
-  },
-  {
-    label: 'About',
-    links: [
-      { label: 'About SG2', to: '/about', description: 'Who we are and what we believe.' },
-      {
-        label: 'Our Work',
-        to: '/work',
-        description: 'How we design, engineer and deliver software.',
+        description: 'Standards, oversight, royalties and invoices.',
       },
     ],
   },
 ]
 
-export const homeLink: NavLink = { label: 'Home', to: '/' }
-
-export const topLevelLinks: NavLink[] = [{ label: 'Contact', to: '/contact' }]
-
-export const demoCta = { label: 'Book a Demo', to: '/contact?inquiry=demo' }
-
+export const topLevelLinks: NavLink[] = [
+  { label: 'Custom Engineering', to: '/services/custom-software-development' },
+  { label: 'About', to: '/about' },
+  { label: 'Contact', to: '/contact' },
+]
+export const mobileLinks = [...navGroups.flatMap((group) => group.links), ...topLevelLinks]
+export const demoCta = { label: 'Book a demo', to: '/contact?inquiry=demo' }
 export const footerGroups: NavGroup[] = [
   ...navGroups,
-  {
-    label: 'Get in touch',
-    links: [
-      { label: 'Book a Demo', to: '/contact?inquiry=demo' },
-      { label: 'Discuss a project', to: '/contact?inquiry=custom' },
-    ],
-  },
+  { label: 'SG2', links: [...topLevelLinks, { label: 'How we work', to: '/work' }] },
 ]

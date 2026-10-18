@@ -5,12 +5,10 @@ import { Logo } from './Logo'
 export function Footer() {
   return (
     <footer className="on-dark border-t border-line-dark bg-ink-deep text-ivory">
-      <div className="container-page grid gap-14 py-16 md:grid-cols-[1.4fr_repeat(4,1fr)] md:py-20">
-        <div className="max-w-sm">
+      <div className="container-page grid grid-cols-2 gap-x-5 gap-y-8 py-10 md:grid-cols-[1.5fr_1fr_1fr] md:gap-12 md:py-16">
+        <div className="col-span-2 max-w-sm md:col-span-1">
           <Logo inverted />
-          <p className="mt-6 font-display text-2xl leading-snug tracking-tight text-ivory">
-            {company.mission}
-          </p>
+          <p className="mt-5 text-base leading-relaxed text-ivory">{company.mission}</p>
           <ul className="mt-6 space-y-1.5 text-[0.95rem]">
             <li>
               <a href={contact.emailHref} className="text-ivory underline-offset-4 hover:underline">
@@ -27,12 +25,12 @@ export function Footer() {
         {footerGroups.map((g) => (
           <nav key={g.label} aria-label={g.label}>
             <p className="t-label mb-4 text-[#ff9a55]">{g.label}</p>
-            <ul className="space-y-2.5">
+            <ul className="space-y-0">
               {g.links.map((l) => (
                 <li key={l.label}>
                   <Link
                     to={l.to}
-                    className="text-[0.95rem] text-ivory/85 underline-offset-4 hover:text-white hover:underline"
+                    className="inline-flex min-h-11 items-center text-[0.95rem] text-ivory/85 underline-offset-4 hover:text-white hover:underline"
                   >
                     {l.label}
                   </Link>

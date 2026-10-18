@@ -6,7 +6,7 @@ import { cn } from '@/lib/cn'
 type Variant = 'primary' | 'secondary' | 'copper' | 'ghost-dark'
 
 const base =
-  'group inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3.5 text-[0.95rem] font-medium leading-none transition-[background,color,box-shadow,transform] duration-300 active:translate-y-px'
+  'group inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full px-6 py-3.5 text-[0.95rem] font-medium leading-none transition-[background,color,box-shadow,transform] duration-300 active:translate-y-px'
 
 const variants: Record<Variant, string> = {
   primary: 'bg-copper text-ink hover:bg-ink hover:text-white',

@@ -36,7 +36,7 @@ export function ProductFrame({
     >
       <div
         className={cn(
-          'flex items-center gap-3 border-b px-4 py-2.5',
+          'flex flex-wrap items-center gap-x-3 gap-y-2 border-b px-4 py-2.5',
           dark ? 'border-line-dark bg-[#1f2227]' : 'border-line bg-ivory',
         )}
       >
@@ -45,7 +45,9 @@ export function ProductFrame({
           <i className="h-2.5 w-2.5 rounded-full bg-ink/15" />
           <i className="h-2.5 w-2.5 rounded-full bg-ink/15" />
         </span>
-        <span className="t-label truncate text-[0.75rem] text-ink-mute">{title}</span>
+        <span className="t-label min-w-0 flex-1 basis-32 break-words text-[0.75rem] text-ink-mute">
+          {title}
+        </span>
         {showLabel && (
           <span className="t-label ml-auto shrink-0 rounded-full border border-dashed border-ink-mute/60 px-2 py-0.5 text-[0.75rem] text-ink-soft">
             Illustrative data

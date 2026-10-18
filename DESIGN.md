@@ -7,7 +7,7 @@
 
 Two software products (Financial Intelligence, Franchise Management) and one engineering practice (Custom Software). The site must read as a *product company with room to grow*, not a restaurant-only vendor and not an IT consultancy. That drives three structural choices:
 
-1. **Solutions vs. Engineering** are separate top-level nav groups, so products and services never blur.
+1. **Products vs. Custom Engineering** are separate top-level navigation choices, so products and services never blur.
 2. **Industry is never in the navigation.** Restaurants appear in product copy, not in the identity. A new product or industry means a new entry in `src/content/site.ts` plus a page, with no redesign.
 3. **Maturity is explicit.** `StatusBadge` (`available`, `development`, `planned`, `illustrative`) is the single mechanism for separating what exists from what is intended.
 
@@ -58,7 +58,7 @@ Starting palette from the brief, refined for accessibility. All tokens live in `
 ## Spacing & layout
 
 - Container: `max-width: 84rem`, gutter `clamp(1.25rem, 4vw, 3rem)`.
-- Section rhythm: `--section-y: clamp(4.5rem, 10vw, 9rem)`.
+- Section rhythm: `--section-y: clamp(2.75rem, 7vw, 7rem)`.
 - Grid: 12 columns from `lg`; text columns 4–6, evidence columns 6–8.
 - Radius: nearly square. Buttons are pills; frames use a small 8px radius. No pervasive rounded-card look.
 
@@ -98,3 +98,23 @@ Approximate guideline, not a rigid measurement: **55% white** (primary backgroun
 - Primary buttons are bright orange (`copper`) with charcoal text (4.6:1). White text on bright orange fails contrast, so do not use it.
 - Orange *text* on light backgrounds uses `copper-deep`; it is lifted to `#FF9A55` inside `.on-dark` sections.
 - Light product frames placed on charcoal keep light-surface text colors via `.light-surface`.
+
+
+## Mobile simplification
+
+The approved simplification keeps the existing brand and editorial typography. The homepage
+uses compact product summaries, one financial overview, custom engineering, mission and a final
+CTA. Interior pages consolidate repeated benefits and use native disclosures with content beside
+its trigger. Mobile navigation contains five destinations plus the demo action, with focus
+containment, Escape-to-close and an inert background. The contact form precedes direct contact
+details in DOM order and carries product context from demo links. Available/planned integration
+distinctions, AI rollout scope, illustrative data and net-payout definitions stay visible.
+
+
+## Typography and copy refinement
+
+The latest approved direction replaces Fraunces headings with Instrument Sans throughout.
+Headings use medium/semibold weights with no italic hero treatment. Labels also use Instrument
+Sans. Homepage copy is limited to a short hero, two product summaries, one engineering sentence
+and a demo action; mission remains in the footer and About page. Product demonstrations are
+optional disclosures, and supporting pages use brief statements rather than repeated narratives.

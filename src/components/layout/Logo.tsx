@@ -10,12 +10,12 @@ export function Logo({ inverted = false }: { inverted?: boolean }) {
         alt="SG2"
         width={600}
         height={218}
-        className={cn('w-auto', inverted ? 'h-12 rounded bg-ivory px-3 py-1.5' : 'h-11')}
+        className={cn('w-auto', inverted ? 'h-12 rounded bg-ivory px-3 py-1.5' : 'h-9 sm:h-11')}
       />
       <span
         aria-hidden
         className={cn(
-          't-label ml-2.5 text-[0.75rem] font-medium leading-none tracking-[0.2em] sm:ml-3 sm:text-[0.75rem]',
+          't-label ml-2.5 text-[0.625rem] font-medium leading-none tracking-[0.2em] sm:ml-3 sm:text-[0.75rem]',
           inverted ? 'text-ivory/85' : 'text-ink-soft',
         )}
       >
