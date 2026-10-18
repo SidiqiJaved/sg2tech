@@ -81,11 +81,11 @@ export function CtaBand({
   secondary?: { label: string; to: string }
 }) {
   return (
-    <section className="on-dark bg-ink py-24 text-ivory sm:py-32">
+    <section className="on-dark bg-ink py-12 text-ivory sm:py-20">
       <div className="container-page">
         <Reveal>
           <h2 className="t-h1 max-w-4xl">{title}</h2>
-          <div className="mt-12 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap gap-3">
             <Button to={primary.to} variant="copper">
               {primary.label}
             </Button>
@@ -118,7 +118,7 @@ export function PageIntro({
   footer?: ReactNode
 }) {
   return (
-    <section className="pb-16 pt-14 sm:pt-20 lg:pb-24">
+    <section className="pb-10 pt-8 sm:py-16 lg:pb-20">
       <div
         className={cn(
           'container-page grid gap-12',
@@ -126,13 +126,13 @@ export function PageIntro({
         )}
       >
         <div className={cn(!!aside && 'lg:col-span-7')}>
-          <p className="t-label mb-8 flex items-center gap-3 text-copper-deep">
+          <p className="t-label mb-5 flex items-center gap-3 text-copper-deep">
             <span aria-hidden className="h-px w-8 bg-copper" />
             {eyebrow}
           </p>
           <h1 className="t-h1">{title}</h1>
-          <p className="t-lead mt-8 max-w-2xl">{lead}</p>
-          {actions && <div className="mt-10 flex flex-wrap gap-3">{actions}</div>}
+          <p className="t-lead mt-5 max-w-2xl">{lead}</p>
+          {actions && <div className="mt-6 flex flex-wrap gap-3">{actions}</div>}
         </div>
         {aside && <div className="min-w-0 lg:col-span-5">{aside}</div>}
       </div>

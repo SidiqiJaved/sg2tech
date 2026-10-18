@@ -1,90 +1,55 @@
-import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui/Button'
-import { CtaBand, Faq, FeatureRow, PageIntro } from '@/components/ui/Blocks'
-import { Reveal } from '@/components/ui/Reveal'
+import { Button, TextLink } from '@/components/ui/Button'
+import { CtaBand, Faq, PageIntro } from '@/components/ui/Blocks'
 import { Section } from '@/components/ui/Section'
 import { SectionHeader } from '@/components/ui/SectionHeader'
-import { IntegrationFlow } from '@/components/product/IntegrationFlow'
 import { ProductFrame } from '@/components/product/ProductFrame'
+import { FinancialSummary } from '@/components/product/FinancialSummary'
 import {
-  AnomalyInsightsMock,
-  AskYourDataMock,
-  ChannelMixMock,
-  DashboardMock,
   GrossToNetMock,
-  LocationComparisonMock,
   PayoutVisibilityMock,
   RoyaltyInvoiceMock,
-  StatementMock,
+  AskYourDataMock,
 } from '@/components/product/fiMocks'
+import { aiAvailability } from '@/content/site'
 
 const faqs = [
   {
-    q: 'Do I have to replace my point-of-sale system?',
+    q: 'Will it work with our systems?',
     a: (
       <p>
-        No. The product is designed to work alongside the systems you already run, not replace them.
+        Keep your existing point-of-sale system. Uber Eats and DoorDash financial reporting is
+        supported. Clover sales data is ingested through SFTP or CSV; a direct Clover API
+        integration is planned. Support for other sources is confirmed before you commit.
       </p>
     ),
   },
   {
-    q: 'Which platforms and POS systems are supported?',
+    q: 'Does this replace accounting or verify bank deposits?',
     a: (
       <p>
-        Uber Eats and DoorDash financial reporting is supported, and Clover POS sales data is
-        ingested today through SFTP or CSV files, with a direct Clover API integration planned.
-        Support for any other platform is confirmed with you before you commit, and we will say
-        plainly if something is not supported.
+        No. It organizes revenue, fees and platform-reported payouts for review. Net payout is not
+        profit or a verified bank deposit. Figures come from source reports; your team and
+        accountant still review the underlying statements.
       </p>
     ),
   },
   {
-    q: 'Is this an accounting system?',
+    q: 'What does AI do, and is it available?',
     a: (
       <p>
-        No. It focuses on visibility into revenue, fees and payouts. It is meant to give your
-        finance team and your accountant clearer inputs, not to replace your books.
+        {aiAvailability} Natural-language analysis and anomaly detection build on established
+        reporting and reconciliation. AI supports human review and builds on core reconciliation. It
+        does not guarantee detection of every anomaly.
       </p>
     ),
   },
   {
-    q: 'How accurate are the numbers?',
+    q: 'How are onboarding, safeguards and scope agreed?',
     a: (
       <p>
-        Figures come from the reports and statements your platforms provide. The product shows where
-        sources disagree so a person can look into it. It does not replace review of the underlying
-        statements.
-      </p>
-    ),
-  },
-  {
-    q: 'Is AI available in Financial Intelligence?',
-    a: (
-      <p>
-        AI-Enabled Financial Intelligence is SG2’s product. Natural-language financial analysis and
-        AI anomaly detection have been developed and are being introduced through our next rollout
-        phase. They can be included in customer-specific implementations based on your requirements
-        and scope. They are not switched on for every customer today, and we confirm exactly what is
-        included before you commit.
-      </p>
-    ),
-  },
-  {
-    q: 'Does AI perform the reconciliation?',
-    a: (
-      <p>
-        Reporting, reconciliation and discrepancy identification are established capabilities of the
-        platform. AI analysis builds on that reconciled data. It supports a person’s review rather
-        than replacing it, and we do not guarantee that any particular anomaly will be detected.
-      </p>
-    ),
-  },
-  {
-    q: 'How long does onboarding take?',
-    a: (
-      <p>
-        That depends on how many locations and systems are involved. We scope it with you during the
-        demo rather than quoting a generic timeline.
+        We review your locations, source systems, royalty agreements and requirements during
+        discovery. We confirm included capabilities, data protection safeguards and onboarding scope
+        with you before you commit. Timelines depend on your implementation.
       </p>
     ),
   },
@@ -94,381 +59,149 @@ export function FinancialIntelligencePage() {
   return (
     <>
       <PageIntro
-        eyebrow="Solutions · AI-Enabled Financial Intelligence"
-        title="Know what your restaurants earn, not just what they sell."
-        lead="Restaurants generate financial data across point-of-sale (POS) systems, delivery platforms and direct ordering. AI-Enabled Financial Intelligence connects it, reconciles reported sales against platform fees and payouts, identifies the discrepancies, and adds natural-language analysis and AI anomaly detection on top, so your team spends less time assembling reports and more time acting on them."
+        eyebrow="Financial Intelligence"
+        title="See revenue, fees and payouts clearly."
+        lead="Bring restaurant sales and payouts into one view. Compare locations, reconcile platform reports and investigate discrepancies without assembling every report by hand."
         actions={
-          <>
-            <Button to="/contact?inquiry=demo">Book a Demo</Button>
-            <Button to="#workflows" variant="secondary" arrow={false}>
-              See the workflows
-            </Button>
-          </>
-        }
-        footer={
-          <ul aria-label="Capabilities" className="flex flex-wrap gap-2">
-            {[
-              ['Revenue reporting', false],
-              ['Financial reconciliation', false],
-              ['Discrepancy identification', false],
-              ['Delivery platform fees and payouts', false],
-              ['Multi-location comparison', false],
-              ['Royalty calculations & franchise invoicing', false],
-              ['Natural-language analytics', true],
-              ['AI anomaly detection', true],
-            ].map(([x, ai]) => (
-              <li
-                key={String(x)}
-                className={
-                  ai
-                    ? 't-label rounded-full bg-copper-soft px-3.5 py-2 text-[0.75rem] text-copper-ink'
-                    : 't-label rounded-full border border-line px-3.5 py-2 text-[0.75rem] text-ink-soft'
-                }
-              >
-                {x}
-              </li>
-            ))}
-          </ul>
+          <Button to="/contact?inquiry=demo&product=financial-intelligence">Book a demo</Button>
         }
         aside={
-          <ProductFrame title="Statement">
-            <StatementMock compact />
+          <ProductFrame title="Sample financial overview">
+            <FinancialSummary />
           </ProductFrame>
         }
       />
 
-      {/* THE GAP */}
-      <Section divider>
+      <Section id="workflows" tone="soft">
         <SectionHeader
-          index="01"
-          eyebrow="The gap"
-          title="Sold is not the same as earned."
-          lead="A delivery order rings up at one number and is paid out at another. The difference is made of pieces that rarely appear in one report."
+          eyebrow="Reporting & reconciliation"
+          title="Three ways to understand your numbers."
         />
-        <Reveal className="mt-14 grid gap-px border border-line bg-line md:grid-cols-4">
-          {[
-            [
-              'Gross sales',
-              'What customers paid, including items, taxes where reported, and tips.',
-            ],
-            ['Adjustments', 'Discounts, promotions, refunds, and order corrections.'],
-            ['Platform fees', 'Commissions and service or marketing charges set by each platform.'],
-            ['Net payout', 'The amount a platform reports as payable to you, and when.'],
-          ].map(([t, d], i) => (
-            <div key={t} className="bg-ivory p-7">
-              <p className="t-label text-copper-deep">{String(i + 1).padStart(2, '0')}</p>
-              <h3 className="t-h3 mt-3">{t}</h3>
-              <p className="t-body mt-3 text-[0.95rem]">{d}</p>
-            </div>
-          ))}
-        </Reveal>
-      </Section>
-
-      {/* WORKFLOWS */}
-      <section id="workflows" className="border-t border-line pb-8">
-        <div className="container-page">
-          <div className="pt-[var(--section-y)]">
-            <SectionHeader
-              index="02"
-              eyebrow="Workflows"
-              title="Built around the questions owners and finance teams ask every week."
-            />
-          </div>
-
-          <FeatureRow
-            index="A"
-            eyebrow="Revenue intelligence"
-            title="One view of revenue across locations and channels."
-            visual={
-              <ProductFrame title="Overview">
-                <DashboardMock />
+        <div className="mt-8 workflow-disclosures">
+          <details open>
+            <summary>Revenue and location reporting</summary>
+            <div className="workflow-content">
+              <div>
+                <h3 className="t-h3">Compare the same measures.</h3>
+                <p className="t-body mt-3">
+                  View revenue across supported sales channels and locations with consistent
+                  definitions. Follow weekly trends, compare restaurants and prepare structured
+                  reports for your finance team or accountant.
+                </p>
+              </div>
+              <ProductFrame title="Revenue overview">
+                <FinancialSummary />
               </ProductFrame>
-            }
-          >
-            <p>
-              Compare in-store sales from your point-of-sale (POS) system with delivery and direct
-              ordering revenue by week, by location, or in total.
-            </p>
-            <p>Trends are easier to trust when every location is measured the same way.</p>
-          </FeatureRow>
-
-          <FeatureRow
-            index="B"
-            eyebrow="Gross sales to net payout"
-            title="Explain the distance between sales and payout."
-            flip
-            visual={
-              <ProductFrame title="Gross to net">
+            </div>
+          </details>
+          <details>
+            <summary>Fees and payout breakdown</summary>
+            <div className="workflow-content">
+              <div>
+                <h3 className="t-h3">Follow sales through to payout.</h3>
+                <p className="t-body mt-3">
+                  See how discounts, refunds, adjustments and platform fees change the amount
+                  reported as payable. Understand the deductions in a statement-style breakdown,
+                  rather than comparing sales totals alone.
+                </p>
+              </div>
+              <ProductFrame title="Gross sales to net payout">
                 <GrossToNetMock />
               </ProductFrame>
-            }
-          >
-            <p>
-              See sales, discounts, adjustments, platform fees and net payout in a single
-              statement-style breakdown.
-            </p>
-            <p>When margin moves, you can see which line moved it.</p>
-          </FeatureRow>
-
-          <FeatureRow
-            index="C"
-            eyebrow="Delivery platform analytics"
-            title="Consolidate platform reporting instead of logging in to each one."
-            visual={
-              <ProductFrame title="Sales by channel">
-                <ChannelMixMock />
-              </ProductFrame>
-            }
-          >
-            <p>
-              Where an integration is supported, reporting from delivery platforms such as Uber Eats
-              and DoorDash can be brought into the same view as the rest of your sales.
-            </p>
-            <p>Which platforms are supported for your account is confirmed before you start.</p>
-          </FeatureRow>
-
-          <FeatureRow
-            index="D"
-            eyebrow="Payout reconciliation"
-            title="Reconcile payouts and surface what doesn’t match."
-            flip
-            visual={
+            </div>
+          </details>
+          <details>
+            <summary>Reconciliation and discrepancy review</summary>
+            <div className="workflow-content">
+              <div>
+                <h3 className="t-h3">Investigate what doesn’t match.</h3>
+                <p className="t-body mt-3">
+                  Compare calculated net payout with platform-reported payout. Separate timing
+                  differences from unexplained gaps and review the underlying detail. A person
+                  decides what needs investigation and whether a difference is expected.
+                </p>
+              </div>
               <ProductFrame title="Payout reconciliation">
                 <PayoutVisibilityMock />
               </ProductFrame>
-            }
-          >
-            <p>
-              Reconcile the sales reported by each source against the payouts received from each
-              platform, and identify the discrepancies.
-            </p>
-            <p>
-              Differences are identified and investigated before results are reconciled. A person
-              still decides what is an error and what is expected.
-            </p>
-          </FeatureRow>
-
-          <FeatureRow
-            index="E"
-            eyebrow="Multi-location visibility"
-            title="Compare restaurants on the same footing."
-            visual={
-              <ProductFrame title="Location comparison">
-                <LocationComparisonMock />
-              </ProductFrame>
-            }
-          >
-            <p>
-              Compare locations based on revenue, platform fees and net payouts to understand
-              financial performance beyond sales volume.
-            </p>
-          </FeatureRow>
-
-          <FeatureRow
-            index="F"
-            eyebrow="Financial reporting"
-            title="Structured reports you can hand to a partner or an accountant."
-          >
-            <p>
-              Consistent definitions and clear breakdowns turn a pile of exports into something a
-              finance manager can review and an accountant can use.
-            </p>
-          </FeatureRow>
+            </div>
+          </details>
         </div>
-      </section>
+      </Section>
 
-      {/* ROYALTIES & FRANCHISE INVOICING */}
+      <Section>
+        <SectionHeader eyebrow="Supported sources" title="Start with the systems you use." />
+        <dl className="mt-8 divide-y divide-line border-y border-line">
+          {[
+            ['Uber Eats & DoorDash', 'Financial reporting supported'],
+            ['Clover POS', 'Sales data through SFTP or CSV today; direct API planned'],
+            ['Other systems', 'Compatibility and implementation confirmed during discovery'],
+          ].map(([name, description]) => (
+            <div key={name} className="grid gap-2 py-5 sm:grid-cols-2">
+              <dt className="font-medium">{name}</dt>
+              <dd className="t-body">{description}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="t-caption mt-4">
+          Platform names identify compatible data sources. SG2 is not affiliated with or endorsed by
+          Uber Eats, DoorDash or Clover.
+        </p>
+      </Section>
+
       <Section tone="soft">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="min-w-0 lg:col-span-5">
+        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+          <div>
             <SectionHeader
-              index="03"
               eyebrow="Franchise finance"
-              title="Royalty Calculations & Franchise Invoicing"
+              title="Royalty calculations & franchise invoicing."
+              lead="Use reported sales and agreed rates to calculate royalties and generate franchise invoices. Terms and implementation scope are tailored to each organization’s agreements."
             />
-            <div className="t-body mt-6 space-y-4">
-              <p>
-                Once sales are reported consistently, they can feed royalty calculations based on
-                the terms agreed with each franchisee, and franchise invoices can be generated from
-                the result.
-              </p>
-              <p>
-                Royalty calculations and franchise invoicing can be tailored to each organization’s
-                agreements and operational requirements, with implementation scope defined during
-                discovery.
-              </p>
-              <p>
-                For inspections, standards and wider franchise oversight, see{' '}
-                <Link
-                  to="/solutions/franchise-management"
-                  className="underline decoration-copper/50 underline-offset-4 hover:decoration-copper-deep"
-                >
-                  Franchise Management
-                </Link>
-                .
-              </p>
+            <p className="t-body mt-4">
+              For inspections, standards and wider network administration, explore Franchise
+              Management. Product connections and custom integrations are agreed during discovery.
+            </p>
+            <div className="mt-6">
+              <TextLink to="/solutions/franchise-management">Explore Franchise Management</TextLink>
             </div>
           </div>
-          <Reveal className="min-w-0 lg:col-span-7">
-            <ProductFrame title="Royalties · Invoice preview">
-              <RoyaltyInvoiceMock />
-            </ProductFrame>
-          </Reveal>
+          <ProductFrame title="Sample royalty invoice">
+            <RoyaltyInvoiceMock />
+          </ProductFrame>
         </div>
       </Section>
 
-      {/* AI-ENABLED FINANCIAL INTELLIGENCE */}
       <Section tone="ink">
-        <SectionHeader
-          index="04"
-          eyebrow="AI-Enabled Financial Intelligence"
-          title="Ask your data. Catch what looks unusual."
-          lead="Natural-language analysis and AI anomaly detection, built on the reporting and reconciliation already in the platform."
-        />
-        <div className="-mt-6">
-          <FeatureRow
-            index="G"
-            eyebrow="Natural-language analysis"
-            title="Ask your financial data a question."
-            visual={
-              <ProductFrame title="AI-Enabled Financial Intelligence · Ask">
-                <AskYourDataMock />
-              </ProductFrame>
-            }
-          >
-            <p>
-              Ask in plain language why net payout moved, how locations compare or which platform is
-              driving fees, and get an answer grounded in your reconciled figures.
+        <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <SectionHeader
+              eyebrow="AI-enabled analysis"
+              title="Ask questions. Spot unusual patterns."
+              lead="Ask why a payout moved or which platform is driving fees. Surface unusual fee rates, refunds and payout gaps for a person to review."
+            />
+            <p className="t-body mt-5">{aiAvailability}</p>
+            <p className="t-caption mt-4">
+              The example is illustrative, with invented data. AI supports a person’s judgment; it
+              does not guarantee that every anomaly will be detected.
             </p>
-            <p>Built on the reporting and reconciliation already in the platform.</p>
-            <p className="t-caption">
-              Illustrative experience with invented data, not a live product screenshot. AI
-              functionality is introduced through our next rollout phase and may be included in
-              customer implementations based on agreed requirements and scope.
-            </p>
-          </FeatureRow>
-
-          <FeatureRow
-            index="H"
-            eyebrow="AI anomaly detection"
-            title="Surface what looks unusual, before it becomes a surprise."
-            flip
-            visual={
-              <ProductFrame title="AI-Enabled Financial Intelligence · Insights">
-                <AnomalyInsightsMock />
-              </ProductFrame>
-            }
-          >
-            <p>
-              Unusual fee rates, refund spikes and payout gaps are surfaced for review, with the
-              context to investigate them quickly.
-            </p>
-            <p>Insights point your team to what deserves attention. A person decides what to do.</p>
-            <p className="t-caption">
-              Illustrative experience with invented data, not a live product screenshot. AI
-              functionality is introduced through our next rollout phase and may be included in
-              customer implementations based on agreed requirements and scope.
-            </p>
-          </FeatureRow>
-        </div>
-      </Section>
-
-      {/* SCENARIO */}
-      <Section tone="soft">
-        <SectionHeader
-          index="05"
-          eyebrow="A typical Monday"
-          title="From assembling reports to reading them."
-          lead="An illustrative scenario for a four-location operator."
-        />
-        <div className="mt-14 grid gap-px bg-line md:grid-cols-2">
-          {[
-            {
-              h: 'Before',
-              items: [
-                'Log in to each delivery platform and download last week’s statement.',
-                'Export sales from the POS for every location.',
-                'Combine everything in a spreadsheet and fix the column differences.',
-                'Notice a payout is lower than the sales reported and start searching for why.',
-              ],
-            },
-            {
-              h: 'With Financial Intelligence',
-              items: [
-                'Open one view of last week’s revenue, fees and payouts.',
-                'Compare locations on net results.',
-                'Open the payouts that don’t match and review the detail.',
-                'Spend the time on what to change.',
-              ],
-            },
-          ].map((col) => (
-            <div key={col.h} className="bg-paper p-8 sm:p-10">
-              <p className="t-label mb-6 text-copper-deep">{col.h}</p>
-              <ol className="space-y-4">
-                {col.items.map((x, i) => (
-                  <li key={x} className="flex gap-4 text-ink-soft">
-                    <span className="t-label mt-1 text-ink-mute">{i + 1}</span>
-                    {x}
-                  </li>
-                ))}
-              </ol>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* INTEGRATIONS */}
-      <Section>
-        <SectionHeader
-          index="06"
-          eyebrow="Integrations"
-          title="From source data to one financial view."
-          lead="Financial data arrives from the platforms and point-of-sale (POS) systems you already use, is structured into a single model, and surfaces as reports your team can read."
-        />
-        <div className="mt-14">
-          <IntegrationFlow />
-        </div>
-      </Section>
-
-      {/* AUDIENCE */}
-      <Section tone="soft">
-        <SectionHeader
-          index="07"
-          eyebrow="Who it is for"
-          title="Made for the people who answer for the numbers."
-        />
-        <ul className="mt-12 grid gap-x-12 gap-y-0 sm:grid-cols-2">
-          {[
-            'Multi-location restaurant owners',
-            'Restaurant groups',
-            'Franchise operators',
-            'Finance managers',
-            'Operations directors',
-            'Owners working across several delivery platforms and POS systems',
-          ].map((x) => (
-            <li key={x} className="border-b border-ink/20 py-4 font-display text-xl tracking-tight">
-              {x}
-            </li>
-          ))}
-        </ul>
-      </Section>
-
-      {/* FAQ */}
-      <Section>
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <SectionHeader index="08" eyebrow="Questions" title="Straight answers." />
           </div>
-          <div className="lg:col-span-8">
-            <Faq items={faqs} />
-          </div>
+          <ProductFrame title="Illustrative AI analysis">
+            <AskYourDataMock />
+          </ProductFrame>
         </div>
       </Section>
-
+      <Section>
+        <SectionHeader eyebrow="Questions" title="Before you get started." />
+        <div className="mt-8">
+          <Faq items={faqs} />
+        </div>
+      </Section>
       <CtaBand
-        title="See your own numbers in one view."
-        primary={{ label: 'Book a Demo', to: '/contact?inquiry=demo' }}
-        secondary={{ label: 'Franchise Management', to: '/solutions/franchise-management' }}
+        title="See how it fits your restaurants."
+        primary={{
+          label: 'Book a demo',
+          to: '/contact?inquiry=demo&product=financial-intelligence',
+        }}
       />
     </>
   )

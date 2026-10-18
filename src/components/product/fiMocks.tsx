@@ -339,7 +339,12 @@ export function PayoutVisibilityMock() {
         title="Payout reconciliation"
         scope={`${PERIOD.label} (${PERIOD.span}) · All locations`}
       />
-      <div className="overflow-x-auto">
+      <div
+        role="region"
+        aria-label="Payout reconciliation table; scroll to see all columns"
+        tabIndex={0}
+        className="overflow-x-auto"
+      >
         <table className="w-full text-left text-[0.75rem] tabular-nums sm:text-[0.8rem]">
           <caption className="sr-only">
             Illustrative comparison of calculated net payout and reported payout by source for{' '}

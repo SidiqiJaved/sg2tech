@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink as RouterNavLink, useLocation } from 'react-router-dom'
 import { ChevronDown, Menu, X } from 'lucide-react'
-import { demoCta, homeLink, navGroups, topLevelLinks } from '@/content/site'
+import { demoCta, mobileLinks, navGroups, topLevelLinks } from '@/content/site'
 import { cn } from '@/lib/cn'
 import { Logo } from './Logo'
 
@@ -122,10 +122,7 @@ function MobileTopLink({
     <Link
       to={link.to}
       aria-current={active ? 'page' : undefined}
-      className={cn(
-        'block py-2 font-display text-2xl tracking-tight',
-        active && 'text-copper-deep',
-      )}
+      className={cn('block py-3 font-display text-xl tracking-tight', active && 'text-copper-deep')}
     >
       {link.label}
     </Link>
@@ -154,8 +151,9 @@ function TopLink({ link }: { link: (typeof topLevelLinks)[number] }) {
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const { pathname, search, hash } = useNavLocation()
+  const { pathname, search } = useNavLocation()
   const menuBtn = useRef<HTMLButtonElement>(null)
+  const menuRef = useRef<HTMLElement>(null)
 
   useEffect(() => setMobileOpen(false), [pathname, search])
   useEffect(() => {
@@ -165,16 +163,49 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : ''
     if (!mobileOpen) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+    const trigger = menuBtn.current
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const background = [document.getElementById('main'), document.querySelector('footer')]
+    background.forEach((el) => el?.setAttribute('inert', ''))
+    menuRef.current?.querySelector<HTMLElement>('a')?.focus()
+    const controls = () =>
+      [
+        menuBtn.current,
+        ...Array.from(menuRef.current?.querySelectorAll<HTMLElement>('a') ?? []),
+      ].filter((el): el is HTMLElement => !!el)
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
         setMobileOpen(false)
-        menuBtn.current?.focus()
+      }
+      if (event.key === 'Tab') {
+        const items = controls()
+        const first = items[0]
+        const last = items[items.length - 1]
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault()
+          last?.focus()
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault()
+          first?.focus()
+        }
       }
     }
+    const desktop = window.matchMedia('(min-width: 64rem)')
+    const onResize = () => {
+      if (desktop.matches) setMobileOpen(false)
+    }
+    desktop.addEventListener('change', onResize)
     document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      background.forEach((el) => el?.removeAttribute('inert'))
+      document.removeEventListener('keydown', onKey)
+      desktop.removeEventListener('change', onResize)
+      trigger?.focus()
+    }
   }, [mobileOpen])
 
   return (
@@ -188,7 +219,6 @@ export function Header() {
         <Logo />
 
         <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
-          <TopLink link={homeLink} />
           {navGroups.map((g) => (
             <DesktopGroup key={g.label} group={g} />
           ))}
@@ -219,6 +249,7 @@ export function Header() {
       </div>
 
       <nav
+        ref={menuRef}
         id="mobile-nav"
         aria-label="Mobile"
         hidden={!mobileOpen}
@@ -227,39 +258,17 @@ export function Header() {
         <div className="container-page py-6">
           <Link
             to={demoCta.to}
-            className="block rounded-full bg-copper px-6 py-4 text-center font-medium text-ink transition-colors hover:bg-ink hover:text-white"
+            className="block rounded-full bg-copper px-6 py-3 text-center font-medium text-ink transition-colors hover:bg-ink hover:text-white"
           >
             {demoCta.label}
           </Link>
-          <div className="mt-6 border-b border-line pb-5">
-            <MobileTopLink link={homeLink} pathname={pathname} />
-          </div>
-          {navGroups.map((g) => (
-            <div key={g.label} className="border-b border-line py-5">
-              <p className="t-label mb-3 text-copper-deep">{g.label}</p>
-              <ul className="space-y-1">
-                {g.links.map((l) => (
-                  <li key={l.to}>
-                    <Link
-                      to={l.to}
-                      aria-current={isActive(l.to, pathname, hash) ? 'page' : undefined}
-                      className={cn(
-                        'block py-2 font-display text-2xl tracking-tight',
-                        isActive(l.to, pathname, hash) && 'text-copper-deep',
-                      )}
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          <div className="border-b border-line py-5">
-            {topLevelLinks.map((l) => (
-              <MobileTopLink key={l.to} link={l} pathname={pathname} />
+          <ul className="mt-5 divide-y divide-line">
+            {mobileLinks.map((link) => (
+              <li key={link.to}>
+                <MobileTopLink link={link} pathname={pathname} />
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </nav>
     </header>

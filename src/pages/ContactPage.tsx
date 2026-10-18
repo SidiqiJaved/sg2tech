@@ -6,6 +6,7 @@ import { cn } from '@/lib/cn'
 import { contact } from '@/content/site'
 
 type Inquiry = 'demo' | 'custom'
+type Product = '' | 'financial-intelligence' | 'franchise-management' | 'both'
 type Status = 'idle' | 'sending' | 'sent' | 'error' | 'not-configured'
 type Errors = Partial<Record<'name' | 'email' | 'company' | 'message', string>>
 
@@ -28,7 +29,7 @@ function validate(d: FormData): Errors {
   if (name.length < 2) e.name = 'Enter your full name.'
   if (!emailRe.test(email)) e.email = 'Enter a valid work email address.'
   if (company.length < 2) e.company = 'Enter your company name.'
-  if (message.length < 20)
+  if (d.get('inquiry') === 'custom' && message.length < 20)
     e.message = 'Please describe your needs in at least a sentence or two (20+ characters).'
   if (message.length > 3000) e.message = 'Please keep the description under 3,000 characters.'
   return e
@@ -76,6 +77,7 @@ function Field({
 export function ContactPage() {
   const [params] = useSearchParams()
   const [inquiry, setInquiry] = useState<Inquiry>('demo')
+  const [product, setProduct] = useState<Product>('')
   const [status, setStatus] = useState<Status>('idle')
   const [errors, setErrors] = useState<Errors>({})
   const [sentTo, setSentTo] = useState({ name: '', email: '' })
@@ -87,7 +89,16 @@ export function ContactPage() {
   // Read the query after hydration so server and client markup match.
   useEffect(() => {
     const q = params.get('inquiry')
-    if (q === 'demo' || q === 'custom') setInquiry(q)
+    setInquiry(q === 'custom' ? 'custom' : 'demo')
+    const selected = params.get('product')
+    setProduct(
+      selected === 'financial-intelligence' ||
+        selected === 'franchise-management' ||
+        selected === 'both'
+        ? selected
+        : '',
+    )
+    setErrors({})
   }, [params])
 
   useEffect(() => {
@@ -125,11 +136,12 @@ export function ContactPage() {
       })
       if (!res.ok) throw new Error(String(res.status))
       setSentTo({
-        name: String(data.get('name')).trim().split(/s+/)[0] ?? '',
+        name: String(data.get('name')).trim().split(/\s+/)[0] ?? '',
         email: String(data.get('email')).trim(),
       })
       setStatus('sent')
       formRef.current?.reset()
+      setProduct('')
     } catch {
       setStatus('error')
     } finally {
@@ -144,53 +156,13 @@ export function ContactPage() {
     <>
       <PageIntro
         eyebrow="Contact"
-        title="Book a demo or start a conversation."
-        lead="Tell us a little about your business and what you are trying to solve. A person will read it and reply."
+        title={inquiry === 'demo' ? 'Request a demo.' : 'Discuss a project.'}
+        lead="Tell us a little about your business. We’ll reply to arrange the next step."
       />
 
       <section className="pb-24 sm:pb-32">
         <div className="container-page grid gap-14 lg:grid-cols-12 lg:gap-20">
-          <aside className="lg:col-span-4">
-            <h2 className="t-label mb-6 text-copper-deep">Reach us directly</h2>
-            <ul className="mb-12 space-y-3">
-              <li>
-                <span className="t-label block text-ink-mute">Email</span>
-                <a
-                  href={contact.emailHref}
-                  className="font-display text-2xl tracking-tight underline decoration-copper/50 underline-offset-4 hover:decoration-copper-deep"
-                >
-                  {contact.email}
-                </a>
-              </li>
-              <li>
-                <span className="t-label block text-ink-mute">Phone</span>
-                <a
-                  href={contact.phoneHref}
-                  className="font-display text-2xl tracking-tight underline decoration-copper/50 underline-offset-4 hover:decoration-copper-deep"
-                >
-                  {contact.phone}
-                </a>
-              </li>
-            </ul>
-            <h2 className="t-label mb-6 text-copper-deep">Two ways to start</h2>
-            <dl className="space-y-8">
-              <div className="rule-tick pt-5">
-                <dt className="t-h3">Product demonstration</dt>
-                <dd className="t-body mt-2 text-[0.95rem]">
-                  For multi-location restaurants and franchises interested in Financial Intelligence
-                  or Franchise Management.
-                </dd>
-              </div>
-              <div className="rule-tick pt-5">
-                <dt className="t-h3">Custom software consultation</dt>
-                <dd className="t-body mt-2 text-[0.95rem]">
-                  For organizations that need an application, integration or automation built.
-                </dd>
-              </div>
-            </dl>
-          </aside>
-
-          <div className="lg:col-span-8">
+          <div className="min-w-0 lg:col-span-7 lg:row-start-1">
             <div ref={summaryRef} tabIndex={-1} aria-live="polite" className="outline-none">
               {status === 'sent' && (
                 <div
@@ -217,8 +189,8 @@ export function ContactPage() {
                 >
                   <CircleAlert aria-hidden className="mt-0.5 shrink-0" size={20} />
                   <p>
-                    <strong>We could not send your message.</strong> Nothing was submitted. Please
-                    try again in a few minutes.
+                    <strong>We could not send your message.</strong> Please try again or contact us
+                    by email.
                   </p>
                 </div>
               )}
@@ -268,8 +240,8 @@ export function ContactPage() {
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                   {(
                     [
-                      ['demo', 'Product demonstration'],
-                      ['custom', 'Custom software consultation'],
+                      ['demo', 'Product demo'],
+                      ['custom', 'Custom project'],
                     ] as const
                   ).map(([v, l]) => (
                     <label
@@ -284,7 +256,11 @@ export function ContactPage() {
                         name="inquiry"
                         value={v}
                         checked={inquiry === v}
-                        onChange={() => setInquiry(v)}
+                        onChange={() => {
+                          setInquiry(v)
+                          setErrors({})
+                          setStatus('idle')
+                        }}
                         className="h-4 w-4 accent-[#a8400a]"
                       />
                       {l}
@@ -292,6 +268,24 @@ export function ContactPage() {
                   ))}
                 </div>
               </fieldset>
+
+              <div hidden={inquiry !== 'demo'}>
+                <Field id="product" label="Which product? (optional)">
+                  <select
+                    id="product"
+                    name="product"
+                    disabled={inquiry !== 'demo'}
+                    value={product}
+                    onChange={(event) => setProduct(event.target.value as Product)}
+                    className={inputCls}
+                  >
+                    <option value="">Not sure yet</option>
+                    <option value="financial-intelligence">Financial Intelligence</option>
+                    <option value="franchise-management">Franchise Management</option>
+                    <option value="both">Both products</option>
+                  </select>
+                </Field>
+              </div>
 
               <div className="grid gap-7 sm:grid-cols-2">
                 <Field id="name" label="Full name" error={errors.name}>
@@ -339,6 +333,7 @@ export function ContactPage() {
                     <input
                       id="locations"
                       name="locations"
+                      disabled={inquiry !== 'demo'}
                       inputMode="numeric"
                       pattern="[0-9]*"
                       maxLength={5}
@@ -351,7 +346,9 @@ export function ContactPage() {
               <Field
                 id="message"
                 label={
-                  inquiry === 'demo' ? 'What would you like to see?' : 'What do you need to build?'
+                  inquiry === 'demo'
+                    ? 'What would you like to see? (optional)'
+                    : 'What do you need to build?'
                 }
                 error={errors.message}
                 hint="A few sentences is plenty. Please do not include passwords or financial account numbers."
@@ -359,8 +356,8 @@ export function ContactPage() {
                 <textarea
                   id="message"
                   name="message"
-                  rows={6}
-                  required
+                  rows={4}
+                  required={inquiry === 'custom'}
                   maxLength={3000}
                   aria-invalid={!!errors.message}
                   aria-describedby={['message-hint', desc('message')].filter(Boolean).join(' ')}
@@ -377,11 +374,38 @@ export function ContactPage() {
                   disabled={status === 'sending'}
                   className="inline-flex items-center justify-center rounded-full bg-copper px-8 py-4 font-medium text-ink transition-colors hover:bg-ink hover:text-white disabled:cursor-wait disabled:opacity-60"
                 >
-                  {status === 'sending' ? 'Sending…' : 'Send message'}
+                  {status === 'sending'
+                    ? 'Sending…'
+                    : inquiry === 'demo'
+                      ? 'Request a demo'
+                      : 'Send project inquiry'}
                 </button>
               </div>
             </form>
           </div>
+          <aside className="lg:col-span-4 lg:col-start-9 lg:row-start-1">
+            <h2 className="t-label mb-6 text-copper-deep">Reach us directly</h2>
+            <ul className="space-y-3">
+              <li>
+                <span className="t-label block text-ink-mute">Email</span>
+                <a
+                  href={contact.emailHref}
+                  className="font-display text-2xl tracking-tight underline decoration-copper/50 underline-offset-4 hover:decoration-copper-deep"
+                >
+                  {contact.email}
+                </a>
+              </li>
+              <li>
+                <span className="t-label block text-ink-mute">Phone</span>
+                <a
+                  href={contact.phoneHref}
+                  className="font-display text-2xl tracking-tight underline decoration-copper/50 underline-offset-4 hover:decoration-copper-deep"
+                >
+                  {contact.phone}
+                </a>
+              </li>
+            </ul>
+          </aside>
         </div>
       </section>
     </>

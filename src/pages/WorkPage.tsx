@@ -1,129 +1,79 @@
 import { CtaBand, PageIntro } from '@/components/ui/Blocks'
-import { Reveal } from '@/components/ui/Reveal'
 import { Section } from '@/components/ui/Section'
 import { SectionHeader } from '@/components/ui/SectionHeader'
-
-const stages = [
-  [
-    '01',
-    'Understanding the Business',
-    'We examine how the work is actually done: the workflows, the people who depend on them, the constraints, the systems already in place and the outcome the business wants. Requirements come from that understanding, not from a feature list.',
-  ],
-  [
-    '02',
-    'Defining the Solution',
-    'Business requirements become product priorities, user experiences, technical decisions and a delivery plan. We agree on what “done” means before engineering begins, and on what can wait.',
-  ],
-  [
-    '03',
-    'Engineering & Integration',
-    'Applications, data pipelines, integrations and custom workflows are built in increments you can see and react to, and connected to the systems your teams already use.',
-  ],
-  [
-    '04',
-    'Testing & Validation',
-    'We check that the software does what the business needs, not only that it runs. Functionality is tested, defects are reviewed and fixed, requirements are verified, and findings feed the next iteration.',
-  ],
-]
-
-const documents = [
-  ['Business and functional requirements', 'What the software must do, and why.'],
-  [
-    'Product roadmaps and priorities',
-    'What is being built now, what is next, and what is deferred.',
-  ],
-  ['User workflows', 'How people move through the software to get their work done.'],
-  ['Architecture and integration documentation', 'How the pieces fit together and exchange data.'],
-  ['Technical decisions', 'The options considered and the reasons for the choice made.'],
-  ['Testing and QA records', 'What was tested, what was found and how it was resolved.'],
-  ['Deployment documentation', 'How the software is released, configured and rolled back.'],
-  ['Handover and support guidance', 'What the people who run the software need to know.'],
-]
 
 export function WorkPage() {
   return (
     <>
       <PageIntro
-        eyebrow="Our work"
-        title="From business challenges to working software."
-        lead="Every solution begins with understanding the business behind it. At SG2 Technologies, we bring discovery, product thinking, engineering, testing and documentation together to develop software around practical operational needs."
+        eyebrow="How we work"
+        title="From business problem to working software."
+        lead="Agree on outcomes, see progress throughout delivery and receive software your team can understand and maintain."
       />
-
       <Section tone="soft">
-        <SectionHeader
-          eyebrow="From challenge to delivery"
-          title="How a business problem becomes working software."
-        />
-        <ol className="mt-14 grid gap-x-16 md:grid-cols-2">
-          {stages.map(([n, t, d], i) => (
-            <Reveal
-              as="li"
-              key={t}
-              delay={(i % 2) * 70}
-              className="rule-tick grid grid-cols-[2.5rem_1fr] gap-3 py-8"
-            >
-              <span className="t-label pt-1.5 text-copper-deep">{n}</span>
-              <span>
-                <span className="t-h3 block">{t}</span>
-                <span className="t-body mt-2 block text-[0.95rem]">{d}</span>
-              </span>
-            </Reveal>
+        <SectionHeader eyebrow="Delivery" title="A clear path from discovery to release." />
+        <ol className="mt-8 grid gap-8 md:grid-cols-2">
+          {[
+            [
+              'Understand the business',
+              'Learn the workflows, people, constraints and existing systems, then agree on the outcome the software needs to support.',
+            ],
+            [
+              'Define the solution',
+              'Turn requirements into priorities, user experiences and a delivery plan, including what is in scope and what can wait.',
+            ],
+            [
+              'Engineer and integrate',
+              'Build in visible increments, review working software together and connect it to the systems your team already uses.',
+            ],
+            [
+              'Test and validate',
+              'Check functionality against the agreed requirements, fix defects and validate important business workflows before release.',
+            ],
+          ].map(([title, body], i) => (
+            <li key={title} className="rule-tick pt-5">
+              <p className="t-label text-copper-deep">0{i + 1}</p>
+              <h3 className="t-h3 mt-3">{title}</h3>
+              <p className="t-body mt-3">{body}</p>
+            </li>
           ))}
         </ol>
       </Section>
-
-      <Section tone="ink" id="documentation">
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <SectionHeader
-              index="05"
-              eyebrow="How we document our work"
-              title="Documentation is part of the product."
-              lead="It keeps the work transparent while it is built, preserves continuity when people change, and lets you maintain and own the software long after delivery."
-            />
-            <p className="t-caption mt-8 max-w-md">
-              Documentation is tailored to the scope and complexity of each engagement. Not every
-              document is produced for every project.
-            </p>
-          </div>
-          <ul className="lg:col-span-6 lg:col-start-7">
-            {documents.map(([t, d]) => (
-              <li key={t} className="rule-tick py-5">
-                <p className="font-display text-xl tracking-tight sm:text-2xl">{t}</p>
-                <p className="t-body mt-1 text-[0.95rem]">{d}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <Section id="documentation">
+        <SectionHeader
+          eyebrow="Documentation & handover"
+          title="Built to be understood."
+          lead="Document the decisions and workflows that help people maintain the software after delivery. The documentation package reflects the scope and complexity of your engagement."
+        />
+        <dl className="mt-8 space-y-6">
+          {[
+            [
+              'Requirements and priorities',
+              'Business requirements, user workflows and the roadmap explain what is being built, why it matters and what has been deferred.',
+            ],
+            [
+              'Architecture and integrations',
+              'System structure, data connections and technical decisions explain how the pieces fit together and the tradeoffs behind them.',
+            ],
+            [
+              'Testing, deployment and handover',
+              'QA records, release guidance and support documentation help your team understand what was validated and how to operate the software.',
+            ],
+          ].map(([title, body]) => (
+            <div key={title} className="rule-tick pt-5">
+              <dt className="t-h3">{title}</dt>
+              <dd className="t-body mt-3 max-w-3xl">{body}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="t-body mt-6 max-w-3xl">
+          After release, we improve the software based on real usage. Ownership and support terms
+          are agreed in writing, so responsibilities stay clear as your organization evolves.
+        </p>
       </Section>
-
-      <Section>
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <SectionHeader
-              index="06"
-              eyebrow="Built for long-term use"
-              title="No black boxes. No unnecessary complexity."
-            />
-          </div>
-          <div className="t-lead space-y-6 lg:col-span-6 lg:col-start-7">
-            <p>
-              Software should stay understandable, maintainable and adaptable as your organization
-              evolves. We favor clear structure over cleverness, and we explain our decisions so
-              that the people who inherit the system can work with it.
-            </p>
-            <p>
-              After release, we improve the software based on how people actually use it, making
-              everyday workflows clearer and more effective.
-            </p>
-          </div>
-        </div>
-      </Section>
-
       <CtaBand
-        title="Have a software project to discuss?"
+        title="Let’s discuss your project."
         primary={{ label: 'Discuss a project', to: '/contact?inquiry=custom' }}
-        secondary={{ label: 'Book a demo', to: '/contact?inquiry=demo' }}
       />
     </>
   )

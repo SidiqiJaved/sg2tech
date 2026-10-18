@@ -32,7 +32,7 @@
 
 :root {
   --gutter: clamp(1.25rem, 4vw, 3rem);
-  --section-y: clamp(4.5rem, 10vw, 9rem);
+  --section-y: clamp(2.75rem, 7vw, 7rem);
 }
 
 html {
@@ -240,4 +240,62 @@ body {
 }
 .on-dark .light-surface .text-copper-deep {
   color: var(--color-copper-deep);
+}
+
+/* Concise lists and adjacent disclosure content keep the mobile scan path short. */
+.benefit-list {
+  border-top: 1px solid var(--color-line);
+}
+.benefit-list li {
+  padding-block: 0.75rem;
+  border-bottom: 1px solid var(--color-line);
+}
+.workflow-disclosures details {
+  border-top: 1px solid var(--color-line);
+}
+.workflow-disclosures details:last-child {
+  border-bottom: 1px solid var(--color-line);
+}
+.workflow-disclosures summary {
+  cursor: pointer;
+  padding: 1rem 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+.workflow-disclosures details[open] > summary {
+  color: var(--color-copper-deep);
+}
+.workflow-content {
+  display: grid;
+  gap: 1.5rem;
+  padding: 0.5rem 0.5rem 1.5rem;
+}
+.workflow-content > * {
+  min-width: 0;
+}
+@media (min-width: 64rem) {
+  .workflow-content {
+    grid-template-columns: 1fr 1.2fr;
+    align-items: start;
+    gap: 3rem;
+  }
+}
+@media (max-width: 39.999rem) {
+  .t-display {
+    font-size: clamp(2.5rem, 10vw, 3.25rem);
+    line-height: 1.02;
+  }
+  .t-h1 {
+    font-size: clamp(2.1rem, 8.4vw, 2.8rem);
+    line-height: 1.08;
+  }
+  .t-lead {
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
