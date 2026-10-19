@@ -8,6 +8,7 @@ import { FranchiseManagementPage } from '@/pages/FranchiseManagementPage'
 import { HomePage } from '@/pages/HomePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { WorkPage } from '@/pages/WorkPage'
+import { PrivacyPolicyPage, TermsPage } from '@/pages/LegalPages'
 
 export function App() {
   return (
@@ -20,6 +21,8 @@ export function App() {
         <Route path="about" element={<AboutPage />} />
         <Route path="work" element={<WorkPage />} />
         <Route path="contact" element={<ContactPage />} />
+        <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="terms-and-conditions" element={<TermsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

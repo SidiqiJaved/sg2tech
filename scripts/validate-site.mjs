@@ -12,6 +12,8 @@ const routes = [
   '/about',
   '/work',
   '/contact',
+  '/privacy-policy',
+  '/terms-and-conditions',
 ]
 const pages = new Map(
   await Promise.all(
@@ -60,6 +62,11 @@ for (const name of [
   'company',
   'locations',
   'message',
+  'phone',
+  'sms-consent',
+  'sms-consent-at',
+  'sms-consent-version',
+  'sms-consent-disclosure',
 ]) {
   assert.ok(contact.includes(`name="${name}"`), `Netlify form detection: missing ${name}`)
 }
@@ -67,6 +74,21 @@ assert.ok(
   contact.indexOf('<form') < contact.indexOf('<aside'),
   'Form precedes contact alternatives',
 )
-console.log(
-  'Site OK: 7 prerendered routes, internal links, preserved anchors, headings and contact schema',
+const notice =
+  'No mobile information will be shared with third parties/affiliates for marketing/promotional purposes. All other categories exclude text messaging originator opt-in data and consent; this information will not be shared with any third parties.'
+assert.ok(contact.includes(notice), 'Contact must show the exact mobile privacy notice')
+assert.ok(
+  pages.get('/privacy-policy').includes(notice),
+  'Privacy Policy must show the exact mobile privacy notice',
 )
+const checkbox = contact.match(/<input[^>]*name="sms-consent"[^>]*>/)?.[0] ?? ''
+assert.ok(checkbox && !/\schecked(?:=|\s|>)/.test(checkbox), 'SMS consent must start unchecked')
+assert.ok(!/\srequired(?:=|\s|>)/.test(checkbox), 'SMS consent must remain optional')
+for (const [route, html] of pages) {
+  const footer = html.slice(html.indexOf('<footer'))
+  assert.ok(
+    footer.includes('href="/privacy-policy"') && footer.includes('href="/terms-and-conditions"'),
+    `${route}: footer policy links`,
+  )
+}
+console.log('Site OK: 9 routes, links, anchors, contact schema and SMS disclosures')
