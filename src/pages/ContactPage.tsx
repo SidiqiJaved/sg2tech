@@ -405,7 +405,7 @@ export function ContactPage() {
                 <button
                   type="submit"
                   disabled={status === 'sending'}
-                  className="inline-flex items-center justify-center rounded-full bg-copper px-8 py-4 font-medium text-ink transition-colors hover:bg-ink hover:text-white disabled:cursor-wait disabled:opacity-60"
+                  className="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-copper px-8 py-4 font-medium text-ink transition-colors hover:bg-ink hover:text-white disabled:cursor-wait disabled:opacity-60"
                 >
                   {status === 'sending'
                     ? 'Sending…'
