@@ -45,7 +45,20 @@ export function Footer() {
           <p>
             © {company.year} {company.legalName}. All rights reserved.
           </p>
-          <p>{company.tagline}</p>
+          <nav aria-label="Legal" className="flex flex-wrap gap-x-6 gap-y-2">
+            <Link
+              to="/privacy-policy"
+              className="inline-flex min-h-11 items-center underline underline-offset-4"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              to="/terms-and-conditions"
+              className="inline-flex min-h-11 items-center underline underline-offset-4"
+            >
+              Terms of Service
+            </Link>
+          </nav>
         </div>
       </div>
     </footer>

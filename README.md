@@ -101,5 +101,20 @@ The contact form includes that choice in the Netlify form schema. Demo messages 
 custom project descriptions require at least 20 characters. Preview locally without
 `VITE_FORMS_ENABLED=true` to exercise validation without transmitting a submission.
 
+### SMS consent and policy pages
+
+Privacy Policy: `/privacy-policy`. Terms of Service: `/terms-and-conditions` (SMS section: `#sms`).
+Both are linked from every footer. Contact also contains the verbatim mobile-information notice.
+The contact form uses a separate, optional and unchecked SMS consent checkbox; supplying a phone
+number alone does not grant consent. This program covers inquiry follow-ups, demos, project
+coordination and customer support. Marketing texts require a separately reviewed program.
+
+The Netlify `contact` schema includes `phone`, `sms-consent` (`yes` or `no`),
+`sms-consent-at` (client submission time for opted-in requests), `sms-consent-version`, and the
+exact `sms-consent-disclosure`. Keep these records with the inquiry. Verify the added fields are
+captured in Netlify after deploying. Configure Zoom's campaign, STOP/HELP behavior and consent
+handling separately before sending texts; the website form does not send SMS or synchronize
+consent to Zoom automatically. Run `npm run validate:sms` for consent/validation regressions.
+
 After building, run `npm run validate:site` to check prerendered routes, internal links, anchors,
 page headings and contact field detection. Run `npm run validate:fi-demo` for financial arithmetic.

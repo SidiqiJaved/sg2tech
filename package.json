@@ -14,7 +14,8 @@
     "prerender": "node scripts/prerender.mjs",
     "build": "npm run typecheck && npm run build:client && npm run build:server && npm run prerender",
     "preview": "vite preview",
-    "validate:site": "node scripts/validate-site.mjs"
+    "validate:site": "node scripts/validate-site.mjs",
+    "validate:sms": "node scripts/validate-sms.mjs"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",

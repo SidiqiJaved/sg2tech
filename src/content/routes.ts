@@ -8,6 +8,20 @@ export interface RouteMeta {
 
 export const routeMeta: RouteMeta[] = [
   {
+    path: '/privacy-policy',
+    title: 'Privacy Policy | SG2 Technologies',
+    description:
+      'How SG2 Technologies handles website inquiries, mobile information and SMS consent.',
+    indexable: true,
+  },
+  {
+    path: '/terms-and-conditions',
+    title: 'Terms of Service | SG2 Technologies',
+    description:
+      'Website and SMS messaging terms for SG2 Technologies, including opt-out and help information.',
+    indexable: true,
+  },
+  {
     path: '/',
     title: 'SG2 Technologies | Software Products & Engineering',
     description:

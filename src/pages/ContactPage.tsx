@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { CircleAlert, CircleCheck } from 'lucide-react'
 import { PageIntro } from '@/components/ui/Blocks'
 import { cn } from '@/lib/cn'
 import { contact } from '@/content/site'
+import { mobilePrivacyNotice, smsConsentDisclosure, smsConsentVersion } from '@/content/legal'
+import { validate, recordSmsConsent, type Errors } from '@/lib/contactValidation'
 
 type Inquiry = 'demo' | 'custom'
 type Product = '' | 'financial-intelligence' | 'franchise-management' | 'both'
 type Status = 'idle' | 'sending' | 'sent' | 'error' | 'not-configured'
-type Errors = Partial<Record<'name' | 'email' | 'company' | 'message', string>>
 
 /**
  * Delivery is Netlify Forms (the static form below is detected at deploy time).
@@ -17,23 +18,6 @@ type Errors = Partial<Record<'name' | 'email' | 'company' | 'message', string>>
  */
 // Read as a plain `import.meta.env.X` member so Vite substitutes it at build time.
 const FORMS_ENABLED = import.meta.env.VITE_FORMS_ENABLED === 'true'
-
-const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-
-function validate(d: FormData): Errors {
-  const e: Errors = {}
-  const name = String(d.get('name') ?? '').trim()
-  const email = String(d.get('email') ?? '').trim()
-  const company = String(d.get('company') ?? '').trim()
-  const message = String(d.get('message') ?? '').trim()
-  if (name.length < 2) e.name = 'Enter your full name.'
-  if (!emailRe.test(email)) e.email = 'Enter a valid work email address.'
-  if (company.length < 2) e.company = 'Enter your company name.'
-  if (d.get('inquiry') === 'custom' && message.length < 20)
-    e.message = 'Please describe your needs in at least a sentence or two (20+ characters).'
-  if (message.length > 3000) e.message = 'Please keep the description under 3,000 characters.'
-  return e
-}
 
 const encode = (d: FormData) =>
   new URLSearchParams(Array.from(d.entries()).map(([k, v]) => [k, String(v)])).toString()
@@ -132,7 +116,7 @@ export function ContactPage() {
       const res = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode(data),
+        body: encode(recordSmsConsent(data, new Date().toISOString())),
       })
       if (!res.ok) throw new Error(String(res.status))
       setSentTo({
@@ -229,6 +213,9 @@ export function ContactPage() {
               className="space-y-7"
             >
               <input type="hidden" name="form-name" value="contact" />
+              <input type="hidden" name="sms-consent-version" value={smsConsentVersion} />
+              <input type="hidden" name="sms-consent-disclosure" value={smsConsentDisclosure} />
+              <input type="hidden" name="sms-consent-at" value="" />
               <p className="sr-only" aria-hidden>
                 <label>
                   Leave this field empty <input name="bot-field" tabIndex={-1} autoComplete="off" />
@@ -344,6 +331,24 @@ export function ContactPage() {
               </div>
 
               <Field
+                id="phone"
+                label="Mobile phone (optional)"
+                error={errors.phone}
+                hint="Include your country code. A phone number alone does not opt you into SMS."
+              >
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  autoComplete="tel"
+                  maxLength={30}
+                  aria-invalid={!!errors.phone}
+                  aria-describedby={['phone-hint', desc('phone')].filter(Boolean).join(' ')}
+                  className={inputCls}
+                />
+              </Field>
+
+              <Field
                 id="message"
                 label={
                   inquiry === 'demo'
@@ -365,9 +370,37 @@ export function ContactPage() {
                 />
               </Field>
 
+              <fieldset className="border border-line bg-ivory p-5">
+                <legend className="px-2 text-sm font-medium">Optional SMS updates</legend>
+                <label className="flex cursor-pointer items-start gap-3 text-sm leading-relaxed">
+                  <input
+                    id="sms-consent"
+                    name="sms-consent"
+                    type="checkbox"
+                    value="yes"
+                    className="mt-1 h-5 w-5 shrink-0 accent-[#a8400a]"
+                  />
+                  <span>{smsConsentDisclosure}</span>
+                </label>
+                <p className="mt-3 text-sm">
+                  <Link className="underline underline-offset-4" to="/privacy-policy">
+                    Privacy Policy
+                  </Link>{' '}
+                  ·{' '}
+                  <Link className="underline underline-offset-4" to="/terms-and-conditions#sms">
+                    Terms of Service
+                  </Link>
+                </p>
+              </fieldset>
+
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <p className="t-caption max-w-md">
-                  We will use the details you submit only to respond to your inquiry.
+                  We use your details to respond to your inquiry and provide any SMS updates you
+                  choose. See our{' '}
+                  <Link to="/privacy-policy" className="underline underline-offset-4">
+                    Privacy Policy
+                  </Link>
+                  .
                 </p>
                 <button
                   type="submit"
@@ -382,6 +415,24 @@ export function ContactPage() {
                 </button>
               </div>
             </form>
+            <section
+              id="sms-privacy"
+              aria-labelledby="sms-privacy-title"
+              className="mt-8 border-t border-line pt-6"
+            >
+              <h2 id="sms-privacy-title" className="t-h3">
+                Mobile information and privacy
+              </h2>
+              <p className="mt-3 text-base leading-relaxed text-ink-soft">{mobilePrivacyNotice}</p>
+              <p className="mt-3 text-sm">
+                <Link
+                  to="/privacy-policy#mobile-information"
+                  className="underline underline-offset-4"
+                >
+                  Read our Privacy Policy
+                </Link>
+              </p>
+            </section>
           </div>
           <aside className="lg:col-span-4 lg:col-start-9 lg:row-start-1">
             <h2 className="t-label mb-6 text-copper-deep">Reach us directly</h2>
