@@ -8,6 +8,19 @@ export interface RouteMeta {
 
 export const routeMeta: RouteMeta[] = [
   {
+    path: '/eula',
+    title: 'Clover Application EULA | SG2 Technologies',
+    description: 'License terms for the SG2 Clover integration and financial-dashboard services.',
+    indexable: true, // Legal text approved; pushing and deployment remain separately controlled.
+  },
+  {
+    path: '/clover-privacy-policy',
+    title: 'Clover Application Privacy Policy | SG2 Technologies',
+    description:
+      'How SG2 handles Clover application information, including California privacy rights and sale disclosures.',
+    indexable: true, // Legal text approved; pushing and deployment remain separately controlled.
+  },
+  {
     path: '/privacy-policy',
     title: 'Privacy Policy | SG2 Technologies',
     description:

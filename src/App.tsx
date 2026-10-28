@@ -9,6 +9,7 @@ import { HomePage } from '@/pages/HomePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { WorkPage } from '@/pages/WorkPage'
 import { PrivacyPolicyPage, TermsPage } from '@/pages/LegalPages'
+import { CloverEulaPage, CloverPrivacyPolicyPage } from '@/pages/CloverLegalPages'
 
 export function App() {
   return (
@@ -23,6 +24,8 @@ export function App() {
         <Route path="contact" element={<ContactPage />} />
         <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="terms-and-conditions" element={<TermsPage />} />
+        <Route path="eula" element={<CloverEulaPage />} />
+        <Route path="clover-privacy-policy" element={<CloverPrivacyPolicyPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

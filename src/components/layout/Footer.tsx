@@ -58,6 +58,18 @@ export function Footer() {
             >
               Terms of Service
             </Link>
+            <Link
+              to="/eula"
+              className="inline-flex min-h-11 items-center underline underline-offset-4"
+            >
+              Clover App EULA
+            </Link>
+            <Link
+              to="/clover-privacy-policy"
+              className="inline-flex min-h-11 items-center underline underline-offset-4"
+            >
+              Clover App Privacy
+            </Link>
           </nav>
         </div>
       </div>

@@ -14,6 +14,8 @@ const routes = [
   '/contact',
   '/privacy-policy',
   '/terms-and-conditions',
+  '/eula',
+  '/clover-privacy-policy',
 ]
 const pages = new Map(
   await Promise.all(
@@ -87,8 +89,11 @@ assert.ok(!/\srequired(?:=|\s|>)/.test(checkbox), 'SMS consent must remain optio
 for (const [route, html] of pages) {
   const footer = html.slice(html.indexOf('<footer'))
   assert.ok(
-    footer.includes('href="/privacy-policy"') && footer.includes('href="/terms-and-conditions"'),
+    footer.includes('href="/privacy-policy"') &&
+      footer.includes('href="/terms-and-conditions"') &&
+      footer.includes('href="/eula"') &&
+      footer.includes('href="/clover-privacy-policy"'),
     `${route}: footer policy links`,
   )
 }
-console.log('Site OK: 9 routes, links, anchors, contact schema and SMS disclosures')
+console.log('Site OK: 11 routes, links, anchors, contact schema and SMS disclosures')
