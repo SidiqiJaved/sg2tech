@@ -7,6 +7,19 @@
   # Contact form posts to Netlify Forms; submissions are stored under Netlify > Forms.
   VITE_FORMS_ENABLED = "true"
 
+# Retired Clover policy: redirect both forms before static files and the 404 rule.
+[[redirects]]
+  from = "/clover-privacy-policy"
+  to = "/privacy-policy/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/clover-privacy-policy/"
+  to = "/privacy-policy/"
+  status = 301
+  force = true
+
 # Pages are prerendered to real HTML files, so no SPA catch-all rewrite is needed.
 # Unknown paths get the prerendered 404 page.
 [[redirects]]

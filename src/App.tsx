@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Layout } from '@/components/layout/Layout'
 import { AboutPage } from '@/pages/AboutPage'
 import { ContactPage } from '@/pages/ContactPage'
@@ -8,8 +8,14 @@ import { FranchiseManagementPage } from '@/pages/FranchiseManagementPage'
 import { HomePage } from '@/pages/HomePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { WorkPage } from '@/pages/WorkPage'
-import { PrivacyPolicyPage, TermsPage } from '@/pages/LegalPages'
-import { CloverEulaPage, CloverPrivacyPolicyPage } from '@/pages/CloverLegalPages'
+import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage'
+import { TermsPage } from '@/pages/LegalPages'
+import { CloverEulaPage } from '@/pages/CloverLegalPages'
+
+function PrivacyPolicyRedirect() {
+  const { search, hash } = useLocation()
+  return <Navigate to={`/privacy-policy/${search}${hash}`} replace />
+}
 
 export function App() {
   return (
@@ -25,7 +31,7 @@ export function App() {
         <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="terms-and-conditions" element={<TermsPage />} />
         <Route path="eula" element={<CloverEulaPage />} />
-        <Route path="clover-privacy-policy" element={<CloverPrivacyPolicyPage />} />
+        <Route path="clover-privacy-policy" element={<PrivacyPolicyRedirect />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

@@ -27,7 +27,7 @@ const orgJsonLd = {
 }
 
 function head(meta, { home = false } = {}) {
-  const url = SITE_URL + (meta.path === '/' ? '/' : meta.path)
+  const url = SITE_URL + (meta.canonicalPath ?? (meta.path === '/' ? '/' : meta.path))
   const tags = [
     `<title>${esc(meta.title)}</title>`,
     `<meta name="description" content="${esc(meta.description)}" />`,
@@ -77,7 +77,7 @@ const urls = routeMeta
   .filter((r) => r.indexable)
   .map(
     (r) =>
-      `  <url><loc>${SITE_URL}${r.path === '/' ? '/' : r.path}</loc><lastmod>${today}</lastmod></url>`,
+      `  <url><loc>${SITE_URL}${r.canonicalPath ?? (r.path === '/' ? '/' : r.path)}</loc><lastmod>${today}</lastmod></url>`,
   )
   .join('\n')
 await writeFile(

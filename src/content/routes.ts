@@ -2,6 +2,8 @@ export interface RouteMeta {
   path: string
   title: string
   description: string
+  /** Optional canonical path when it differs from the client route. */
+  canonicalPath?: string
   /** Included in sitemap.xml */
   indexable: boolean
 }
@@ -14,17 +16,11 @@ export const routeMeta: RouteMeta[] = [
     indexable: true, // Legal text approved; pushing and deployment remain separately controlled.
   },
   {
-    path: '/clover-privacy-policy',
-    title: 'Clover Application Privacy Policy | SG2 Technologies',
-    description:
-      'How SG2 handles Clover application information, including California privacy rights and sale disclosures.',
-    indexable: true, // Legal text approved; pushing and deployment remain separately controlled.
-  },
-  {
     path: '/privacy-policy',
+    canonicalPath: '/privacy-policy/',
     title: 'Privacy Policy | SG2 Technologies',
     description:
-      'How SG2 Technologies handles website inquiries, mobile information and SMS consent.',
+      'SG2 Technologies privacy practices for its website, SMS, Clover integration, financial intelligence application and merchant data, including California privacy rights.',
     indexable: true,
   },
   {

@@ -47,7 +47,7 @@ export function Footer() {
           </p>
           <nav aria-label="Legal" className="flex flex-wrap gap-x-6 gap-y-2">
             <Link
-              to="/privacy-policy"
+              to="/privacy-policy/"
               className="inline-flex min-h-11 items-center underline underline-offset-4"
             >
               Privacy Policy
@@ -63,12 +63,6 @@ export function Footer() {
               className="inline-flex min-h-11 items-center underline underline-offset-4"
             >
               Clover App EULA
-            </Link>
-            <Link
-              to="/clover-privacy-policy"
-              className="inline-flex min-h-11 items-center underline underline-offset-4"
-            >
-              Clover App Privacy
             </Link>
           </nav>
         </div>

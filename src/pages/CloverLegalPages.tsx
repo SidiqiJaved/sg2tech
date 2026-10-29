@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { company, contact } from '@/content/site'
-import { eulaSections, privacySections } from '@/content/cloverLegal'
+import { eulaSections } from '@/content/cloverLegal'
 
 function LegalShell({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -54,7 +54,7 @@ export function CloverEulaPage() {
           {section.id === 'confidentiality' && (
             <p>
               Application data is also governed by our{' '}
-              <Link to="/clover-privacy-policy">Clover Application Privacy Policy</Link>.
+              <Link to="/privacy-policy/">Clover Application Privacy Policy</Link>.
             </p>
           )}
         </section>
@@ -62,46 +62,6 @@ export function CloverEulaPage() {
       <section id="contact">
         <h2>12. Contact</h2>
         <LegalContact />
-      </section>
-    </LegalShell>
-  )
-}
-
-export function CloverPrivacyPolicyPage() {
-  return (
-    <LegalShell title="Clover Application Privacy Policy">
-      <p>
-        This policy explains how {company.legalName} (SG2, we, us, or our) handles information for
-        its Clover integration and related financial-dashboard services (the App). The business
-        using the App is the Merchant. Information processed on a Merchant’s behalf is Merchant
-        Data. This policy supplements SG2’s existing privacy disclosures for client services. The
-        separate <Link to="/privacy-policy">website and SMS Privacy Policy</Link> continues to
-        govern website inquiries and SMS consent. This policy does not replace a Merchant's own
-        notices to customers or personnel.
-      </p>
-      {privacySections.map((section) => (
-        <section key={section.id} id={section.id} className="mt-8">
-          <h2>{section.title}</h2>
-          {section.paragraphs.map((p) => (
-            <p key={p}>{p}</p>
-          ))}
-          {section.id === 'rights' && (
-            <p>
-              For requests for which Clover is responsible, use{' '}
-              <a href="https://www.clover.com/privacy-policy">Clover's Privacy Notice</a>. SG2 will
-              assist the responsible Merchant or Clover as required by law and the applicable
-              agreement.
-            </p>
-          )}
-        </section>
-      ))}
-      <section id="contact">
-        <h2>10. Contact and privacy requests</h2>
-        <LegalContact />
-        <p>
-          These channels accept questions, complaints, and privacy requests. You may also contact
-          the responsible Merchant directly.
-        </p>
       </section>
     </LegalShell>
   )

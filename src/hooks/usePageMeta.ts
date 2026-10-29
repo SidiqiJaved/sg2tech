@@ -22,7 +22,7 @@ export function usePageMeta(pathname: string) {
     const noindex = !meta.indexable || import.meta.env.VITE_NOINDEX === 'true'
     if (noindex) setMeta('name', 'robots', 'noindex')
     else document.head.querySelector('meta[name="robots"]')?.remove()
-    const url = SITE_URL + (meta.path === '/' ? '/' : meta.path)
+    const url = SITE_URL + (meta.canonicalPath ?? (meta.path === '/' ? '/' : meta.path))
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')
     if (meta.path === '/404') {
       canonical?.remove()
